@@ -13,4 +13,4 @@ export const store = configureStore({
   },
 });
 
-export const server = "https://ecommerce-server-i8ns.onrender.com/api/v1";
+export const server = "http://localhost:3000/api/v1";

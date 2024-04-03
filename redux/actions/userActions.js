@@ -1,5 +1,6 @@
 import axios from "axios";
 import { server } from "../store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const register = (formData) => async (dispatch) => {
   try {
@@ -13,6 +14,9 @@ export const register = (formData) => async (dispatch) => {
       },
       withCredentials: true,
     });
+
+    // save to storage
+    await AsyncStorage.setItem("token", data.token);
 
     dispatch({
       type: "registerSuccess",
@@ -48,6 +52,9 @@ export const login = (email, password) => async (dispatch) => {
       }
     );
 
+    // save to storage
+    await AsyncStorage.setItem("token", data.token);
+
     dispatch({
       type: "loginSuccess",
       payload: data.message,
@@ -62,10 +69,13 @@ export const login = (email, password) => async (dispatch) => {
 
 export const loadUser = () => async (dispatch) => {
   try {
+    // save to storage
+    const token = await AsyncStorage.getItem("token");
+
     dispatch({
       type: "loadUserRequest",
     });
-    const { data } = await axios.get(`${server}/user/me`, {
+    const { data } = await axios.get(`${server}/user/me?token=${token}`, {
       withCredentials: true,
     });
 
