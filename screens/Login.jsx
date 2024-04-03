@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
 import React, { useState } from "react";
 import {
   colors,
@@ -24,14 +24,12 @@ const Login = ({ navigation }) => {
     dispatch(login(email, password));
   };
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={defaultStyle}>
-        {/* Heading */}
-        <View style={{ marginBottom: 20 }}>
-          <Text style={formHeading}>Login</Text>
-        </View>
-
         <View style={styles.container}>
+          <View style={{ marginBottom: 10 }}>
+            <Text style={formHeading}>Login</Text>
+          </View>
           <TextInput
             {...inputOptions}
             placeholder="Email"
@@ -58,7 +56,6 @@ const Login = ({ navigation }) => {
           <Button
             loading={loading}
             textColor={colors.color2}
-            disabled={email === "" || password === ""}
             style={styles.btn}
             onPress={submitHandler}
           >
@@ -67,17 +64,18 @@ const Login = ({ navigation }) => {
 
           <Text style={styles.or}>OR</Text>
 
-          <TouchableOpacity
-            activeOpacity={0.8}
+          <Button
+            textColor={colors.color2}
+            style={styles.btn}
             onPress={() => navigation.navigate("signup")}
           >
-            <Text style={styles.link}>Sign Up</Text>
-          </TouchableOpacity>
+            Sign Up
+          </Button>
         </View>
       </View>
 
       <Footer activeRoute="profile" />
-    </>
+    </SafeAreaView>
   );
 };
 

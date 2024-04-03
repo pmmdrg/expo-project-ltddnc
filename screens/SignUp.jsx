@@ -1,4 +1,10 @@
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  SafeAreaView,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import {
   colors,
@@ -58,23 +64,16 @@ const SignUp = ({ navigation, route }) => {
     if (route.params?.image) setAvatar(route.params.image);
   }, [route.params]);
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={defaultStyle}>
-        {/* Heading */}
-        <View style={{ marginBottom: 20 }}>
-          <Text style={formHeading}>Sign Up</Text>
-        </View>
-
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={{
-            padding: 20,
             elevation: 10,
             borderRadius: 10,
-            backgroundColor: colors.color3,
           }}
         >
-          <View style={{ minHeight: 900 }}>
+          <View style={{ minHeight: 900, paddingTop: 20, paddingBottom: 100 }}>
             <Avatar.Image
               style={{
                 alignSelf: "center",
@@ -141,7 +140,6 @@ const SignUp = ({ navigation, route }) => {
             <Button
               loading={loading}
               textColor={colors.color2}
-              disabled={disableBtn}
               style={styles.btn}
               onPress={submitHandler}
             >
@@ -150,18 +148,20 @@ const SignUp = ({ navigation, route }) => {
 
             <Text style={styles.or}>OR</Text>
 
-            <TouchableOpacity
-              activeOpacity={0.8}
+            <Button
+              loading={loading}
+              textColor={colors.color2}
+              style={styles.btn}
               onPress={() => navigation.navigate("login")}
             >
-              <Text style={styles.link}>Log In</Text>
-            </TouchableOpacity>
+              Login
+            </Button>
           </View>
         </ScrollView>
       </View>
 
       <Footer activeRoute="profile" />
-    </>
+    </SafeAreaView>
   );
 };
 

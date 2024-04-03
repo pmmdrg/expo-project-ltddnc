@@ -25,12 +25,10 @@ const ForgetPassword = ({ navigation }) => {
   return (
     <>
       <View style={defaultStyle}>
-        {/* Heading */}
-        <View style={{ marginBottom: 20 }}>
-          <Text style={formHeading}>Forget Password</Text>
-        </View>
-
         <View style={styles.container}>
+          <View style={{ marginBottom: 10 }}>
+            <Text style={formHeading}>Forget Password</Text>
+          </View>
           <TextInput
             {...inputOptions}
             placeholder="Email"
@@ -42,21 +40,22 @@ const ForgetPassword = ({ navigation }) => {
           <Button
             loading={loading}
             textColor={colors.color2}
-            disabled={email === ""}
             style={styles.btn}
             onPress={submitHandler}
           >
-            Send OTP
+            Get OTP Code
           </Button>
 
           <Text style={styles.or}>OR</Text>
 
-          <TouchableOpacity
-            activeOpacity={0.8}
+          <Button
+            loading={loading}
+            textColor={colors.color2}
+            style={styles.btn}
             onPress={() => navigation.navigate("login")}
           >
-            <Text style={styles.link}>Log In</Text>
-          </TouchableOpacity>
+            Log In
+          </Button>
         </View>
       </View>
 
