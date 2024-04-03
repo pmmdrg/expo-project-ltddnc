@@ -22,6 +22,7 @@ const Login = ({ navigation }) => {
 
   const submitHandler = () => {
     dispatch(login(email, password));
+    console.log("dispatch");
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -33,6 +34,7 @@ const Login = ({ navigation }) => {
           <TextInput
             {...inputOptions}
             placeholder="Email"
+            autoCapitalize={false}
             keyboardType="email-address"
             value={email}
             onChangeText={setEmail}
@@ -40,6 +42,7 @@ const Login = ({ navigation }) => {
 
           <TextInput
             {...inputOptions}
+            autoCapitalize={false}
             placeholder="Password"
             secureTextEntry={true}
             value={password}
