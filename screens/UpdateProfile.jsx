@@ -34,20 +34,17 @@ const UpdateProfile = ({ navigation }) => {
     <View style={defaultStyle}>
       <Header back={true} />
 
-      {/* Heading */}
-      <View style={{ marginBottom: 20, paddingTop: 70 }}>
-        <Text style={formHeading}>Edit Profile</Text>
-      </View>
-
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{
-          padding: 20,
           elevation: 10,
           borderRadius: 10,
-          backgroundColor: colors.color3,
         }}
       >
+        {/* Heading */}
+        <View style={{ marginBottom: 10, paddingTop: 70 }}>
+          <Text style={formHeading}>Edit Profile</Text>
+        </View>
         <View>
           <TextInput
             {...inputOptions}

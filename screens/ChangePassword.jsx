@@ -27,12 +27,11 @@ const ChangePassword = () => {
   return (
     <View style={defaultStyle}>
       <Header back={true} />
-      {/* Heading */}
-      <View style={{ marginBottom: 20, paddingTop: 70 }}>
-        <Text style={formHeading}>Change Password</Text>
-      </View>
 
       <View style={styles.container}>
+        <View style={{ marginBottom: 20 }}>
+          <Text style={formHeading}>Change Password</Text>
+        </View>
         <TextInput
           {...inputOptions}
           placeholder="Old Password"
@@ -51,7 +50,6 @@ const ChangePassword = () => {
         <Button
           loading={loading}
           textColor={colors.color2}
-          disabled={oldPassword === "" || newPassword === ""}
           style={styles.btn}
           onPress={submitHandler}
         >
