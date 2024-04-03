@@ -217,7 +217,7 @@ const Home = () => {
         <HomeSection title='Ưu đãi đặc biệt' list={data} />
       </ScrollView>
 
-      <Footer activeRoute={'home'} />
+      {/* <Footer activeRoute={'home'} /> */}
       <View style={styles.navigation}>
         <NavigationItem
           iconSrc={require('../assets/icons/home.png')}
