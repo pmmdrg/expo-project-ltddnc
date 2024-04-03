@@ -22,7 +22,6 @@ const Login = ({ navigation }) => {
 
   const submitHandler = () => {
     dispatch(login(email, password));
-    console.log("dispatch");
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
