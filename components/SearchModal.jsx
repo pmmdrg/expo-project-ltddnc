@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { startTransition, useEffect } from 'react';
 import {
   View,
   Text,
@@ -58,7 +58,7 @@ const SearchModal = ({
     >
       <SafeAreaView>
         <View style={styles.headerContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={backAction} style={styles.backButton}>
             <Image source={require('../assets/icons/back.png')} />
           </TouchableOpacity>
           <View style={styles.searchContainer}>
@@ -150,9 +150,13 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+
     alignItems: 'center',
+    position: 'relative',
+  },
+  backButton: {
     paddingLeft: 20,
+    flexGrow: 1,
   },
   searchContainer: {
     backgroundColor: backgroundColor.secondaryBackground,
@@ -165,6 +169,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     position: 'relative',
+    flexGrow: 12,
   },
 
   input: {

@@ -16,6 +16,8 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import SearchModal from '../components/SearchModal';
 import ProductCard from '../components/ProductCard';
 import Footer from '../components/Footer';
+import HomeSection from '../components/HomeSection';
+import NavigationItem from '../components/NavigationItem';
 
 import { getAllProducts } from '../redux/actions/productAction';
 
@@ -27,7 +29,6 @@ import {
   textColors,
 } from '../assets/colors/colors';
 import { colors } from '../styles/styles';
-import HomeSection from '../components/HomeSection';
 
 const data = [
   {
@@ -217,6 +218,32 @@ const Home = () => {
       </ScrollView>
 
       <Footer activeRoute={'home'} />
+      <View style={styles.navigation}>
+        <NavigationItem
+          iconSrc={require('../assets/icons/home.png')}
+          title='TRANG CHỦ'
+          onPress={() => {
+            navigate.navigate('home');
+          }}
+        />
+        <NavigationItem
+          iconSrc={require('../assets/icons/heart.png')}
+          title='YÊU THÍCH'
+          onPress={() => {}}
+        />
+        <NavigationItem
+          iconSrc={require('../assets/icons/bag.png')}
+          title='ĐƠN HÀNG'
+          onPress={() => {}}
+        />
+        <NavigationItem
+          iconSrc={require('../assets/icons/profile.png')}
+          title='ĐĂNG NHẬP'
+          onPress={() => {
+            navigate.navigate('login');
+          }}
+        />
+      </View>
     </SafeAreaView>
   );
 };
