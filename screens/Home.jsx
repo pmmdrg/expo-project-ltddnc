@@ -192,7 +192,7 @@ const Home = () => {
         </View>
 
         {/* Products */}
-        <View style={{ flex: 1 }}>
+        {/* <View style={{ flex: 1 }}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {products.map((item, index) => (
               <ProductCard
@@ -208,7 +208,7 @@ const Home = () => {
               />
             ))}
           </ScrollView>
-        </View>
+        </View> */}
 
         <HomeSection title='Sản phẩm nổi bật' list={data} />
         <HomeSection title='Bán chạy nhất' list={data} />

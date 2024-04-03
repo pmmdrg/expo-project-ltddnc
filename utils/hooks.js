@@ -1,26 +1,26 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { Toast } from "react-native-toast-message/lib/src/Toast";
-import { useSelector } from "react-redux";
-import { loadUser } from "../redux/actions/userActions";
-import { server } from "../redux/store";
-import { getAdminProducts } from "../redux/actions/productAction";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { useSelector } from 'react-redux';
+import { loadUser } from '../redux/actions/userActions';
+import { server } from '../redux/store';
+import { getAdminProducts } from '../redux/actions/productAction';
 
 export const useMessageAndErrorUser = (
   navigation,
   dispatch,
-  navigateTo = "login"
+  navigateTo = 'login'
 ) => {
   const { loading, message, error } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (error) {
       Toast.show({
-        type: "error",
+        type: 'error',
         text1: error,
       });
       dispatch({
-        type: "clearError",
+        type: 'clearError',
       });
     }
 
@@ -30,11 +30,11 @@ export const useMessageAndErrorUser = (
         routes: [{ name: navigateTo }],
       });
       Toast.show({
-        type: "success",
+        type: 'success',
         text1: message,
       });
       dispatch({
-        type: "clearMessage",
+        type: 'clearMessage',
       });
       dispatch(loadUser());
     }
@@ -54,21 +54,21 @@ export const useMessageAndErrorOther = (
   useEffect(() => {
     if (error) {
       Toast.show({
-        type: "error",
+        type: 'error',
         text1: error,
       });
       dispatch({
-        type: "clearError",
+        type: 'clearError',
       });
     }
 
     if (message) {
       Toast.show({
-        type: "success",
+        type: 'success',
         text1: message,
       });
       dispatch({
-        type: "clearMessage",
+        type: 'clearMessage',
       });
 
       navigateTo && navigation.navigate(navigateTo);
@@ -82,17 +82,22 @@ export const useMessageAndErrorOther = (
 
 export const useSetCategories = (setCategories, isFocused) => {
   useEffect(() => {
-    axios
-      .get(`${server}/product/categories`)
-      .then((res) => {
-        setCategories(res.data.categories);
-      })
-      .catch((e) => {
-        Toast.show({
-          type: "error",
-          text1: e.response.data.message,
-        });
-      });
+    // axios
+    //   .get(`${server}/product/categories`)
+    //   .then((res) => {
+    //     setCategories(res.data.categories);
+    //   })
+    //   .catch((e) => {
+    //     Toast.show({
+    //       type: "error",
+    //       text1: e.response.data.message,
+    //     });
+    //   });
+    setCategories([
+      { _id: 1, category: 'Headphone' },
+      { _id: 2, category: 'In-ears' },
+      { _id: 3, category: 'Bluetooth' },
+    ]);
   }, [isFocused]);
 };
 
@@ -102,14 +107,14 @@ export const useGetOrders = (isFocused, isAdmin = false) => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${server}/order/${isAdmin ? "admin" : "my"}`)
+      .get(`${server}/order/${isAdmin ? 'admin' : 'my'}`)
       .then((res) => {
         setOrders(res.data.orders);
         setLoading(false);
       })
       .catch((e) => {
         Toast.show({
-          type: "error",
+          type: 'error',
           text1: e.response.data.message,
         });
         setLoading(false);
@@ -130,11 +135,11 @@ export const useAdminProducts = (dispatch, isFocused) => {
   useEffect(() => {
     if (error) {
       Toast.show({
-        type: "error",
+        type: 'error',
         text1: error,
       });
       dispatch({
-        type: "clearError",
+        type: 'clearError',
       });
     }
 

@@ -12,7 +12,7 @@ import {
   TextInput,
   StyleSheet,
 } from 'react-native';
-import { Headline, Searchbar } from 'react-native-paper';
+import { Headline } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
 import {
@@ -57,14 +57,19 @@ const SearchModal = ({
       }}
     >
       <SafeAreaView>
-        <View style={styles.searchContainer}>
-          <TextInput
-            placeholder='Tìm kiếm tên sản phẩm'
-            value={searchQuery}
-            onChangeText={(query) => setSearchQuery(query)}
-            style={styles.input}
-          />
-          <Image source={require('../assets/icons/search.png')} />
+        <View style={styles.headerContainer}>
+          <TouchableOpacity>
+            <Image source={require('../assets/icons/back.png')} />
+          </TouchableOpacity>
+          <View style={styles.searchContainer}>
+            <TextInput
+              placeholder='Tìm kiếm tên sản phẩm'
+              value={searchQuery}
+              onChangeText={(query) => setSearchQuery(query)}
+              style={styles.input}
+            />
+            <Image source={require('../assets/icons/search.png')} />
+          </View>
         </View>
 
         <ScrollView>
@@ -143,6 +148,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: backgroundColor.primaryBackground,
   },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: 20,
+  },
   searchContainer: {
     backgroundColor: backgroundColor.secondaryBackground,
     height: 50,
@@ -155,27 +166,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'relative',
   },
-  header: {
-    height: 55,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderBottomColor: borderColor.primaryBorder,
-    borderBottomWidth: 1,
-    position: 'relative',
-  },
-  headerTitle: {
-    color: textColors.blueText,
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-  notiIcon: {
-    position: 'absolute',
-    right: 70,
-  },
-  cartIcon: {
-    position: 'absolute',
-    right: 30,
-  },
+
   input: {
     backgroundColor: backgroundColor.transparentBackground,
     fontSize: 14,
