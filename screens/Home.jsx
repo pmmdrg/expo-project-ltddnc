@@ -27,6 +27,45 @@ import {
   textColors,
 } from '../assets/colors/colors';
 import { colors } from '../styles/styles';
+import HomeSection from '../components/HomeSection';
+
+const data = [
+  {
+    id: 1,
+    name: 'Headphone',
+    price: 500000,
+    rate: 4.5,
+    rateCount: 80,
+  },
+  {
+    id: 2,
+    name: 'Headphone',
+    price: 500000,
+    rate: 4.5,
+    rateCount: 80,
+  },
+  {
+    id: 3,
+    name: 'Headphone',
+    price: 500000,
+    rate: 4.5,
+    rateCount: 80,
+  },
+  {
+    id: 4,
+    name: 'Headphone',
+    price: 500000,
+    rate: 4.5,
+    rateCount: 80,
+  },
+  {
+    id: 5,
+    name: 'Headphone',
+    price: 500000,
+    rate: 4.5,
+    rateCount: 80,
+  },
+];
 
 const Home = () => {
   const [category, setCategory] = useState('');
@@ -89,6 +128,7 @@ const Home = () => {
           products={products}
         />
       )}
+
       {/* <Header /> */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Shop Tai nghe</Text>
@@ -105,7 +145,6 @@ const Home = () => {
       </View>
 
       {/* Search Bar */}
-
       <TouchableOpacity onPress={() => setActiveSearch(true)}>
         <View style={styles.searchContainer}>
           <Text style={styles.input}>Tìm kiếm tên sản phẩm</Text>
@@ -169,6 +208,13 @@ const Home = () => {
           ))}
         </ScrollView>
       </View>
+      <ScrollView>
+        <HomeSection title='Sản phẩm nổi bật' list={data} />
+        <HomeSection title='Bán chạy nhất' list={data} />
+        <HomeSection title='Hàng mới về' list={data} />
+        <HomeSection title='Ưu đãi đặc biệt' list={data} />
+      </ScrollView>
+
       <Footer activeRoute={'home'} />
     </SafeAreaView>
   );

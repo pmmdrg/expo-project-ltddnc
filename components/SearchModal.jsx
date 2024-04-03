@@ -53,7 +53,6 @@ const SearchModal = ({
         top: 0,
         zIndex: 100,
         backgroundColor: colors.color2,
-
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
       }}
     >

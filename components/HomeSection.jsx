@@ -4,12 +4,16 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
+  ScrollView,
 } from 'react-native';
 
-import { textColors } from '../../assets/colors';
+import { textColors } from '../assets/colors/colors';
 import Product from './Product';
+import { useNavigation } from '@react-navigation/native';
 
-const HomeSection = ({ type, title, list }) => {
+const HomeSection = ({ title, list }) => {
+  const navigate = useNavigation();
+
   return (
     <View>
       <View style={styles.sectionHeader}>
@@ -18,7 +22,34 @@ const HomeSection = ({ type, title, list }) => {
           <Text style={styles.sectionMore}>Xem tất cả</Text>
         </TouchableOpacity>
       </View>
-      <FlatList
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.listItem}
+      >
+        {list.map((item) => (
+          // <ProductCard
+          //   stock={item.stock}
+          //   name={item.name}
+          //   price={item.price}
+          //   image={item.images[0]?.url}
+          //   addToCardHandler={addToCardHandler}
+          //   id={item._id}
+          //   key={item._id}
+          //   i={index}
+          //   navigate={navigate}
+          // />
+          <Product
+            key={item.id}
+            name={item.name}
+            price={item.price}
+            rate={item.rate}
+            rateCount={item.rateCount}
+            navigate={navigate}
+          />
+        ))}
+      </ScrollView>
+      {/* <FlatList
         data={list}
         renderItem={({ item }) => {
           return (
@@ -35,7 +66,7 @@ const HomeSection = ({ type, title, list }) => {
         horizontal
         showsHorizontalScrollIndicator={false}
         style={styles.listItem}
-      />
+      /> */}
     </View>
   );
 };
@@ -59,7 +90,7 @@ const styles = StyleSheet.create({
     color: textColors.blueText,
   },
   listItem: {
-    paddingHorizontal: 25,
+    paddingHorizontal: 15,
     marginBottom: 30,
   },
 });

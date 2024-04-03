@@ -1,26 +1,26 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-import { backgroundColor, textColors } from '../../assets/colors';
+import { backgroundColor, textColors } from '../assets/colors/colors';
 
-const Product = ({ name, price, rate, rateCount }) => {
+const Product = ({ name, price, rate, rateCount, navigate }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity style={styles.prod} onPress={() => {}}>
       <View style={styles.container}>
         <Image
-          source={require('../../assets/images/headphone.png')}
+          source={require('../assets/images/headphone.png')}
           style={styles.prodImage}
         />
         <View style={styles.prodInfo}>
           <Text style={styles.prodName}>{name}</Text>
           <Text style={styles.prodPrice}>{price} VND</Text>
           <View style={styles.rateContainer}>
-            <Image source={require('../../assets/icons/star.png')} />
+            <Image source={require('../assets/icons/star.png')} />
             <Text style={styles.prodRate}>{rate}</Text>
           </View>
           <View style={styles.prodFooter}>
             <Text style={styles.prodRateCount}>{rateCount} lượt đánh giá</Text>
             <TouchableOpacity>
-              <Image source={require('../../assets/icons/option.png')} />
+              <Image source={require('../assets/icons/option.png')} />
             </TouchableOpacity>
           </View>
         </View>
@@ -30,6 +30,9 @@ const Product = ({ name, price, rate, rateCount }) => {
 };
 
 const styles = StyleSheet.create({
+  prod: {
+    paddingHorizontal: 10,
+  },
   container: {
     width: 160,
     alignItems: 'center',
