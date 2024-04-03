@@ -66,12 +66,12 @@ const Cart = () => {
       <Heading
         text1="Shopping"
         text2="Cart"
-        containerStyle={{ paddingTop: 70, marginLeft: 35 }}
+        containerStyle={{ paddingTop: 90, marginLeft: 20 }}
       />
 
       <View
         style={{
-          paddingVertical: 20,
+          paddingVertical: 30,
           flex: 1,
         }}
       >
@@ -104,7 +104,7 @@ const Cart = () => {
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
-          paddingHorizontal: 35,
+          paddingHorizontal: 20,
         }}
       >
         <Text>{cartItems.length} Items</Text>
@@ -127,7 +127,8 @@ const Cart = () => {
             backgroundColor: colors.color3,
             borderRadius: 100,
             padding: 5,
-            margin: 30,
+            marginVertical: 30,
+            marginHorizontal: 20,
           }}
           icon={"cart"}
           textColor={colors.color2}

@@ -1,4 +1,10 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import {
   colors,
@@ -83,20 +89,13 @@ const Profile = ({ navigation, route }) => {
   }, [user]);
 
   return (
-    <>
-      <View style={defaultStyle}>
-        {/* Heading */}
-        <View style={{ marginBottom: 20 }}>
-          <Text style={formHeading}>Profile</Text>
-        </View>
-
-        {/* Loading */}
-
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={[defaultStyle, { padding: 20 }]}>
         {loading ? (
           <Loader />
         ) : (
           <>
-            <View style={styles.container}>
+            <View style={[styles.container, { marginBottom: 20 }]}>
               <Avatar.Image
                 source={{
                   uri: avatar,
@@ -114,7 +113,7 @@ const Profile = ({ navigation, route }) => {
                 <Button
                   disabled={loadingPic}
                   loading={loadingPic}
-                  textColor={colors.color1}
+                  textColor={colors.color2}
                 >
                   Change Photo
                 </Button>
@@ -183,7 +182,7 @@ const Profile = ({ navigation, route }) => {
       </View>
 
       <Footer />
-    </>
+    </SafeAreaView>
   );
 };
 
@@ -198,7 +197,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 20,
     fontWeight: "500",
-    marginTop: 10,
+    marginVertical: 10,
     color: colors.color2,
   },
 });
