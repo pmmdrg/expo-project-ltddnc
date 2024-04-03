@@ -2,9 +2,14 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 import { backgroundColor, textColors } from '../assets/colors/colors';
 
-const Product = ({ name, price, rate, rateCount, navigate }) => {
+const Product = ({ id, name, price, rate, rateCount, navigate }) => {
   return (
-    <TouchableOpacity style={styles.prod} onPress={() => {}}>
+    <TouchableOpacity
+      style={styles.prod}
+      onPress={() => {
+        navigate.navigate('productdetails', { id });
+      }}
+    >
       <View style={styles.container}>
         <Image
           source={require('../assets/images/headphone.png')}

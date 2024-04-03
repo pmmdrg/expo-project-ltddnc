@@ -144,71 +144,72 @@ const Home = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Search Bar */}
-      <TouchableOpacity onPress={() => setActiveSearch(true)}>
-        <View style={styles.searchContainer}>
-          <Text style={styles.input}>Tìm kiếm tên sản phẩm</Text>
-          <Image source={require('../assets/icons/search.png')} />
-        </View>
-      </TouchableOpacity>
-
-      {/* Categories */}
-      <View
-        style={{
-          flexDirection: 'row',
-          height: 80,
-        }}
-      >
-        <ScrollView
-          horizontal
-          contentContainerStyle={{
-            alignItems: 'center',
-          }}
-          showsHorizontalScrollIndicator={false}
-        >
-          {categories.map((item, index) => (
-            <Button
-              key={item._id}
-              style={{
-                backgroundColor:
-                  category === item._id ? colors.color1 : colors.color5,
-                borderRadius: 100,
-                margin: 5,
-              }}
-              onPress={() => categoryButtonHandler(item._id)}
-            >
-              <Text
-                style={{
-                  fontSize: 12,
-                  color: category === item._id ? colors.color2 : 'gray',
-                }}
-              >
-                {item.category}
-              </Text>
-            </Button>
-          ))}
-        </ScrollView>
-      </View>
-
-      {/* Products */}
-      <View style={{ flex: 1 }}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {products.map((item, index) => (
-            <ProductCard
-              stock={item.stock}
-              name={item.name}
-              price={item.price}
-              image={item.images[0]?.url}
-              addToCardHandler={addToCardHandler}
-              id={item._id}
-              key={item._id}
-              i={index}
-              navigate={navigate}
-            />
-          ))}
-        </ScrollView>
-      </View>
       <ScrollView>
+        {/* Search Bar */}
+        <TouchableOpacity onPress={() => setActiveSearch(true)}>
+          <View style={styles.searchContainer}>
+            <Text style={styles.input}>Tìm kiếm tên sản phẩm</Text>
+            <Image source={require('../assets/icons/search.png')} />
+          </View>
+        </TouchableOpacity>
+
+        {/* Categories */}
+        <View
+          style={{
+            flexDirection: 'row',
+            height: 80,
+          }}
+        >
+          <ScrollView
+            horizontal
+            contentContainerStyle={{
+              alignItems: 'center',
+            }}
+            showsHorizontalScrollIndicator={false}
+          >
+            {categories.map((item, index) => (
+              <Button
+                key={item._id}
+                style={{
+                  backgroundColor:
+                    category === item._id ? colors.color1 : colors.color5,
+                  borderRadius: 100,
+                  margin: 5,
+                }}
+                onPress={() => categoryButtonHandler(item._id)}
+              >
+                <Text
+                  style={{
+                    fontSize: 12,
+                    color: category === item._id ? colors.color2 : 'gray',
+                  }}
+                >
+                  {item.category}
+                </Text>
+              </Button>
+            ))}
+          </ScrollView>
+        </View>
+
+        {/* Products */}
+        <View style={{ flex: 1 }}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {products.map((item, index) => (
+              <ProductCard
+                stock={item.stock}
+                name={item.name}
+                price={item.price}
+                image={item.images[0]?.url}
+                addToCardHandler={addToCardHandler}
+                id={item._id}
+                key={item._id}
+                i={index}
+                navigate={navigate}
+              />
+            ))}
+          </ScrollView>
+        </View>
+
         <HomeSection title='Sản phẩm nổi bật' list={data} />
         <HomeSection title='Bán chạy nhất' list={data} />
         <HomeSection title='Hàng mới về' list={data} />
