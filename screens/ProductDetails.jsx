@@ -5,18 +5,19 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
-} from "react-native";
-import React, { useEffect, useRef, useState } from "react";
-import { colors, defaultStyle } from "../styles/styles";
-import Header from "../components/Header";
-import Carousel from "react-native-snap-carousel";
-import { Avatar, Button } from "react-native-paper";
-import { Toast } from "react-native-toast-message/lib/src/Toast";
-import { useDispatch, useSelector } from "react-redux";
-import { useIsFocused } from "@react-navigation/native";
-import { getProductDetails } from "../redux/actions/productAction";
+} from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { colors, defaultStyle } from '../styles/styles';
+import Header from '../components/Header';
+import Carousel from 'react-native-snap-carousel';
+import { Avatar, Button } from 'react-native-paper';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
+import { getProductDetails } from '../redux/actions/productAction';
+import { backgroundColor } from '../assets/colors/colors';
 
-const SLIDER_WIDTH = Dimensions.get("window").width;
+const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = SLIDER_WIDTH;
 export const iconOptions = {
   size: 20,
@@ -28,10 +29,24 @@ export const iconOptions = {
   },
 };
 
+const products = {
+  product: {
+    id: 1,
+    name: 'Headphone',
+    price: 500000,
+    stock: 0,
+    rate: 4.5,
+    rateCount: 80,
+    images: require('../assets/images/headphone.png'),
+    description:
+      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit sed vitae similique ducimus tenetur pariatur eius aspernatur voluptatibus molestiae a atque qui, corporis nam ab, dolore optio impedit aliquid rerum.',
+  },
+};
+
 const ProductDetails = ({ route: { params } }) => {
   const {
     product: { name, price, stock, description, images },
-  } = useSelector((state) => state.product);
+  } = useSelector((state) => state.product); // products;
 
   const isCarousel = useRef(null);
   const [quantity, setQuantity] = useState(1);
@@ -41,8 +56,8 @@ const ProductDetails = ({ route: { params } }) => {
   const incrementQty = () => {
     if (stock <= quantity)
       return Toast.show({
-        type: "error",
-        text1: "Maximum Value Added",
+        type: 'error',
+        text1: 'Maximum Value Added',
       });
     setQuantity((prev) => prev + 1);
   };
@@ -54,11 +69,11 @@ const ProductDetails = ({ route: { params } }) => {
   const addToCardHandler = () => {
     if (stock === 0)
       return Toast.show({
-        type: "error",
-        text1: "Out Of Stock",
+        type: 'error',
+        text1: 'Out Of Stock',
       });
     dispatch({
-      type: "addToCart",
+      type: 'addToCart',
       payload: {
         product: params.id,
         name,
@@ -69,8 +84,8 @@ const ProductDetails = ({ route: { params } }) => {
       },
     });
     Toast.show({
-      type: "success",
-      text1: "Added To Cart",
+      type: 'success',
+      text1: 'Added To Cart',
     });
   };
 
@@ -83,29 +98,40 @@ const ProductDetails = ({ route: { params } }) => {
       style={{
         ...defaultStyle,
         padding: 0,
-        backgroundColor: colors.color1,
+        backgroundColor: backgroundColor.secondaryBackground,
       }}
     >
       <Header back={true} />
 
       {/* Carousel */}
-      <Carousel
-        layout="stack"
+      {/* <Carousel
+        layout='stack'
         sliderWidth={SLIDER_WIDTH}
         itemWidth={ITEM_WIDTH}
         ref={isCarousel}
         data={images}
         renderItem={CarouselCardItem}
-      />
+      /> */}
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Image
+          source={images}
+          style={{ width: 300, height: 300, marginTop: 40 }}
+        />
+      </View>
 
       <View
         style={{
           backgroundColor: colors.color2,
           padding: 35,
           flex: 1,
-          marginTop: -380,
-          borderTopLeftRadius: 55,
-          borderTopRightRadius: 55,
+          // marginTop: -380,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
         }}
       >
         <Text
@@ -120,10 +146,10 @@ const ProductDetails = ({ route: { params } }) => {
         <Text
           style={{
             fontSize: 18,
-            fontWeight: "900",
+            fontWeight: '900',
           }}
         >
-          ₹{price}
+          {price} VND
         </Text>
 
         <Text
@@ -139,16 +165,16 @@ const ProductDetails = ({ route: { params } }) => {
 
         <View
           style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
             paddingHorizontal: 5,
           }}
         >
           <Text
             style={{
               color: colors.color3,
-              fontWeight: "100",
+              fontWeight: '100',
             }}
           >
             Quantity
@@ -157,25 +183,25 @@ const ProductDetails = ({ route: { params } }) => {
           <View
             style={{
               width: 80,
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
             }}
           >
             <TouchableOpacity onPress={decrementQty}>
-              <Avatar.Icon icon={"minus"} {...iconOptions} />
+              <Avatar.Icon icon={'minus'} {...iconOptions} />
             </TouchableOpacity>
 
             <Text style={style.quantity}>{quantity}</Text>
 
             <TouchableOpacity onPress={incrementQty}>
-              <Avatar.Icon icon={"plus"} {...iconOptions} />
+              <Avatar.Icon icon={'plus'} {...iconOptions} />
             </TouchableOpacity>
           </View>
         </View>
 
         <TouchableOpacity activeOpacity={0.9} onPress={addToCardHandler}>
-          <Button icon={"cart"} style={style.btn} textColor={colors.color2}>
+          <Button icon={'cart'} style={style.btn} textColor={colors.color2}>
             Add To Cart
           </Button>
         </TouchableOpacity>
@@ -199,20 +225,19 @@ const style = StyleSheet.create({
   },
   image: {
     width: ITEM_WIDTH,
-    resizeMode: "contain",
+    resizeMode: 'contain',
     height: 250,
   },
   quantity: {
     backgroundColor: colors.color4,
     height: 25,
     width: 25,
-    textAlignVertical: "center",
-    textAlign: "center",
+    textAlignVertical: 'center',
+    textAlign: 'center',
     borderWidth: 1,
     borderRadius: 5,
     borderColor: colors.color5,
   },
-
   btn: {
     backgroundColor: colors.color3,
     borderRadius: 100,

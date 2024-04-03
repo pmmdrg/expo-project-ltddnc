@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   View,
   Text,
@@ -8,70 +8,85 @@ import {
   StyleSheet,
   Image,
   SafeAreaView,
-} from "react-native";
-import { Button } from "react-native-paper";
-import { Toast } from "react-native-toast-message/lib/src/Toast";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+} from 'react-native';
+import { Button } from 'react-native-paper';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 
-import SearchModal from "../components/SearchModal";
-import ProductCard from "../components/ProductCard";
-import Footer from "../components/Footer";
-import HomeSection from "../components/HomeSection";
-import NavigationItem from "../components/NavigationItem";
+import SearchModal from '../components/SearchModal';
+import ProductCard from '../components/ProductCard';
+import Footer from '../components/Footer';
+import HomeSection from '../components/HomeSection';
+import NavigationItem from '../components/NavigationItem';
 
-import { getAllProducts } from "../redux/actions/productAction";
+import { getAllProducts } from '../redux/actions/productAction';
 
-import { useSetCategories } from "../utils/hooks";
+import { useSetCategories } from '../utils/hooks';
 
 import {
   backgroundColor,
   borderColor,
   textColors,
-} from "../assets/colors/colors";
-import { colors } from "../styles/styles";
+} from '../assets/colors/colors';
+import { colors } from '../styles/styles';
 
 const data = [
   {
     id: 1,
-    name: "Headphone",
+    name: 'Headphone',
     price: 500000,
     rate: 4.5,
     rateCount: 80,
+    image: require('../assets/images/headphone.png'),
+    description:
+      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit sed vitae similique ducimus tenetur pariatur eius aspernatur voluptatibus molestiae a atque qui, corporis nam ab, dolore optio impedit aliquid rerum.',
   },
   {
     id: 2,
-    name: "Headphone",
+    name: 'Headphone',
     price: 500000,
     rate: 4.5,
     rateCount: 80,
+    image: require('../assets/images/headphone.png'),
+    description:
+      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit sed vitae similique ducimus tenetur pariatur eius aspernatur voluptatibus molestiae a atque qui, corporis nam ab, dolore optio impedit aliquid rerum.',
   },
   {
     id: 3,
-    name: "Headphone",
+    name: 'Headphone',
     price: 500000,
     rate: 4.5,
     rateCount: 80,
+    image: require('../assets/images/headphone.png'),
+    description:
+      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit sed vitae similique ducimus tenetur pariatur eius aspernatur voluptatibus molestiae a atque qui, corporis nam ab, dolore optio impedit aliquid rerum.',
   },
   {
     id: 4,
-    name: "Headphone",
+    name: 'Headphone',
     price: 500000,
     rate: 4.5,
     rateCount: 80,
+    image: require('../assets/images/headphone.png'),
+    description:
+      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit sed vitae similique ducimus tenetur pariatur eius aspernatur voluptatibus molestiae a atque qui, corporis nam ab, dolore optio impedit aliquid rerum.',
   },
   {
     id: 5,
-    name: "Headphone",
+    name: 'Headphone',
     price: 500000,
     rate: 4.5,
     rateCount: 80,
+    image: require('../assets/images/headphone.png'),
+    description:
+      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit sed vitae similique ducimus tenetur pariatur eius aspernatur voluptatibus molestiae a atque qui, corporis nam ab, dolore optio impedit aliquid rerum.',
   },
 ];
 
 const Home = () => {
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState('');
   const [activeSearch, setActiveSearch] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [categories, setCategories] = useState([]);
 
   const navigate = useNavigation();
@@ -87,11 +102,11 @@ const Home = () => {
   const addToCardHandler = (id, name, price, image, stock) => {
     if (stock === 0)
       return Toast.show({
-        type: "error",
-        text1: "Out Of Stock",
+        type: 'error',
+        text1: 'Out Of Stock',
       });
     dispatch({
-      type: "addToCart",
+      type: 'addToCart',
       payload: {
         product: id,
         name,
@@ -102,8 +117,8 @@ const Home = () => {
       },
     });
     Toast.show({
-      type: "success",
-      text1: "Added To Cart",
+      type: 'success',
+      text1: 'Added To Cart',
     });
   };
 
@@ -134,14 +149,14 @@ const Home = () => {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Shop Tai nghe</Text>
         <Image
-          source={require("../assets/icons/notification.png")}
+          source={require('../assets/icons/notification.png')}
           style={styles.notiIcon}
         />
         <TouchableOpacity
-          onPress={() => navigate.navigate("cart")}
+          onPress={() => navigate.navigate('cart')}
           style={styles.cartIcon}
         >
-          <Image source={require("../assets/icons/cart.png")} />
+          <Image source={require('../assets/icons/cart.png')} />
         </TouchableOpacity>
       </View>
 
@@ -150,21 +165,22 @@ const Home = () => {
         <TouchableOpacity onPress={() => setActiveSearch(true)}>
           <View style={styles.searchContainer}>
             <Text style={styles.input}>Tìm kiếm tên sản phẩm</Text>
-            <Image source={require("../assets/icons/search.png")} />
+            <Image source={require('../assets/icons/search.png')} />
           </View>
         </TouchableOpacity>
 
         {/* Categories */}
         <View
           style={{
-            flexDirection: "row",
+            flexDirection: 'row',
             height: 80,
+            paddingHorizontal: 20,
           }}
         >
           <ScrollView
             horizontal
             contentContainerStyle={{
-              alignItems: "center",
+              alignItems: 'center',
             }}
             showsHorizontalScrollIndicator={false}
           >
@@ -182,7 +198,7 @@ const Home = () => {
                 <Text
                   style={{
                     fontSize: 12,
-                    color: category === item._id ? colors.color2 : "gray",
+                    color: category === item._id ? colors.color2 : 'gray',
                   }}
                 >
                   {item.category}
@@ -193,7 +209,7 @@ const Home = () => {
         </View>
 
         {/* Products */}
-        {/* <View style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {products.map((item, index) => (
               <ProductCard
@@ -209,38 +225,38 @@ const Home = () => {
               />
             ))}
           </ScrollView>
-        </View> */}
+        </View>
 
-        <HomeSection title="Sản phẩm nổi bật" list={data} />
-        <HomeSection title="Bán chạy nhất" list={data} />
-        <HomeSection title="Hàng mới về" list={data} />
-        <HomeSection title="Ưu đãi đặc biệt" list={data} />
+        <HomeSection title='Sản phẩm nổi bật' list={data} />
+        <HomeSection title='Bán chạy nhất' list={data} />
+        <HomeSection title='Hàng mới về' list={data} />
+        <HomeSection title='Ưu đãi đặc biệt' list={data} />
       </ScrollView>
 
       {/* <Footer activeRoute={'home'} /> */}
       <View style={styles.navigation}>
         <NavigationItem
-          iconSrc={require("../assets/icons/home.png")}
-          title="TRANG CHỦ"
+          iconSrc={require('../assets/icons/home.png')}
+          title='TRANG CHỦ'
           onPress={() => {
-            navigate.navigate("home");
+            navigate.navigate('home');
           }}
         />
         <NavigationItem
-          iconSrc={require("../assets/icons/heart.png")}
-          title="YÊU THÍCH"
+          iconSrc={require('../assets/icons/heart.png')}
+          title='YÊU THÍCH'
           onPress={() => {}}
         />
         <NavigationItem
-          iconSrc={require("../assets/icons/bag.png")}
-          title="ĐƠN HÀNG"
+          iconSrc={require('../assets/icons/bag.png')}
+          title='ĐƠN HÀNG'
           onPress={() => {}}
         />
         <NavigationItem
-          iconSrc={require("../assets/icons/profile.png")}
-          title="ĐĂNG NHẬP"
+          iconSrc={require('../assets/icons/profile.png')}
+          title='ĐĂNG NHẬP'
           onPress={() => {
-            navigate.navigate("login");
+            navigate.navigate('login');
           }}
         />
       </View>
@@ -261,30 +277,30 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginVertical: 30,
     marginHorizontal: 25,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    position: "relative",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    position: 'relative',
   },
   header: {
     height: 55,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     borderBottomColor: borderColor.primaryBorder,
     borderBottomWidth: 1,
-    position: "relative",
+    position: 'relative',
   },
   headerTitle: {
     color: textColors.blueText,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 18,
   },
   notiIcon: {
-    position: "absolute",
+    position: 'absolute',
     right: 70,
   },
   cartIcon: {
-    position: "absolute",
+    position: 'absolute',
     right: 30,
   },
   input: {
@@ -294,8 +310,8 @@ const styles = StyleSheet.create({
   },
   navigation: {
     height: 60,
-    flexDirection: "row",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     borderTopColor: borderColor.primaryBorder,
     borderTopWidth: 1,
   },

@@ -46,6 +46,7 @@ const HomeSection = ({ title, list }) => {
             price={item.price}
             rate={item.rate}
             rateCount={item.rateCount}
+            image={item.image}
             navigate={navigate}
           />
         ))}

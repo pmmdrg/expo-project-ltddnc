@@ -1,9 +1,11 @@
-import { TouchableOpacity } from "react-native";
-import React from "react";
-import { Avatar } from "react-native-paper";
-import { colors } from "../styles/styles";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
+import { Image, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { Avatar } from 'react-native-paper';
+import { colors } from '../styles/styles';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { StyleSheet } from 'react-native';
+import { backgroundColor } from '../assets/colors/colors';
 
 const Header = ({ back, emptyCart = false }) => {
   const navigate = useNavigation();
@@ -11,55 +13,49 @@ const Header = ({ back, emptyCart = false }) => {
   const route = useRoute();
   const emptyCartHandler = () => {
     dispatch({
-      type: "clearCart",
+      type: 'clearCart',
     });
   };
 
   return (
-    <>
+    <View style={styles.container}>
       {back && (
         <TouchableOpacity
-          style={{
-            position: "absolute",
-            left: 10,
-            top: 20,
-            zIndex: 10,
-          }}
+          style={styles.backButton}
           onPress={() => navigate.goBack()}
         >
-          <Avatar.Icon
-            style={{
-              backgroundColor: colors.color4,
-            }}
-            icon={"arrow-left"}
-            color={
-              route.name === "productdetails" ? colors.color2 : colors.color3
-            }
-          />
+          <Image source={require('../assets/icons/back.png')} />
         </TouchableOpacity>
       )}
 
       <TouchableOpacity
-        style={{
-          position: "absolute",
-          right: 10,
-          top: 20,
-          zIndex: 10,
-        }}
-        onPress={emptyCart ? emptyCartHandler : () => navigate.navigate("cart")}
+        style={styles.cartButton}
+        onPress={emptyCart ? emptyCartHandler : () => navigate.navigate('cart')}
       >
-        <Avatar.Icon
-          style={{
-            backgroundColor: colors.color4,
-          }}
-          icon={emptyCart ? "delete-outline" : "cart-outline"}
-          color={
-            route.name === "productdetails" ? colors.color2 : colors.color3
-          }
-        />
+        <Image source={require('../assets/icons/cart.png')} />
       </TouchableOpacity>
-    </>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: backgroundColor.primaryBackground,
+  },
+  backButton: {
+    position: 'absolute',
+    left: 20,
+    top: 20,
+    zIndex: 10,
+    padding: 10,
+  },
+  cartButton: {
+    position: 'absolute',
+    right: 20,
+    top: 20,
+    zIndex: 10,
+    padding: 10,
+  },
+});
 
 export default Header;

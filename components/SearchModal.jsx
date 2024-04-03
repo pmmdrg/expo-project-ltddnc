@@ -45,17 +45,7 @@ const SearchModal = ({
   }, []);
 
   return (
-    <View
-      style={{
-        width: '100%',
-        height: '100%',
-        position: 'absolute',
-        top: 0,
-        zIndex: 100,
-        backgroundColor: colors.color2,
-        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-      }}
-    >
+    <View style={styles.container}>
       <SafeAreaView>
         <View style={styles.headerContainer}>
           <TouchableOpacity onPress={backAction} style={styles.backButton}>
@@ -145,12 +135,16 @@ const SearchItem = ({ price, name, imgSrc, handler }) => (
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: backgroundColor.primaryBackground,
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    top: 0,
+    zIndex: 100,
+    backgroundColor: colors.color2,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   headerContainer: {
     flexDirection: 'row',
-
     alignItems: 'center',
     position: 'relative',
   },
@@ -171,18 +165,10 @@ const styles = StyleSheet.create({
     position: 'relative',
     flexGrow: 12,
   },
-
   input: {
     backgroundColor: backgroundColor.transparentBackground,
     fontSize: 14,
     flex: 1,
-  },
-  navigation: {
-    height: 60,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    borderTopColor: borderColor.primaryBorder,
-    borderTopWidth: 1,
   },
 });
 
