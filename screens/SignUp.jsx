@@ -98,6 +98,7 @@ const SignUp = ({ navigation, route }) => {
             <TextInput
               {...inputOptions}
               placeholder="Email"
+              autoCapitalize={false}
               keyboardType="email-address"
               value={email}
               onChangeText={setEmail}
@@ -107,6 +108,7 @@ const SignUp = ({ navigation, route }) => {
               {...inputOptions}
               secureTextEntry={true}
               placeholder="Password"
+              autoCapitalize={false}
               value={password}
               onChangeText={setPassword}
             />
