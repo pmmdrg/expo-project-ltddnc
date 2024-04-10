@@ -32,6 +32,7 @@ const ForgetPassword = ({ navigation }) => {
           <TextInput
             {...inputOptions}
             placeholder="Email"
+            autoCapitalize="none"
             keyboardType="email-address"
             value={email}
             onChangeText={setEmail}

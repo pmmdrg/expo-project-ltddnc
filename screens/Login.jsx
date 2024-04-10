@@ -33,6 +33,7 @@ const Login = ({ navigation }) => {
           <TextInput
             {...inputOptions}
             placeholder="Email"
+            autoCapitalize="none"
             keyboardType="email-address"
             value={email}
             onChangeText={setEmail}
@@ -40,6 +41,7 @@ const Login = ({ navigation }) => {
 
           <TextInput
             {...inputOptions}
+            autoCapitalize="none"
             placeholder="Password"
             secureTextEntry={true}
             value={password}
