@@ -31,7 +31,6 @@ const ForgetPassword = ({ navigation }) => {
           </View>
           <TextInput
             {...inputOptions}
-            autoCapitalize={false}
             placeholder="Email"
             keyboardType="email-address"
             value={email}
