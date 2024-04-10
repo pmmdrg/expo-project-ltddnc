@@ -74,7 +74,7 @@ export const loadUser = () => async (dispatch) => {
     if (!token) {
       dispatch({
         type: "loadUserFail",
-        payload: "Token does not exist",
+        payload: "Please login or register new account",
       });
     } else {
       dispatch({
