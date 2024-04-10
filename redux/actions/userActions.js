@@ -71,21 +71,26 @@ export const loadUser = () => async (dispatch) => {
   try {
     // save to storage
     const token = await AsyncStorage.getItem("token");
+    if (!token) {
+      dispatch({
+        type: "loadUserFail",
+        payload: "Token does not exist",
+      });
+    } else {
+      dispatch({
+        type: "loadUserRequest",
+      });
+      const { data } = await axios.get(`${server}/user/me?token=${token}`, {
+        withCredentials: true,
+      });
+      console.log(data);
 
-    dispatch({
-      type: "loadUserRequest",
-    });
-    const { data } = await axios.get(`${server}/user/me?token=${token}`, {
-      withCredentials: true,
-    });
-    console.log(data);
-
-    dispatch({
-      type: "loadUserSuccess",
-      payload: data.user,
-    });
+      dispatch({
+        type: "loadUserSuccess",
+        payload: data.user,
+      });
+    }
   } catch (error) {
-    console.log(error.response.data.message);
     dispatch({
       type: "loadUserFail",
       payload: error.response.data.message,
