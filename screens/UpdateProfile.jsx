@@ -26,8 +26,10 @@ const UpdateProfile = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const loading = useMessageAndErrorOther(dispatch, navigation, "profile");
+  console.log(loading);
 
   const submitHandler = () => {
+    console.log("submit");
     dispatch(updateProfile(name, email, address, city, country, pinCode));
   };
   return (

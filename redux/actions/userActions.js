@@ -78,12 +78,14 @@ export const loadUser = () => async (dispatch) => {
     const { data } = await axios.get(`${server}/user/me?token=${token}`, {
       withCredentials: true,
     });
+    console.log("Data loaduser", data);
 
     dispatch({
       type: "loadUserSuccess",
       payload: data.user,
     });
   } catch (error) {
+    console.log(error.response.data.message);
     dispatch({
       type: "loadUserFail",
       payload: error.response.data.message,
@@ -93,10 +95,13 @@ export const loadUser = () => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   try {
+    // save to storage
+    const token = await AsyncStorage.getItem("token");
+
     dispatch({
       type: "logoutRequest",
     });
-    const { data } = await axios.get(`${server}/user/logout`, {
+    const { data } = await axios.get(`${server}/user/logout?token=${token}`, {
       withCredentials: true,
     });
 

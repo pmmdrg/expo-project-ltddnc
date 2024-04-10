@@ -32,6 +32,7 @@ const Main = () => {
 
   useEffect(() => {
     dispatch(loadUser());
+    console.log("load trong dispatch");
   }, [dispatch]);
 
   return (

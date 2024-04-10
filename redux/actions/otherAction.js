@@ -1,15 +1,19 @@
 import axios from "axios";
 import { server } from "../store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const updatePassword =
   (oldPassword, newPassword) => async (dispatch) => {
+    // save to storage
+    const token = await AsyncStorage.getItem("token");
+
     try {
       dispatch({
         type: "updatePasswordRequest",
       });
 
       const { data } = await axios.put(
-        `${server}/user/changepassword`,
+        `${server}/user/changepassword?token=${token}`,
         {
           oldPassword,
           newPassword,
@@ -36,13 +40,15 @@ export const updatePassword =
 
 export const updateProfile =
   (name, email, address, city, country, pinCode) => async (dispatch) => {
+    // save to storage
+    const token = await AsyncStorage.getItem("token");
     try {
       dispatch({
         type: "updateProfileRequest",
       });
 
       const { data } = await axios.put(
-        `${server}/user/updateprofile`,
+        `${server}/user/updateprofile?token=${token}`,
         {
           name,
           email,
@@ -64,6 +70,7 @@ export const updateProfile =
         payload: data.message,
       });
     } catch (error) {
+      console.log(error.response.data);
       dispatch({
         type: "updateProfileFail",
         payload: error.response.data.message,
@@ -73,16 +80,23 @@ export const updateProfile =
 
 export const updatePic = (formData) => async (dispatch) => {
   try {
+    // save to storage
+    const token = await AsyncStorage.getItem("token");
+
     dispatch({
       type: "updatePicRequest",
     });
 
-    const { data } = await axios.put(`${server}/user/updatepic`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      withCredentials: true,
-    });
+    const { data } = await axios.put(
+      `${server}/user/updatepic?token=${token}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
+      }
+    );
 
     dispatch({
       type: "updatePicSuccess",
