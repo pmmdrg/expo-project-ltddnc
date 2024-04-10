@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet } from "react-native";
-import React from "react";
-import { colors } from "../styles/styles";
+import { View, Text, StyleSheet } from 'react-native';
+import React from 'react';
+import { colors } from '../styles/styles';
+import { backgroundColor, textColors } from '../assets/colors/colors';
 
 const ProductListHeading = () => {
   return (
@@ -16,19 +17,19 @@ const ProductListHeading = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.color3,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    backgroundColor: backgroundColor.secondaryBackground,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     height: 40,
-    alignItems: "center",
+    alignItems: 'center',
     borderRadius: 5,
     padding: 10,
   },
 
   text: {
     width: 40,
-    color: colors.color2,
-    fontWeight: "900",
+    color: textColors.primaryText,
+    fontWeight: '900',
   },
 });
 

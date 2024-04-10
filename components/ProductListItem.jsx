@@ -1,7 +1,8 @@
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
-import React, { useState } from "react";
-import { colors } from "../styles/styles";
-import MyModal from "../components/MyModal";
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import React, { useState } from 'react';
+import { colors } from '../styles/styles';
+import MyModal from '../components/MyModal';
+import { backgroundColor, textColors } from '../assets/colors/colors';
 
 const ProductListItem = ({
   navigate,
@@ -21,12 +22,12 @@ const ProductListItem = ({
       <TouchableOpacity
         activeOpacity={0.9}
         onLongPress={() => setOpenModal((prev) => !prev)}
-        onPress={() => navigate.navigate("productdetails", { id })}
+        onPress={() => navigate.navigate('productdetails', { id })}
       >
         <View
           style={{
             ...styles.container,
-            backgroundColor: i % 2 === 0 ? colors.color1 : colors.color3,
+            backgroundColor: backgroundColor.secondaryBackground,
           }}
         >
           <Image
@@ -36,24 +37,24 @@ const ProductListItem = ({
             style={{
               width: 40,
               height: 40,
-              resizeMode: "contain",
+              resizeMode: 'contain',
             }}
           />
 
           <Text
             style={{
               width: 60,
-              color: colors.color2,
+              color: textColors.primaryText,
             }}
             numberOfLines={1}
           >
-            ₹{price}
+            {price} VND
           </Text>
 
           <Text
             style={{
               maxWidth: 120,
-              color: colors.color2,
+              color: textColors.primaryText,
             }}
             numberOfLines={1}
           >
@@ -63,7 +64,7 @@ const ProductListItem = ({
           <Text
             style={{
               width: 60,
-              color: colors.color2,
+              color: textColors.primaryText,
             }}
             numberOfLines={1}
           >
@@ -73,7 +74,7 @@ const ProductListItem = ({
           <Text
             style={{
               width: 40,
-              color: colors.color2,
+              color: textColors.primaryText,
             }}
             numberOfLines={1}
           >
@@ -96,10 +97,10 @@ const ProductListItem = ({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     height: 70,
-    alignItems: "center",
+    alignItems: 'center',
     padding: 10,
     borderRadius: 10,
     marginVertical: 10,

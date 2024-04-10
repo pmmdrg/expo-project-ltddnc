@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   View,
   Text,
@@ -8,85 +8,30 @@ import {
   StyleSheet,
   Image,
   SafeAreaView,
-} from "react-native";
-import { Button } from "react-native-paper";
-import { Toast } from "react-native-toast-message/lib/src/Toast";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+} from 'react-native';
+import { Button } from 'react-native-paper';
+import Toast from 'react-native-toast-message';
 
-import SearchModal from "../components/SearchModal";
-import ProductCard from "../components/ProductCard";
-import Footer from "../components/Footer";
-import HomeSection from "../components/HomeSection";
-import NavigationItem from "../components/NavigationItem";
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 
-import { getAllProducts } from "../redux/actions/productAction";
+import SearchModal from '../components/SearchModal';
+import Footer from '../components/Footer';
+import HomeSection from '../components/HomeSection';
 
-import { useSetCategories } from "../utils/hooks";
+import { getAllProducts } from '../redux/actions/productAction';
+import { useSetCategories } from '../utils/hooks';
 
 import {
   backgroundColor,
   borderColor,
   textColors,
-} from "../assets/colors/colors";
-import { colors } from "../styles/styles";
-
-const data = [
-  {
-    id: 1,
-    name: "Headphone",
-    price: 500000,
-    rate: 4.5,
-    rateCount: 80,
-    image: require("../assets/images/headphone.png"),
-    description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit sed vitae similique ducimus tenetur pariatur eius aspernatur voluptatibus molestiae a atque qui, corporis nam ab, dolore optio impedit aliquid rerum.",
-  },
-  {
-    id: 2,
-    name: "Headphone",
-    price: 500000,
-    rate: 4.5,
-    rateCount: 80,
-    image: require("../assets/images/headphone.png"),
-    description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit sed vitae similique ducimus tenetur pariatur eius aspernatur voluptatibus molestiae a atque qui, corporis nam ab, dolore optio impedit aliquid rerum.",
-  },
-  {
-    id: 3,
-    name: "Headphone",
-    price: 500000,
-    rate: 4.5,
-    rateCount: 80,
-    image: require("../assets/images/headphone.png"),
-    description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit sed vitae similique ducimus tenetur pariatur eius aspernatur voluptatibus molestiae a atque qui, corporis nam ab, dolore optio impedit aliquid rerum.",
-  },
-  {
-    id: 4,
-    name: "Headphone",
-    price: 500000,
-    rate: 4.5,
-    rateCount: 80,
-    image: require("../assets/images/headphone.png"),
-    description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit sed vitae similique ducimus tenetur pariatur eius aspernatur voluptatibus molestiae a atque qui, corporis nam ab, dolore optio impedit aliquid rerum.",
-  },
-  {
-    id: 5,
-    name: "Headphone",
-    price: 500000,
-    rate: 4.5,
-    rateCount: 80,
-    image: require("../assets/images/headphone.png"),
-    description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit sed vitae similique ducimus tenetur pariatur eius aspernatur voluptatibus molestiae a atque qui, corporis nam ab, dolore optio impedit aliquid rerum.",
-  },
-];
+} from '../assets/colors/colors';
+import { colors } from '../styles/styles';
 
 const Home = () => {
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState('');
   const [activeSearch, setActiveSearch] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [categories, setCategories] = useState([]);
 
   const navigate = useNavigation();
@@ -94,32 +39,10 @@ const Home = () => {
   const isFocused = useIsFocused();
 
   const { products } = useSelector((state) => state.product);
+  const { user } = useSelector((state) => state.user);
 
   const categoryButtonHandler = (id) => {
     setCategory(id);
-  };
-
-  const addToCardHandler = (id, name, price, image, stock) => {
-    if (stock === 0)
-      return Toast.show({
-        type: "error",
-        text1: "Out Of Stock",
-      });
-    dispatch({
-      type: "addToCart",
-      payload: {
-        product: id,
-        name,
-        price,
-        image,
-        stock,
-        quantity: 1,
-      },
-    });
-    Toast.show({
-      type: "success",
-      text1: "Added To Cart",
-    });
   };
 
   useSetCategories(setCategories, isFocused);
@@ -149,14 +72,22 @@ const Home = () => {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Shop Tai nghe</Text>
         <Image
-          source={require("../assets/icons/notification.png")}
+          source={require('../assets/icons/notification.png')}
           style={styles.notiIcon}
         />
         <TouchableOpacity
-          onPress={() => navigate.navigate("cart")}
+          onPress={
+            user
+              ? () => navigate.navigate('cart')
+              : () =>
+                  Toast.show({
+                    type: 'error',
+                    text1: 'Vui lòng đăng nhập',
+                  })
+          }
           style={styles.cartIcon}
         >
-          <Image source={require("../assets/icons/cart.png")} />
+          <Image source={require('../assets/icons/cart.png')} />
         </TouchableOpacity>
       </View>
 
@@ -165,14 +96,14 @@ const Home = () => {
         <TouchableOpacity onPress={() => setActiveSearch(true)}>
           <View style={styles.searchContainer}>
             <Text style={styles.input}>Tìm kiếm tên sản phẩm</Text>
-            <Image source={require("../assets/icons/search.png")} />
+            <Image source={require('../assets/icons/search.png')} />
           </View>
         </TouchableOpacity>
 
         {/* Categories */}
         <View
           style={{
-            flexDirection: "row",
+            flexDirection: 'row',
             height: 80,
             paddingHorizontal: 20,
           }}
@@ -180,7 +111,7 @@ const Home = () => {
           <ScrollView
             horizontal
             contentContainerStyle={{
-              alignItems: "center",
+              alignItems: 'center',
             }}
             showsHorizontalScrollIndicator={false}
           >
@@ -198,7 +129,7 @@ const Home = () => {
                 <Text
                   style={{
                     fontSize: 12,
-                    color: category === item._id ? colors.color2 : "gray",
+                    color: category === item._id ? colors.color2 : 'gray',
                   }}
                 >
                   {item.category}
@@ -209,28 +140,10 @@ const Home = () => {
         </View>
 
         {/* Products */}
-        <View style={{ flex: 1 }}>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {products.map((item, index) => (
-              <ProductCard
-                stock={item.stock}
-                name={item.name}
-                price={item.price}
-                image={item.images[0]?.url}
-                addToCardHandler={addToCardHandler}
-                id={item._id}
-                key={item._id}
-                i={index}
-                navigate={navigate}
-              />
-            ))}
-          </ScrollView>
-        </View>
-
-        <HomeSection title="Sản phẩm nổi bật" list={data} />
-        <HomeSection title="Bán chạy nhất" list={data} />
-        <HomeSection title="Hàng mới về" list={data} />
-        <HomeSection title="Ưu đãi đặc biệt" list={data} />
+        <HomeSection title='Sản phẩm nổi bật' list={products} />
+        <HomeSection title='Bán chạy nhất' list={products} />
+        <HomeSection title='Hàng mới về' list={products} />
+        <HomeSection title='Ưu đãi đặc biệt' list={products} />
       </ScrollView>
 
       <Footer />
@@ -240,7 +153,7 @@ const Home = () => {
 
 const styles = StyleSheet.create({
   container: {
-    position: "relative",
+    position: 'relative',
     flex: 1,
     backgroundColor: backgroundColor.primaryBackground,
     paddingTop: 20,
@@ -252,30 +165,30 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginVertical: 30,
     marginHorizontal: 25,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    position: "relative",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    position: 'relative',
   },
   header: {
     height: 55,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     borderBottomColor: borderColor.primaryBorder,
     borderBottomWidth: 1,
-    position: "relative",
+    position: 'relative',
   },
   headerTitle: {
     color: textColors.blueText,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 18,
   },
   notiIcon: {
-    position: "absolute",
+    position: 'absolute',
     right: 70,
   },
   cartIcon: {
-    position: "absolute",
+    position: 'absolute',
     right: 30,
   },
   input: {
@@ -285,8 +198,8 @@ const styles = StyleSheet.create({
   },
   navigation: {
     height: 60,
-    flexDirection: "row",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     borderTopColor: borderColor.primaryBorder,
     borderTopWidth: 1,
   },

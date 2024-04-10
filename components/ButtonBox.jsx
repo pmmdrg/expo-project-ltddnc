@@ -1,7 +1,8 @@
-import { Text, TouchableOpacity } from "react-native";
-import React from "react";
-import { colors } from "../styles/styles";
-import { Avatar } from "react-native-paper";
+import { Text, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { colors } from '../styles/styles';
+import { Avatar } from 'react-native-paper';
+import { backgroundColor, textColors } from '../assets/colors/colors';
 
 const ButtonBox = ({
   icon,
@@ -14,25 +15,25 @@ const ButtonBox = ({
     <TouchableOpacity
       activeOpacity={1}
       style={{
-        backgroundColor: reverse ? colors.color1 : colors.color3,
+        backgroundColor: backgroundColor.secondaryBackground,
         height: 80,
         width: 80,
         borderRadius: 10,
-        alignItems: "center",
+        alignItems: 'center',
       }}
       onPress={() => handler(text)}
       disabled={loading}
     >
       <Avatar.Icon
         size={50}
-        color={colors.color2}
-        style={[{ backgroundColor: reverse ? colors.color1 : colors.color3 }]}
+        color={textColors.primaryText}
+        style={[{ backgroundColor: backgroundColor.secondaryBackground }]}
         icon={icon}
       />
       <Text
         style={{
-          color: colors.color2,
-          textAlign: "center",
+          color: textColors.primaryText,
+          textAlign: 'center',
           fontSize: 12,
         }}
       >

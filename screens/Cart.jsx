@@ -1,13 +1,13 @@
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
-import React from "react";
-import { colors, defaultStyle } from "../styles/styles";
-import Header from "../components/Header";
-import Heading from "../components/Heading";
-import { Button } from "react-native-paper";
-import CartItem from "../components/CartItem";
-import { useNavigation } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";
-import { Toast } from "react-native-toast-message/lib/src/Toast";
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import React from 'react';
+import { colors, defaultStyle } from '../styles/styles';
+import Header from '../components/Header';
+import Heading from '../components/Heading';
+import { Button } from 'react-native-paper';
+import CartItem from '../components/CartItem';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 const Cart = () => {
   const navigate = useNavigation();
@@ -19,11 +19,11 @@ const Cart = () => {
     const newQty = quantity + 1;
     if (stock <= quantity)
       return Toast.show({
-        type: "error",
-        text1: "Maximum value added",
+        type: 'error',
+        text1: 'Maximum value added',
       });
     dispatch({
-      type: "addToCart",
+      type: 'addToCart',
       payload: {
         product: id,
         name,
@@ -38,10 +38,10 @@ const Cart = () => {
   const decrementHandler = (id, name, price, image, stock, quantity) => {
     const newQty = quantity - 1;
 
-    if (1 >= quantity) return dispatch({ type: "removeFromCart", payload: id });
+    if (1 >= quantity) return dispatch({ type: 'removeFromCart', payload: id });
 
     dispatch({
-      type: "addToCart",
+      type: 'addToCart',
       payload: {
         product: id,
         name,
@@ -63,11 +63,14 @@ const Cart = () => {
       <Header back={true} emptyCart={true} />
 
       {/* Heading */}
-      <Heading
-        text1="Shopping"
-        text2="Cart"
-        containerStyle={{ paddingTop: 30, marginLeft: 20 }}
-      />
+      <Text
+        style={{
+          fontSize: 24,
+          paddingHorizontal: 20,
+        }}
+      >
+        Giỏ hàng
+      </Text>
 
       <View
         style={{
@@ -93,8 +96,8 @@ const Cart = () => {
               />
             ))
           ) : (
-            <Text style={{ textAlign: "center", fontSize: 18 }}>
-              No Items Yet
+            <Text style={{ textAlign: 'center', fontSize: 18 }}>
+              Chưa có sản phẩm trong giỏ hàng
             </Text>
           )}
         </ScrollView>
@@ -102,24 +105,24 @@ const Cart = () => {
 
       <View
         style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
+          flexDirection: 'row',
+          justifyContent: 'space-between',
           paddingHorizontal: 20,
         }}
       >
-        <Text>{cartItems.length} Items</Text>
+        <Text>{cartItems.length} sản phẩm</Text>
         <Text>
-          ₹
           {cartItems.reduce(
             (prev, curr) => prev + curr.quantity * curr.price,
             0
           )}
+          VND
         </Text>
       </View>
 
       <TouchableOpacity
         onPress={
-          cartItems.length > 0 ? () => navigate.navigate("confirmorder") : null
+          cartItems.length > 0 ? () => navigate.navigate('confirmorder') : null
         }
       >
         <Button
@@ -130,10 +133,10 @@ const Cart = () => {
             marginVertical: 30,
             marginHorizontal: 20,
           }}
-          icon={"cart"}
+          icon={'cart'}
           textColor={colors.color2}
         >
-          Checkout
+          Thanh toán
         </Button>
       </TouchableOpacity>
     </View>

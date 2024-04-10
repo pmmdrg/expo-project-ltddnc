@@ -126,7 +126,7 @@ const SearchItem = ({ price, name, imgSrc, handler }) => (
             fontWeight: '900',
           }}
         >
-          ₹{price}
+          {price} VND
         </Headline>
       </View>
     </View>

@@ -1,17 +1,18 @@
-import { View, Text, ScrollView } from "react-native";
-import React from "react";
-import { colors, defaultStyle, formHeading } from "../../styles/styles";
-import Header from "../../components/Header";
-import Loader from "../../components/Loader";
-import ButtonBox from "../../components/ButtonBox";
-import ProductListHeading from "../../components/ProductListHeading";
-import ProductListItem from "../../components/ProductListItem";
-import Chart from "../../components/Chart";
-import { useAdminProducts, useMessageAndErrorOther } from "../../utils/hooks";
-import { useDispatch } from "react-redux";
-import { useIsFocused } from "@react-navigation/native";
-import { deleteProduct } from "../../redux/actions/otherAction";
-import { getAdminProducts } from "../../redux/actions/productAction";
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import React from 'react';
+import { colors, defaultStyle, formHeading } from '../../styles/styles';
+import Header from '../../components/Header';
+import Loader from '../../components/Loader';
+import ButtonBox from '../../components/ButtonBox';
+import ProductListHeading from '../../components/ProductListHeading';
+import ProductListItem from '../../components/ProductListItem';
+import Chart from '../../components/Chart';
+import { useAdminProducts, useMessageAndErrorOther } from '../../utils/hooks';
+import { useDispatch } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
+import { deleteProduct } from '../../redux/actions/otherAction';
+import { getAdminProducts } from '../../redux/actions/productAction';
+import { backgroundColor } from '../../assets/colors/colors';
 
 const AdminPanel = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -24,18 +25,18 @@ const AdminPanel = ({ navigation }) => {
 
   const navigationHandler = (text) => {
     switch (text) {
-      case "Category":
-        navigation.navigate("categories");
+      case 'Category':
+        navigation.navigate('categories');
         break;
-      case "All Orders":
-        navigation.navigate("adminorders");
+      case 'All Orders':
+        navigation.navigate('adminorders');
         break;
-      case "Product":
-        navigation.navigate("newproduct");
+      case 'Product':
+        navigation.navigate('newproduct');
         break;
 
       default:
-        navigation.navigate("adminorders");
+        navigation.navigate('adminorders');
         break;
     }
   };
@@ -52,7 +53,7 @@ const AdminPanel = ({ navigation }) => {
   );
 
   return (
-    <View style={defaultStyle}>
+    <View style={[defaultStyle, styles.container]}>
       <Header back={true} />
       {/* Heading */}
       <View style={{ paddingTop: 70, marginBottom: 20 }}>
@@ -65,9 +66,9 @@ const AdminPanel = ({ navigation }) => {
         <>
           <View
             style={{
-              backgroundColor: colors.color3,
+              backgroundColor: backgroundColor.secondaryBackground,
               borderRadius: 20,
-              alignItems: "center",
+              alignItems: 'center',
             }}
           >
             <Chart inStock={inStock} outOfStock={outOfStock} />
@@ -76,26 +77,26 @@ const AdminPanel = ({ navigation }) => {
           <View>
             <View
               style={{
-                flexDirection: "row",
+                flexDirection: 'row',
                 margin: 10,
-                justifyContent: "space-between",
+                justifyContent: 'space-between',
               }}
             >
               <ButtonBox
-                icon={"plus"}
-                text={"Product"}
+                icon={'plus'}
+                text={'Sản phẩm'}
                 handler={navigationHandler}
               />
 
               <ButtonBox
-                icon={"format-list-bulleted-square"}
-                text={"All Orders"}
+                icon={'format-list-bulleted-square'}
+                text={'Đơn hàng'}
                 handler={navigationHandler}
                 reverse={true}
               />
               <ButtonBox
-                icon={"plus"}
-                text={"Category"}
+                icon={'plus'}
+                text={'Danh mục'}
                 handler={navigationHandler}
               />
             </View>
@@ -127,5 +128,11 @@ const AdminPanel = ({ navigation }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 10,
+  },
+});
 
 export default AdminPanel;

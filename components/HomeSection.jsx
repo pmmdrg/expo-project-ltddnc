@@ -8,11 +8,37 @@ import {
 } from 'react-native';
 
 import { textColors } from '../assets/colors/colors';
-import Product from './Product';
+import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import ProductCard from './ProductCard';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 const HomeSection = ({ title, list }) => {
   const navigate = useNavigation();
+  const dispatch = useDispatch();
+
+  const addToCardHandler = (id, name, price, image, stock) => {
+    if (stock === 0)
+      return Toast.show({
+        type: 'error',
+        text1: 'Out Of Stock',
+      });
+    dispatch({
+      type: 'addToCart',
+      payload: {
+        product: id,
+        name,
+        price,
+        image,
+        stock,
+        quantity: 1,
+      },
+    });
+    Toast.show({
+      type: 'success',
+      text1: 'Added To Cart',
+    });
+  };
 
   return (
     <View>
@@ -27,48 +53,20 @@ const HomeSection = ({ title, list }) => {
         showsHorizontalScrollIndicator={false}
         style={styles.listItem}
       >
-        {list.map((item) => (
-          // <ProductCard
-          //   stock={item.stock}
-          //   name={item.name}
-          //   price={item.price}
-          //   image={item.images[0]?.url}
-          //   addToCardHandler={addToCardHandler}
-          //   id={item._id}
-          //   key={item._id}
-          //   i={index}
-          //   navigate={navigate}
-          // />
-          <Product
-            key={item.id}
-            id={item.id}
+        {list.map((item, index) => (
+          <ProductCard
+            stock={item.stock}
             name={item.name}
             price={item.price}
-            rate={item.rate}
-            rateCount={item.rateCount}
-            image={item.image}
+            image={item.images[0]?.url}
+            addToCardHandler={addToCardHandler}
+            id={item._id}
+            key={item._id}
+            i={index}
             navigate={navigate}
           />
         ))}
       </ScrollView>
-      {/* <FlatList
-        data={list}
-        renderItem={({ item }) => {
-          return (
-            <Product
-              name={item.name}
-              price={item.price}
-              rate={item.rate}
-              rateCount={item.rateCount}
-            />
-          );
-        }}
-        keyExtractor={(item) => item.id}
-        ItemSeparatorComponent={() => <View style={{ width: 15 }} />}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.listItem}
-      /> */}
     </View>
   );
 };

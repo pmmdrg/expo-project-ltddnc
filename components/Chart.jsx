@@ -1,23 +1,24 @@
-import { View, Dimensions } from "react-native";
-import React from "react";
-import { PieChart } from "react-native-chart-kit";
-import { colors } from "../styles/styles";
+import { View, Dimensions } from 'react-native';
+import React from 'react';
+import { PieChart } from 'react-native-chart-kit';
+import { colors } from '../styles/styles';
+import { backgroundColor, textColors } from '../assets/colors/colors';
 
-const screenWidth = Dimensions.get("screen").width - 60 - 75;
+const screenWidth = Dimensions.get('screen').width - 60 - 75;
 
 const Chart = ({ inStock = 0, outOfStock = 0 }) => {
   const data = [
     {
-      name: "Out of Stock",
+      name: 'Out of Stock',
       population: outOfStock,
       color: colors.color1_light,
-      legendFontColor: colors.color2,
+      legendFontColor: textColors.primaryText,
     },
     {
-      name: "In Stock",
+      name: 'In Stock',
       population: inStock,
       color: colors.color1_light2,
-      legendFontColor: colors.color2,
+      legendFontColor: textColors.primaryText,
     },
   ];
 
@@ -32,8 +33,8 @@ const Chart = ({ inStock = 0, outOfStock = 0 }) => {
         width={screenWidth}
         height={150}
         chartConfig={chartConfig}
-        accessor={"population"}
-        backgroundColor={colors.color3}
+        accessor={'population'}
+        backgroundColor={backgroundColor.transparentBackground}
         absolute
       />
     </View>

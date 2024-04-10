@@ -1,7 +1,13 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import React from 'react';
-import { colors } from '../styles/styles';
+import Toast from 'react-native-toast-message';
 import { Button } from 'react-native-paper';
+import {
+  backgroundColor,
+  buttonColors,
+  textColors,
+} from '../assets/colors/colors';
+import { useSelector } from 'react-redux';
 
 const ProductCard = ({
   stock,
@@ -13,89 +19,80 @@ const ProductCard = ({
   i,
   navigate,
 }) => {
+  const { user } = useSelector((state) => state.user);
+
   return (
     <TouchableOpacity
       activeOpacity={1}
+      style={styles.prod}
       onPress={() => navigate.navigate('productdetails', { id })}
     >
-      <View
-        style={{
-          elevation: 15,
-          width: 250,
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          margin: 20,
-          borderRadius: 20,
-          height: 400,
-          backgroundColor: i % 2 === 0 ? colors.color1 : colors.color2,
-        }}
-      >
+      <View style={styles.container}>
         <Image
           source={{
             uri: image,
           }}
-          style={{
-            width: '100%',
-            height: 200,
-            resizeMode: 'contain',
-            position: 'absolute',
-            left: 50,
-            top: 105,
-          }}
+          style={styles.prodImage}
         />
-
-        <View
-          style={{
-            flexDirection: 'row',
-            padding: 20,
-            justifyContent: 'space-between',
-            width: '100%',
-          }}
-        >
-          <Text
-            numberOfLines={2}
-            style={{
-              color: i % 2 === 0 ? colors.color2 : colors.color3,
-              fontSize: 25,
-              fontWeight: '300',
-              width: '60%',
-            }}
-          >
+        <View style={styles.prodInfo}>
+          <Text numberOfLines={2} style={styles.prodName}>
             {name}
           </Text>
-
-          <Text
-            numberOfLines={2}
-            style={{
-              color: i % 2 === 0 ? colors.color2 : colors.color3,
-              fontSize: 20,
-              fontWeight: '700',
-            }}
-          >
-            {price} VND
-          </Text>
+          <Text style={styles.prodPrice}>{price} VND</Text>
         </View>
-
         <TouchableOpacity
           style={{
-            backgroundColor: i % 2 === 0 ? colors.color2 : colors.color3,
-            borderRadius: 0,
+            backgroundColor: buttonColors.primaryButton,
             paddingVertical: 5,
-            borderBottomRightRadius: 20,
-            borderBottomLeftRadius: 20,
             width: '100%',
+            marginTop: 15,
+            borderBottomLeftRadius: 10,
+            borderBottomRightRadius: 10,
           }}
         >
           <Button
-            onPress={() => addToCardHandler(id, name, price, image, stock)}
-            textColor={i % 2 === 0 ? colors.color1 : colors.color2}
+            onPress={
+              user
+                ? () => addToCardHandler(id, name, price, image, stock)
+                : () =>
+                    Toast.show({
+                      type: 'error',
+                      text1: 'Vui lòng đăng nhập',
+                    })
+            }
+            textColor={textColors.whiteText}
           >
-            Add To Cart
+            Thêm Vào Giỏ Hàng
           </Button>
         </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  prod: {
+    paddingHorizontal: 10,
+  },
+  container: {
+    width: 160,
+    alignItems: 'center',
+    backgroundColor: backgroundColor.secondaryBackground,
+    borderRadius: 10,
+    paddingTop: 15,
+  },
+  prodInfo: { width: 130, marginTop: 20 },
+  prodImage: {
+    width: 130,
+    height: 130,
+  },
+  prodName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: textColors.primaryText,
+    marginBottom: 4,
+  },
+  prodPrice: { fontSize: 14, fontWeight: 'bold', color: textColors.redText },
+});
 
 export default ProductCard;
