@@ -103,6 +103,9 @@ export const logout = () => async (dispatch) => {
     // save to storage
     const token = await AsyncStorage.getItem("token");
 
+    // remove item
+    if (token) await AsyncStorage.removeItem("token");
+
     dispatch({
       type: "logoutRequest",
     });
