@@ -66,7 +66,7 @@ const Cart = () => {
       <Heading
         text1="Shopping"
         text2="Cart"
-        containerStyle={{ paddingTop: 90, marginLeft: 20 }}
+        containerStyle={{ paddingTop: 30, marginLeft: 20 }}
       />
 
       <View

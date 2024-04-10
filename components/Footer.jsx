@@ -2,11 +2,19 @@ import { View, TouchableOpacity } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../styles/styles";
-import { Avatar } from "react-native-paper";
 import { useSelector } from "react-redux";
+
+import {
+  backgroundColor,
+  borderColor,
+  textColors,
+} from "../assets/colors/colors";
+
+import NavigationItem from "./NavigationItem";
 
 const Footer = ({ activeRoute = "home" }) => {
   const navigate = useNavigation();
+  const { user } = useSelector((state) => state.user);
 
   const { loading, isAuthenticated } = useSelector((state) => state.user);
 
@@ -40,78 +48,50 @@ const Footer = ({ activeRoute = "home" }) => {
     loading === false && (
       <View
         style={{
-          backgroundColor: colors.color1,
-          borderTopRightRadius: 120,
-          borderTopLeftRadius: 120,
-          position: "absolute",
-          width: "100%",
-          bottom: 0,
+          height: 60,
+          flexDirection: "row",
+          justifyContent: "space-around",
+          borderTopColor: borderColor.primaryBorder,
+          borderTopWidth: 1,
         }}
       >
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-evenly",
+        <NavigationItem
+          iconSrc={require("../assets/icons/home.png")}
+          title="TRANG CHỦ"
+          onPress={() => {
+            navigate.navigate("home");
           }}
-        >
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => navigatationHandler(1)}
-          >
-            <Avatar.Icon
-              {...avatarOptions}
-              icon={activeRoute === "cart" ? "shopping" : "shopping-outline"}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => navigatationHandler(2)}
-          >
-            <Avatar.Icon
-              {...avatarOptions}
-              icon={
-                isAuthenticated === false
-                  ? "login"
-                  : activeRoute === "profile"
-                  ? "account"
-                  : "account-outline"
-              }
-            />
-          </TouchableOpacity>
-        </View>
-
-        <View
-          style={{
-            position: "absolute",
-            width: 80,
-            height: 80,
-            backgroundColor: colors.color2,
-            borderRadius: 100,
-            justifyContent: "center",
-            alignItems: "center",
-            top: -50,
-            alignSelf: "center",
+        />
+        <NavigationItem
+          iconSrc={require("../assets/icons/heart.png")}
+          title="YÊU THÍCH"
+          onPress={() => {}}
+        />
+        <NavigationItem
+          iconSrc={require("../assets/icons/bag.png")}
+          title="ĐƠN HÀNG"
+          onPress={() => {
+            navigate.navigate("cart");
           }}
-        >
-          <View
-            style={{
-              borderRadius: 100,
-              justifyContent: "center",
-              alignItems: "center",
+        />
+        {!user && (
+          <NavigationItem
+            iconSrc={require("../assets/icons/profile.png")}
+            title="ĐĂNG NHẬP"
+            onPress={() => {
+              navigate.navigate("login");
             }}
-          >
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => navigatationHandler(0)}
-            >
-              <Avatar.Icon
-                {...avatarOptions}
-                icon={activeRoute === "home" ? "home" : "home-outline"}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
+          />
+        )}
+        {user && (
+          <NavigationItem
+            iconSrc={require("../assets/icons/profile.png")}
+            title="PROFILE"
+            onPress={() => {
+              navigate.navigate("profile");
+            }}
+          />
+        )}
       </View>
     )
   );
