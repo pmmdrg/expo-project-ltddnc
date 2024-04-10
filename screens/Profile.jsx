@@ -4,27 +4,27 @@ import {
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
-} from "react-native";
-import React, { useEffect, useState } from "react";
+} from 'react-native';
+import React, { useEffect, useState } from 'react';
 import {
   colors,
   defaultImg,
   defaultStyle,
   formHeading,
-} from "../styles/styles";
-import { Avatar, Button } from "react-native-paper";
-import ButtonBox from "../components/ButtonBox";
-import Footer from "../components/Footer";
-import Loader from "../components/Loader";
-import { useDispatch, useSelector } from "react-redux";
-import { loadUser, logout } from "../redux/actions/userActions";
+} from '../styles/styles';
+import { Avatar, Button } from 'react-native-paper';
+import ButtonBox from '../components/ButtonBox';
+import Footer from '../components/Footer';
+import Loader from '../components/Loader';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadUser, logout } from '../redux/actions/userActions';
 import {
   useMessageAndErrorOther,
   useMessageAndErrorUser,
-} from "../utils/hooks";
-import { useIsFocused } from "@react-navigation/native";
-import mime from "mime";
-import { updatePic } from "../redux/actions/otherAction";
+} from '../utils/hooks';
+import { useIsFocused } from '@react-navigation/native';
+import mime from 'mime';
+import { updatePic } from '../redux/actions/otherAction';
 
 const Profile = ({ navigation, route }) => {
   const { user } = useSelector((state) => state.user);
@@ -33,7 +33,7 @@ const Profile = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
-  const loading = useMessageAndErrorUser(navigation, dispatch, "login");
+  const loading = useMessageAndErrorUser(navigation, dispatch, 'login');
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -41,25 +41,25 @@ const Profile = ({ navigation, route }) => {
 
   const navigateHandler = (text) => {
     switch (text) {
-      case "Admin":
-        navigation.navigate("adminpanel");
+      case 'Admin':
+        navigation.navigate('adminpanel');
         break;
-      case "Orders":
-        navigation.navigate("orders");
+      case 'Orders':
+        navigation.navigate('orders');
         break;
-      case "Profile":
-        navigation.navigate("updateprofile");
+      case 'Profile':
+        navigation.navigate('updateprofile');
         break;
-      case "Password":
-        navigation.navigate("changepassword");
+      case 'Password':
+        navigation.navigate('changepassword');
         break;
-      case "Sign Out":
+      case 'Sign Out':
         logoutHandler();
         break;
 
       default:
-      case "Orders":
-        navigation.navigate("orders");
+      case 'Orders':
+        navigation.navigate('orders');
         break;
     }
   };
@@ -71,10 +71,10 @@ const Profile = ({ navigation, route }) => {
       setAvatar(route.params.image);
       // dispatch updatePic Here
       const myForm = new FormData();
-      myForm.append("file", {
+      myForm.append('file', {
         uri: route.params.image,
         type: mime.getType(route.params.image),
-        name: route.params.image.split("/").pop(),
+        name: route.params.image.split('/').pop(),
       });
       dispatch(updatePic(myForm));
     }
@@ -107,7 +107,7 @@ const Profile = ({ navigation, route }) => {
               <TouchableOpacity
                 disabled={loadingPic}
                 onPress={() =>
-                  navigation.navigate("camera", { updateProfile: true })
+                  navigation.navigate('camera', { updateProfile: true })
                 }
               >
                 <Button
@@ -122,7 +122,7 @@ const Profile = ({ navigation, route }) => {
               <Text style={styles.name}>{user?.name}</Text>
               <Text
                 style={{
-                  fontWeight: "300",
+                  fontWeight: '300',
                   color: colors.color2,
                 }}
               >
@@ -133,47 +133,52 @@ const Profile = ({ navigation, route }) => {
             <View>
               <View
                 style={{
-                  flexDirection: "row",
+                  flexDirection: 'row',
                   margin: 10,
-                  justifyContent: "space-between",
+                  justifyContent: 'space-between',
                 }}
               >
                 <ButtonBox
                   handler={navigateHandler}
-                  text={"Orders"}
-                  icon={"format-list-bulleted-square"}
+                  handlerText={'Orders'}
+                  displayText={'Đơn hàng'}
+                  icon={'format-list-bulleted-square'}
                 />
-                {user?.role === "admin" && (
+                {user?.role === 'admin' && (
                   <ButtonBox
                     handler={navigateHandler}
-                    icon={"view-dashboard"}
-                    text={"Admin"}
+                    icon={'view-dashboard'}
+                    handlerText={'Admin'}
+                    displayText={'Admin'}
                     reverse={true}
                   />
                 )}
                 <ButtonBox
                   handler={navigateHandler}
-                  text={"Profile"}
-                  icon={"pencil"}
+                  handlerText={'Profile'}
+                  displayText={'Hồ sơ'}
+                  icon={'pencil'}
                 />
               </View>
 
               <View
                 style={{
-                  flexDirection: "row",
+                  flexDirection: 'row',
                   margin: 10,
-                  justifyContent: "space-evenly",
+                  justifyContent: 'space-evenly',
                 }}
               >
                 <ButtonBox
                   handler={navigateHandler}
-                  text={"Password"}
-                  icon={"pencil"}
+                  handlerText={'Password'}
+                  displayText={'Quên mật khẩu'}
+                  icon={'pencil'}
                 />
                 <ButtonBox
                   handler={navigateHandler}
-                  text={"Sign Out"}
-                  icon={"exit-to-app"}
+                  handlerText={'Sign Out'}
+                  displayText={'Đăng xuất'}
+                  icon={'exit-to-app'}
                 />
               </View>
             </View>
@@ -192,11 +197,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.color3,
     padding: 30,
     borderRadius: 10,
-    alignItems: "center",
+    alignItems: 'center',
   },
   name: {
     fontSize: 20,
-    fontWeight: "500",
+    fontWeight: '500',
     marginVertical: 10,
     color: colors.color2,
   },

@@ -84,19 +84,22 @@ const AdminPanel = ({ navigation }) => {
             >
               <ButtonBox
                 icon={'plus'}
-                text={'Sản phẩm'}
+                displayText={'Sản phẩm'}
+                handlerText={'Product'}
                 handler={navigationHandler}
               />
 
               <ButtonBox
                 icon={'format-list-bulleted-square'}
-                text={'Đơn hàng'}
+                displayText={'Đơn hàng'}
+                handlerText={'All Orders'}
                 handler={navigationHandler}
                 reverse={true}
               />
               <ButtonBox
                 icon={'plus'}
-                text={'Danh mục'}
+                displayText={'Danh mục'}
+                handlerText={'Category'}
                 handler={navigationHandler}
               />
             </View>

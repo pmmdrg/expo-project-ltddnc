@@ -82,16 +82,6 @@ const Footer = ({ activeRoute = 'home' }) => {
           title={!isAuthenticated ? 'ĐĂNG NHẬP' : 'HỒ SƠ'}
           onPress={() => navigationHandler(2)}
         />
-        {/* )} */}
-        {/* {user && (
-          <NavigationItem
-            iconSrc={require('../assets/icons/profile.png')}
-            title='PROFILE'
-            onPress={() => {
-              navigate.navigate('profile');
-            }}
-          />
-        )} */}
       </View>
     )
   );

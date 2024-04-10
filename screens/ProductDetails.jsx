@@ -9,7 +9,6 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 import { colors, defaultStyle } from '../styles/styles';
 import Header from '../components/Header';
-import Carousel from 'react-native-snap-carousel';
 import { Avatar, Button } from 'react-native-paper';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,24 +28,10 @@ export const iconOptions = {
   },
 };
 
-const products = {
-  product: {
-    id: 1,
-    name: 'Headphone',
-    price: 500000,
-    stock: 0,
-    rate: 4.5,
-    rateCount: 80,
-    images: require('../assets/images/headphone.png'),
-    description:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit sed vitae similique ducimus tenetur pariatur eius aspernatur voluptatibus molestiae a atque qui, corporis nam ab, dolore optio impedit aliquid rerum.',
-  },
-};
-
 const ProductDetails = ({ route: { params } }) => {
   const {
     product: { name, price, stock, description, images },
-  } = useSelector((state) => state.product); // products;
+  } = useSelector((state) => state.product);
 
   const isCarousel = useRef(null);
   const [quantity, setQuantity] = useState(1);
@@ -103,15 +88,6 @@ const ProductDetails = ({ route: { params } }) => {
     >
       <Header back={true} />
 
-      {/* Carousel */}
-      {/* <Carousel
-        layout='stack'
-        sliderWidth={SLIDER_WIDTH}
-        itemWidth={ITEM_WIDTH}
-        ref={isCarousel}
-        data={images}
-        renderItem={CarouselCardItem}
-      /> */}
       <View
         style={{
           justifyContent: 'center',
@@ -119,7 +95,7 @@ const ProductDetails = ({ route: { params } }) => {
         }}
       >
         <Image
-          source={images}
+          source={{ uri: images[0]?.url }}
           style={{ width: 300, height: 300, marginTop: 40 }}
         />
       </View>
@@ -129,7 +105,6 @@ const ProductDetails = ({ route: { params } }) => {
           backgroundColor: colors.color2,
           padding: 35,
           flex: 1,
-          // marginTop: -380,
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
         }}

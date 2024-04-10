@@ -7,7 +7,8 @@ import {
   buttonColors,
   textColors,
 } from '../assets/colors/colors';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProductDetails } from '../redux/actions/productAction';
 
 const ProductCard = ({
   stock,
@@ -25,7 +26,9 @@ const ProductCard = ({
     <TouchableOpacity
       activeOpacity={1}
       style={styles.prod}
-      onPress={() => navigate.navigate('productdetails', { id })}
+      onPress={() => {
+        navigate.navigate('productdetails', { id });
+      }}
     >
       <View style={styles.container}>
         <Image
@@ -48,6 +51,8 @@ const ProductCard = ({
             marginTop: 15,
             borderBottomLeftRadius: 10,
             borderBottomRightRadius: 10,
+            position: 'absolute',
+            bottom: 0,
           }}
         >
           <Button
@@ -73,13 +78,17 @@ const ProductCard = ({
 const styles = StyleSheet.create({
   prod: {
     paddingHorizontal: 10,
+    height: 300,
   },
   container: {
     width: 160,
+    height: '100%',
+    maxHeight: 300,
     alignItems: 'center',
     backgroundColor: backgroundColor.secondaryBackground,
     borderRadius: 10,
     paddingTop: 15,
+    position: 'relative',
   },
   prodInfo: { width: 130, marginTop: 20 },
   prodImage: {

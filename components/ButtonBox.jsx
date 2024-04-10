@@ -6,7 +6,8 @@ import { backgroundColor, textColors } from '../assets/colors/colors';
 
 const ButtonBox = ({
   icon,
-  text,
+  displayText,
+  handlerText,
   handler,
   reverse = false,
   loading = false,
@@ -21,7 +22,7 @@ const ButtonBox = ({
         borderRadius: 10,
         alignItems: 'center',
       }}
-      onPress={() => handler(text)}
+      onPress={() => handler(handlerText)}
       disabled={loading}
     >
       <Avatar.Icon
@@ -37,7 +38,7 @@ const ButtonBox = ({
           fontSize: 12,
         }}
       >
-        {text}
+        {displayText}
       </Text>
     </TouchableOpacity>
   );
