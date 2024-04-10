@@ -12,6 +12,7 @@ import { Toast } from "react-native-toast-message/lib/src/Toast";
 import axios from "axios";
 import { server } from "../redux/store";
 import Loader from "../components/Loader";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Payment = ({ navigation, route }) => {
   const [paymentMethod, setPaymentMethod] = useState("COD");
@@ -53,11 +54,14 @@ const Payment = ({ navigation, route }) => {
     );
   };
   const onlineHandler = async () => {
+    // save to storage
+    const token = await AsyncStorage.getItem("token");
+
     try {
       const {
         data: { client_secret },
       } = await axios.post(
-        `${server}/order/payment`,
+        `${server}/order/payment?token=${token}`,
         {
           totalAmount: route.params.totalAmount,
         },

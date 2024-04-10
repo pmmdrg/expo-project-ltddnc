@@ -122,13 +122,15 @@ export const placeOrder =
     paymentInfo
   ) =>
   async (dispatch) => {
+    // save to storage
+    const token = await AsyncStorage.getItem("token");
     try {
       dispatch({
         type: "placeOrderRequest",
       });
 
       const { data } = await axios.post(
-        `${server}/order/new`,
+        `${server}/order/new?token=${token}`,
         {
           shippingInfo,
           orderItems,
@@ -159,13 +161,16 @@ export const placeOrder =
   };
 
 export const processOrder = (id) => async (dispatch) => {
+  // save to storage
+  const token = await AsyncStorage.getItem("token");
+
   try {
     dispatch({
       type: "processOrderRequest",
     });
 
     const { data } = await axios.put(
-      `${server}/order/single/${id}`,
+      `${server}/order/single/${id}?token=${token}`,
 
       {},
       {
@@ -185,13 +190,16 @@ export const processOrder = (id) => async (dispatch) => {
 };
 
 export const addCategory = (category) => async (dispatch) => {
+  // save to storage
+  const token = await AsyncStorage.getItem("token");
+
   try {
     dispatch({
       type: "addCategoryRequest",
     });
 
     const { data } = await axios.post(
-      `${server}/product/category`,
+      `${server}/product/category?token=${token}`,
 
       {
         category,
@@ -216,13 +224,16 @@ export const addCategory = (category) => async (dispatch) => {
 };
 
 export const deleteCategory = (id) => async (dispatch) => {
+  // save to storage
+  const token = await AsyncStorage.getItem("token");
+
   try {
     dispatch({
       type: "deleteCategoryRequest",
     });
 
     const { data } = await axios.delete(
-      `${server}/product/category/${id}`,
+      `${server}/product/category/${id}?token=${token}`,
 
       {
         withCredentials: true,
@@ -241,17 +252,24 @@ export const deleteCategory = (id) => async (dispatch) => {
 };
 
 export const createProduct = (formData) => async (dispatch) => {
+  // save to storage
+  const token = await AsyncStorage.getItem("token");
+
   try {
     dispatch({
       type: "addProductRequest",
     });
 
-    const { data } = await axios.post(`${server}/product/new`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      withCredentials: true,
-    });
+    const { data } = await axios.post(
+      `${server}/product/new?token=${token}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
+      }
+    );
 
     dispatch({
       type: "addProductSuccess",
@@ -267,12 +285,15 @@ export const createProduct = (formData) => async (dispatch) => {
 
 export const updateProduct =
   (id, name, description, price, stock, category) => async (dispatch) => {
+    // save to storage
+    const token = await AsyncStorage.getItem("token");
+
     try {
       dispatch({
         type: "updateProductRequest",
       });
       const { data } = await axios.put(
-        `${server}/product/single/${id}`,
+        `${server}/product/single/${id}?token=${token}`,
         {
           name,
           description,
@@ -301,13 +322,16 @@ export const updateProduct =
   };
 
 export const updateProductImage = (productId, formData) => async (dispatch) => {
+  // save to storage
+  const token = await AsyncStorage.getItem("token");
+
   try {
     dispatch({
       type: "updateProductImageRequest",
     });
 
     const { data } = await axios.post(
-      `${server}/product/images/${productId}`,
+      `${server}/product/images/${productId}?token=${token}`,
       formData,
       {
         headers: {
@@ -330,13 +354,16 @@ export const updateProductImage = (productId, formData) => async (dispatch) => {
 };
 
 export const deleteProductImage = (productId, imageId) => async (dispatch) => {
+  // save to storage
+  const token = await AsyncStorage.getItem("token");
+
   try {
     dispatch({
       type: "deleteProductImageRequest",
     });
 
     const { data } = await axios.delete(
-      `${server}/product/images/${productId}?id=${imageId}`,
+      `${server}/product/images/${productId}?id=${imageId}&token=${token}`,
       {
         withCredentials: true,
       }
@@ -355,13 +382,16 @@ export const deleteProductImage = (productId, imageId) => async (dispatch) => {
 };
 
 export const deleteProduct = (productId) => async (dispatch) => {
+  // save to storage
+  const token = await AsyncStorage.getItem("token");
+
   try {
     dispatch({
       type: "deleteProductRequest",
     });
 
     const { data } = await axios.delete(
-      `${server}/product/single/${productId}`,
+      `${server}/product/single/${productId}?token=${token}`,
       {
         withCredentials: true,
       }

@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { loadUser } from "../redux/actions/userActions";
 import { server } from "../redux/store";
 import { getAdminProducts } from "../redux/actions/productAction";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const useMessageAndErrorUser = (
   navigation,
@@ -105,20 +106,27 @@ export const useGetOrders = (isFocused, isAdmin = false) => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`${server}/order/${isAdmin ? "admin" : "my"}`)
-      .then((res) => {
-        setOrders(res.data.orders);
-        setLoading(false);
-      })
-      .catch((e) => {
-        Toast.show({
-          type: "error",
-          text1: e.response.data.message,
+    const init = async () => {
+      // save to storage
+      const token = await AsyncStorage.getItem("token");
+
+      setLoading(true);
+      axios
+        .get(`${server}/order/${isAdmin ? "admin" : "my"}?token=${token}`)
+        .then((res) => {
+          setOrders(res.data.orders);
+          setLoading(false);
+        })
+        .catch((e) => {
+          Toast.show({
+            type: "error",
+            text1: e.response.data.message,
+          });
+          setLoading(false);
         });
-        setLoading(false);
-      });
+    };
+
+    init();
   }, [isFocused]);
 
   return {
