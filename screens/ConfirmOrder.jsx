@@ -20,7 +20,7 @@ const ConfirmOrder = () => {
   const [tax] = useState(Number((0.18 * itemsPrice).toFixed()));
   const [totalAmount] = useState(itemsPrice + shippingCharges + tax);
   return (
-    <View style={defaultStyle}>
+    <View style={[defaultStyle, { paddingHorizontal: 10 }]}>
       <Header back={true} />
       {/* Heading */}
       <Heading
@@ -91,7 +91,7 @@ const PriceTag = ({ heading, value }) => (
     }}
   >
     <Text style={{ fontWeight: "800" }}>{heading}</Text>
-    <Text>₹{value}</Text>
+    <Text>{value} VND</Text>
   </View>
 );
 

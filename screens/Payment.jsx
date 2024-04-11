@@ -13,6 +13,7 @@ import axios from "axios";
 import { server } from "../redux/store";
 import Loader from "../components/Loader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { backgroundColor } from "../assets/colors/colors";
 
 const Payment = ({ navigation, route }) => {
   const [paymentMethod, setPaymentMethod] = useState("COD");
@@ -117,30 +118,41 @@ const Payment = ({ navigation, route }) => {
   return loaderLoading ? (
     <Loader />
   ) : (
-    <View style={defaultStyle}>
+    <View style={[defaultStyle]}>
       <Header back={true} />
       <Heading
         containerStyle={{
           paddingTop: 70,
+          paddingHorizontal: 15,
         }}
         text1="Payment"
         text2="Method"
       />
 
-      <View style={styles.container}>
-        <RadioButton.Group
-          onValueChange={setPaymentMethod}
-          value={paymentMethod}
-        >
-          <View style={styles.radioStyle}>
-            <Text style={styles.radioStyleText}>Cash On Delivery</Text>
-            <RadioButton color={colors.color1} value={"COD"} />
-          </View>
-          <View style={styles.radioStyle}>
-            <Text style={styles.radioStyleText}>ONLINE</Text>
-            <RadioButton color={colors.color1} value={"ONLINE"} />
-          </View>
-        </RadioButton.Group>
+      <View style={{ paddingHorizontal: 15, flex: 1 }}>
+        <View style={styles.container}>
+          <RadioButton.Group
+            onValueChange={setPaymentMethod}
+            value={paymentMethod}
+          >
+            <View style={styles.radioStyle}>
+              <Text style={styles.radioStyleText}>Cash On Delivery</Text>
+              <RadioButton
+                color={colors.color2}
+                backgroundColor={colors.color3}
+                value={"COD"}
+              />
+            </View>
+            <View style={styles.radioStyle}>
+              <Text style={styles.radioStyleText}>ONLINE</Text>
+              <RadioButton
+                color={colors.color2}
+                backgroundColor={colors.color3}
+                value={"ONLINE"}
+              />
+            </View>
+          </RadioButton.Group>
+        </View>
       </View>
 
       <TouchableOpacity
@@ -171,8 +183,6 @@ const Payment = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.color3,
-    padding: 30,
     borderRadius: 10,
     marginVertical: 20,
     flex: 1,
@@ -189,7 +199,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 18,
     textTransform: "uppercase",
-    color: colors.color2,
+    // color: colors.color2,
   },
   btn: {
     backgroundColor: colors.color3,

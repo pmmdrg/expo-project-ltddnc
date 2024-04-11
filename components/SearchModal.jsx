@@ -1,4 +1,4 @@
-import React, { startTransition, useEffect } from 'react';
+import React, { startTransition, useEffect } from "react";
 import {
   View,
   Text,
@@ -11,16 +11,16 @@ import {
   BackHandler,
   TextInput,
   StyleSheet,
-} from 'react-native';
-import { Headline } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
+} from "react-native";
+import { Headline } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
 import {
   backgroundColor,
   borderColor,
   textColors,
-} from '../assets/colors/colors';
-import { colors } from '../styles/styles';
+} from "../assets/colors/colors";
+import { colors } from "../styles/styles";
 
 const SearchModal = ({
   searchQuery,
@@ -31,16 +31,16 @@ const SearchModal = ({
   const navigate = useNavigation();
 
   const backAction = () => {
-    setSearchQuery('');
+    setSearchQuery("");
     setActiveSearch(false);
     return true;
   };
 
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', backAction);
+    BackHandler.addEventListener("hardwareBackPress", backAction);
 
     return () => {
-      BackHandler.removeEventListener('hardwareBackPress', backAction);
+      BackHandler.removeEventListener("hardwareBackPress", backAction);
     };
   }, []);
 
@@ -49,16 +49,16 @@ const SearchModal = ({
       <SafeAreaView>
         <View style={styles.headerContainer}>
           <TouchableOpacity onPress={backAction} style={styles.backButton}>
-            <Image source={require('../assets/icons/back.png')} />
+            <Image source={require("../assets/icons/back.png")} />
           </TouchableOpacity>
           <View style={styles.searchContainer}>
             <TextInput
-              placeholder='Tìm kiếm tên sản phẩm'
+              placeholder="Tìm kiếm tên sản phẩm"
               value={searchQuery}
               onChangeText={(query) => setSearchQuery(query)}
               style={styles.input}
             />
-            <Image source={require('../assets/icons/search.png')} />
+            <Image source={require("../assets/icons/search.png")} />
           </View>
         </View>
 
@@ -76,7 +76,7 @@ const SearchModal = ({
                 name={i.name}
                 price={i.price}
                 handler={() =>
-                  navigate.navigate('productdetails', { id: i._id })
+                  navigate.navigate("productdetails", { id: i._id })
                 }
               />
             ))}
@@ -95,10 +95,10 @@ const SearchItem = ({ price, name, imgSrc, handler }) => (
         borderRadius: 10,
         backgroundColor: colors.color2,
         elevation: 5,
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        flexDirection: 'row',
+        width: "100%",
+        alignItems: "center",
+        justifyContent: "flex-end",
+        flexDirection: "row",
         marginVertical: 30,
       }}
     >
@@ -109,8 +109,8 @@ const SearchItem = ({ price, name, imgSrc, handler }) => (
         style={{
           width: 80,
           height: 80,
-          position: 'absolute',
-          resizeMode: 'contain',
+          position: "absolute",
+          resizeMode: "contain",
           top: -15,
           left: 10,
           borderTopLeftRadius: 20,
@@ -118,12 +118,12 @@ const SearchItem = ({ price, name, imgSrc, handler }) => (
         }}
       />
 
-      <View style={{ width: '80%', paddingHorizontal: 30 }}>
+      <View style={{ width: "80%", paddingHorizontal: 30 }}>
         <Text numberOfLines={1}>{name}</Text>
         <Headline
           numberOfLines={1}
           style={{
-            fontWeight: '900',
+            fontWeight: "900",
           }}
         >
           {price} VND
@@ -135,18 +135,18 @@ const SearchItem = ({ price, name, imgSrc, handler }) => (
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
+    width: "100%",
+    height: "120%",
+    position: "absolute",
     top: 0,
     zIndex: 100,
     backgroundColor: colors.color2,
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    position: 'relative',
+    flexDirection: "row",
+    alignItems: "center",
+    position: "relative",
   },
   backButton: {
     paddingLeft: 20,
@@ -159,10 +159,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginVertical: 30,
     marginHorizontal: 25,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    position: 'relative',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    position: "relative",
     flexGrow: 12,
   },
   input: {

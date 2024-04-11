@@ -1,8 +1,8 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { userReducer } from './reducers/userReducer';
-import { otherReducer } from './reducers/otherReducer';
-import { productReducer } from './reducers/productReducer';
-import { cartReducer } from './reducers/cartReducer';
+import { configureStore } from "@reduxjs/toolkit";
+import { userReducer } from "./reducers/userReducer";
+import { otherReducer } from "./reducers/otherReducer";
+import { productReducer } from "./reducers/productReducer";
+import { cartReducer } from "./reducers/cartReducer";
 
 export const store = configureStore({
   reducer: {
@@ -13,4 +13,4 @@ export const store = configureStore({
   },
 });
 
-export const server = 'http://192.168.0.101:3000/api/v1';
+export const server = "http://172.16.30.34:3000/api/v1";
