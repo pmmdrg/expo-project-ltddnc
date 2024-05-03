@@ -63,7 +63,6 @@ const HomeSection = ({ title, list }) => {
               addToCardHandler={addToCardHandler}
               id={item._id}
               key={item._id}
-              i={index}
               navigate={navigate}
             />
           ))}

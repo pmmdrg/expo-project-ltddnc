@@ -17,7 +17,7 @@ const ProductCard = ({
   image,
   id,
   addToCardHandler,
-  i,
+
   navigate,
 }) => {
   const { user } = useSelector((state) => state.user);

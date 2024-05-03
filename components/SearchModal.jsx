@@ -23,6 +23,7 @@ import {
 import { colors } from '../styles/styles';
 import { useDispatch } from 'react-redux';
 import { getProductByName } from '../redux/actions/productAction';
+import ProductCard from './ProductCard';
 
 const SearchModal = ({
   searchQuery,
@@ -36,6 +37,29 @@ const SearchModal = ({
   const backAction = () => {
     setSearchQuery('');
     setActiveSearch(false);
+  };
+
+  const addToCardHandler = (id, name, price, image, stock) => {
+    if (stock === 0)
+      return Toast.show({
+        type: 'error',
+        text1: 'Out Of Stock',
+      });
+    dispatch({
+      type: 'addToCart',
+      payload: {
+        product: id,
+        name,
+        price,
+        image,
+        stock,
+        quantity: 1,
+      },
+    });
+    Toast.show({
+      type: 'success',
+      text1: 'Added To Cart',
+    });
   };
 
   useEffect(() => {
@@ -79,14 +103,24 @@ const SearchModal = ({
             }}
           >
             {products.map((i) => (
-              <SearchItem
-                key={i._id}
-                imgSrc={i.images[0]?.url}
+              // <SearchItem
+              //   key={i._id}
+              //   imgSrc={i.images[0]?.url}
+              //   name={i.name}
+              //   price={i.price}
+              //   handler={() =>
+              //     navigate.navigate('productdetails', { id: i._id })
+              //   }
+              // />
+              <ProductCard
+                stock={i.stock}
                 name={i.name}
                 price={i.price}
-                handler={() =>
-                  navigate.navigate('productdetails', { id: i._id })
-                }
+                image={i.images[0]?.url}
+                addToCardHandler={addToCardHandler}
+                id={i._id}
+                key={i._id}
+                navigate={navigate}
               />
             ))}
           </View>
