@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Image,
   SafeAreaView,
+  TextInput,
 } from 'react-native';
 import { Button } from 'react-native-paper';
 import Toast from 'react-native-toast-message';
@@ -24,6 +25,7 @@ import { useSetCategories } from '../utils/hooks';
 import {
   backgroundColor,
   borderColor,
+  buttonColors,
   textColors,
 } from '../assets/colors/colors';
 import { colors } from '../styles/styles';
@@ -55,13 +57,14 @@ const Home = () => {
     return () => {
       clearTimeout(timeOutId);
     };
-  }, [dispatch, searchQuery, category, isFocused]);
+  }, [dispatch, category, isFocused, activeSearch]);
 
   return (
     <SafeAreaView style={styles.container}>
       {activeSearch && (
         <SearchModal
           searchQuery={searchQuery}
+          category={category}
           setSearchQuery={setSearchQuery}
           setActiveSearch={setActiveSearch}
           products={products}
@@ -93,12 +96,22 @@ const Home = () => {
 
       <ScrollView>
         {/* Search Bar */}
-        <TouchableOpacity onPress={() => setActiveSearch(true)}>
-          <View style={styles.searchContainer}>
-            <Text style={styles.input}>Tìm kiếm tên sản phẩm</Text>
-            <Image source={require('../assets/icons/search.png')} />
-          </View>
-        </TouchableOpacity>
+        <View style={styles.searchContainer}>
+          <TextInput
+            placeholder='Tìm kiếm tên sản phẩm'
+            value={searchQuery}
+            onChangeText={(query) => setSearchQuery(query)}
+            style={styles.input}
+          />
+          <TouchableOpacity
+            onPress={() => {
+              setActiveSearch(true);
+            }}
+            style={styles.searchBtn}
+          >
+            <Image source={require('../assets/icons/white-search.png')} />
+          </TouchableOpacity>
+        </View>
 
         {/* Categories */}
         <View
@@ -159,10 +172,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   searchContainer: {
-    backgroundColor: backgroundColor.secondaryBackground,
     height: 50,
-    paddingHorizontal: 20,
-    borderRadius: 10,
     marginVertical: 30,
     marginHorizontal: 25,
     flexDirection: 'row',
@@ -192,9 +202,18 @@ const styles = StyleSheet.create({
     right: 30,
   },
   input: {
-    backgroundColor: backgroundColor.transparentBackground,
+    backgroundColor: backgroundColor.secondaryBackground,
+    height: 50,
     fontSize: 14,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginRight: 10,
     flex: 1,
+  },
+  searchBtn: {
+    backgroundColor: buttonColors.primaryButton,
+    padding: 15,
+    borderRadius: 10,
   },
   navigation: {
     height: 60,

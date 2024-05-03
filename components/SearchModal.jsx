@@ -18,22 +18,27 @@ import { useNavigation } from '@react-navigation/native';
 import {
   backgroundColor,
   borderColor,
+  buttonColors,
   textColors,
 } from '../assets/colors/colors';
 import { colors } from '../styles/styles';
+import { useDispatch } from 'react-redux';
+import { getAllProducts } from '../redux/actions/productAction';
 
 const SearchModal = ({
   searchQuery,
+  category,
   setActiveSearch,
   setSearchQuery,
   products = [],
 }) => {
   const navigate = useNavigation();
+  const dispatch = useDispatch();
 
+  console.log(searchQuery, category);
   const backAction = () => {
     setSearchQuery('');
     setActiveSearch(false);
-    return true;
   };
 
   useEffect(() => {
@@ -58,14 +63,21 @@ const SearchModal = ({
               onChangeText={(query) => setSearchQuery(query)}
               style={styles.input}
             />
-            <Image source={require('../assets/icons/search.png')} />
+            <TouchableOpacity
+              style={styles.searchBtn}
+              onPress={() => {
+                dispatch(getAllProducts(searchQuery, category));
+              }}
+            >
+              <Image source={require('../assets/icons/white-search.png')} />
+            </TouchableOpacity>
           </View>
         </View>
 
         <ScrollView>
           <View
             style={{
-              paddingVertical: 40,
+              paddingVertical: 30,
               paddingHorizontal: 10,
             }}
           >
@@ -120,14 +132,7 @@ const SearchItem = ({ price, name, imgSrc, handler }) => (
 
       <View style={{ width: '80%', paddingHorizontal: 30 }}>
         <Text numberOfLines={1}>{name}</Text>
-        <Headline
-          numberOfLines={1}
-          style={{
-            fontWeight: '900',
-          }}
-        >
-          {price} VND
-        </Headline>
+        <Text>{price} VND</Text>
       </View>
     </View>
   </TouchableOpacity>
@@ -136,39 +141,45 @@ const SearchItem = ({ price, name, imgSrc, handler }) => (
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: '100%',
+    height: '120%',
     position: 'absolute',
     top: 0,
     zIndex: 100,
     backgroundColor: colors.color2,
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    paddingBottom: 80,
   },
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    position: 'relative',
+    width: '100%',
   },
   backButton: {
-    paddingLeft: 20,
-    flexGrow: 1,
+    marginLeft: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 15,
   },
   searchContainer: {
-    backgroundColor: backgroundColor.secondaryBackground,
     height: 50,
-    paddingHorizontal: 20,
-    borderRadius: 10,
     marginVertical: 30,
-    marginHorizontal: 25,
+    marginRight: 20,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     position: 'relative',
-    flexGrow: 12,
   },
   input: {
-    backgroundColor: backgroundColor.transparentBackground,
+    height: 50,
+    paddingHorizontal: 20,
+    backgroundColor: backgroundColor.secondaryBackground,
     fontSize: 14,
-    flex: 1,
+    width: '75%',
+    borderRadius: 10,
+    marginRight: 10,
+  },
+  searchBtn: {
+    backgroundColor: buttonColors.primaryButton,
+    padding: 15,
+    borderRadius: 10,
   },
 });
 
