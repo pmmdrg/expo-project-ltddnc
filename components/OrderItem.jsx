@@ -67,7 +67,7 @@ const TextBox = ({ title, value, i }) => (
     }}
   >
     <Text style={{ fontWeight: "900" }}>{title} - </Text>
-    {title === "Price" ? "₹" : ""}
+    {title === "Price" ? "VND" : ""}
     {value}
   </Text>
 );

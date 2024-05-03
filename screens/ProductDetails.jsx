@@ -5,18 +5,18 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
-} from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
-import { colors, defaultStyle } from '../styles/styles';
-import Header from '../components/Header';
-import { Avatar, Button } from 'react-native-paper';
-import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import { useDispatch, useSelector } from 'react-redux';
-import { useIsFocused } from '@react-navigation/native';
-import { getProductDetails } from '../redux/actions/productAction';
-import { backgroundColor } from '../assets/colors/colors';
+} from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { colors, defaultStyle } from "../styles/styles";
+import Header from "../components/Header";
+import { Avatar, Button } from "react-native-paper";
+import { Toast } from "react-native-toast-message/lib/src/Toast";
+import { useDispatch, useSelector } from "react-redux";
+import { useIsFocused } from "@react-navigation/native";
+import { getProductDetails } from "../redux/actions/productAction";
+import { backgroundColor } from "../assets/colors/colors";
 
-const SLIDER_WIDTH = Dimensions.get('window').width;
+const SLIDER_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = SLIDER_WIDTH;
 export const iconOptions = {
   size: 20,
@@ -38,11 +38,13 @@ const ProductDetails = ({ route: { params } }) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
+  console.log("images product detail", images);
+
   const incrementQty = () => {
     if (stock <= quantity)
       return Toast.show({
-        type: 'error',
-        text1: 'Maximum Value Added',
+        type: "error",
+        text1: "Maximum Value Added",
       });
     setQuantity((prev) => prev + 1);
   };
@@ -54,11 +56,11 @@ const ProductDetails = ({ route: { params } }) => {
   const addToCardHandler = () => {
     if (stock === 0)
       return Toast.show({
-        type: 'error',
-        text1: 'Out Of Stock',
+        type: "error",
+        text1: "Out Of Stock",
       });
     dispatch({
-      type: 'addToCart',
+      type: "addToCart",
       payload: {
         product: params.id,
         name,
@@ -69,8 +71,8 @@ const ProductDetails = ({ route: { params } }) => {
       },
     });
     Toast.show({
-      type: 'success',
-      text1: 'Added To Cart',
+      type: "success",
+      text1: "Added To Cart",
     });
   };
 
@@ -90,12 +92,12 @@ const ProductDetails = ({ route: { params } }) => {
 
       <View
         style={{
-          justifyContent: 'center',
-          alignItems: 'center',
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <Image
-          source={{ uri: images[0]?.url }}
+          source={{ uri: images && images[0]?.url }}
           style={{ width: 300, height: 300, marginTop: 40 }}
         />
       </View>
@@ -121,7 +123,7 @@ const ProductDetails = ({ route: { params } }) => {
         <Text
           style={{
             fontSize: 18,
-            fontWeight: '900',
+            fontWeight: "900",
           }}
         >
           {price} VND
@@ -140,16 +142,16 @@ const ProductDetails = ({ route: { params } }) => {
 
         <View
           style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
             paddingHorizontal: 5,
           }}
         >
           <Text
             style={{
               color: colors.color3,
-              fontWeight: '100',
+              fontWeight: "100",
             }}
           >
             Quantity
@@ -158,25 +160,25 @@ const ProductDetails = ({ route: { params } }) => {
           <View
             style={{
               width: 80,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
             }}
           >
             <TouchableOpacity onPress={decrementQty}>
-              <Avatar.Icon icon={'minus'} {...iconOptions} />
+              <Avatar.Icon icon={"minus"} {...iconOptions} />
             </TouchableOpacity>
 
             <Text style={style.quantity}>{quantity}</Text>
 
             <TouchableOpacity onPress={incrementQty}>
-              <Avatar.Icon icon={'plus'} {...iconOptions} />
+              <Avatar.Icon icon={"plus"} {...iconOptions} />
             </TouchableOpacity>
           </View>
         </View>
 
         <TouchableOpacity activeOpacity={0.9} onPress={addToCardHandler}>
-          <Button icon={'cart'} style={style.btn} textColor={colors.color2}>
+          <Button icon={"cart"} style={style.btn} textColor={colors.color2}>
             Add To Cart
           </Button>
         </TouchableOpacity>
@@ -200,15 +202,15 @@ const style = StyleSheet.create({
   },
   image: {
     width: ITEM_WIDTH,
-    resizeMode: 'contain',
+    resizeMode: "contain",
     height: 250,
   },
   quantity: {
     backgroundColor: colors.color4,
     height: 25,
     width: 25,
-    textAlignVertical: 'center',
-    textAlign: 'center',
+    textAlignVertical: "center",
+    textAlign: "center",
     borderWidth: 1,
     borderRadius: 5,
     borderColor: colors.color5,
