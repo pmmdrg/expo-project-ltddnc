@@ -5,18 +5,25 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
-} from "react-native";
-import React, { useEffect, useRef, useState } from "react";
-import { colors, defaultStyle } from "../styles/styles";
-import Header from "../components/Header";
-import { Avatar, Button } from "react-native-paper";
-import { Toast } from "react-native-toast-message/lib/src/Toast";
-import { useDispatch, useSelector } from "react-redux";
-import { useIsFocused } from "@react-navigation/native";
-import { getProductDetails } from "../redux/actions/productAction";
-import { backgroundColor } from "../assets/colors/colors";
+  ScrollView,
+  TextInput,
+} from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { colors, defaultStyle } from '../styles/styles';
+import Header from '../components/Header';
+import { Avatar, Button } from 'react-native-paper';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
+import { getProductDetails } from '../redux/actions/productAction';
+import {
+  backgroundColor,
+  buttonColors,
+  textColors,
+} from '../assets/colors/colors';
+import CommentItem from '../components/CommentItem';
 
-const SLIDER_WIDTH = Dimensions.get("window").width;
+const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = SLIDER_WIDTH;
 export const iconOptions = {
   size: 20,
@@ -30,7 +37,7 @@ export const iconOptions = {
 
 const ProductDetails = ({ route: { params } }) => {
   const {
-    product: { name, price, stock, description, images },
+    product: { name, price, stock, description, images, comments },
   } = useSelector((state) => state.product);
 
   const isCarousel = useRef(null);
@@ -38,13 +45,11 @@ const ProductDetails = ({ route: { params } }) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
-  console.log("images product detail", images);
-
   const incrementQty = () => {
     if (stock <= quantity)
       return Toast.show({
-        type: "error",
-        text1: "Maximum Value Added",
+        type: 'error',
+        text1: 'Maximum Value Added',
       });
     setQuantity((prev) => prev + 1);
   };
@@ -56,11 +61,11 @@ const ProductDetails = ({ route: { params } }) => {
   const addToCardHandler = () => {
     if (stock === 0)
       return Toast.show({
-        type: "error",
-        text1: "Out Of Stock",
+        type: 'error',
+        text1: 'Out Of Stock',
       });
     dispatch({
-      type: "addToCart",
+      type: 'addToCart',
       payload: {
         product: params.id,
         name,
@@ -71,8 +76,8 @@ const ProductDetails = ({ route: { params } }) => {
       },
     });
     Toast.show({
-      type: "success",
-      text1: "Added To Cart",
+      type: 'success',
+      text1: 'Added To Cart',
     });
   };
 
@@ -89,111 +94,115 @@ const ProductDetails = ({ route: { params } }) => {
       }}
     >
       <Header back={true} />
-
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Image
-          source={{ uri: images && images[0]?.url }}
-          style={{ width: 300, height: 300, marginTop: 40 }}
-        />
-      </View>
-
-      <View
-        style={{
-          backgroundColor: colors.color2,
-          padding: 35,
-          flex: 1,
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
-        }}
-      >
-        <Text
-          numberOfLines={2}
-          style={{
-            fontSize: 25,
-          }}
-        >
-          {name}
-        </Text>
-
-        <Text
-          style={{
-            fontSize: 18,
-            fontWeight: "900",
-          }}
-        >
-          {price} VND
-        </Text>
-
-        <Text
-          style={{
-            letterSpacing: 1,
-            lineHeight: 20,
-            marginVertical: 15,
-          }}
-          numberOfLines={8}
-        >
-          {description}
-        </Text>
-
+      <ScrollView>
         <View
           style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            paddingHorizontal: 5,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Image
+            source={{ uri: images && images[0]?.url }}
+            style={{ width: 300, height: 300, marginTop: 40 }}
+          />
+        </View>
+        <View
+          style={{
+            backgroundColor: colors.color2,
+            padding: 35,
+            flex: 1,
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
           }}
         >
           <Text
+            numberOfLines={2}
             style={{
-              color: colors.color3,
-              fontWeight: "100",
+              fontSize: 25,
             }}
           >
-            Quantity
+            {name}
           </Text>
-
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: '900',
+            }}
+          >
+            {price} VND
+          </Text>
+          <Text
+            style={{
+              letterSpacing: 1,
+              lineHeight: 20,
+              marginVertical: 15,
+            }}
+            numberOfLines={8}
+          >
+            {description}
+          </Text>
           <View
             style={{
-              width: 80,
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingHorizontal: 5,
             }}
           >
-            <TouchableOpacity onPress={decrementQty}>
-              <Avatar.Icon icon={"minus"} {...iconOptions} />
-            </TouchableOpacity>
-
-            <Text style={style.quantity}>{quantity}</Text>
-
-            <TouchableOpacity onPress={incrementQty}>
-              <Avatar.Icon icon={"plus"} {...iconOptions} />
-            </TouchableOpacity>
+            <Text
+              style={{
+                color: colors.color3,
+                fontWeight: '100',
+              }}
+            >
+              Số lượng
+            </Text>
+            <View
+              style={{
+                width: 80,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <TouchableOpacity onPress={decrementQty}>
+                <Avatar.Icon icon={'minus'} {...iconOptions} />
+              </TouchableOpacity>
+              <Text style={styles.quantity}>{quantity}</Text>
+              <TouchableOpacity onPress={incrementQty}>
+                <Avatar.Icon icon={'plus'} {...iconOptions} />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <TouchableOpacity activeOpacity={0.9} onPress={addToCardHandler}>
+            <Button icon={'cart'} style={styles.btn} textColor={colors.color2}>
+              <Text>Thêm vào giỏ hàng</Text>
+            </Button>
+          </TouchableOpacity>
+          <View>
+            <Text style={styles.comment}>
+              {comments?.length !== 0
+                ? `${comments.length} bình luận:`
+                : `Bình luận`}
+            </Text>
+            <CommentItem comments={comments} />
           </View>
         </View>
-
-        <TouchableOpacity activeOpacity={0.9} onPress={addToCardHandler}>
-          <Button icon={"cart"} style={style.btn} textColor={colors.color2}>
-            Add To Cart
-          </Button>
+      </ScrollView>
+      <View style={styles.cmtInputContainer}>
+        <TextInput
+          placeholder='Nhập bình luận của bạn'
+          style={styles.cmtInput}
+        />
+        <TouchableOpacity>
+          <Text style={styles.cmtSubmit}>Gửi</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-const CarouselCardItem = ({ item, index }) => (
-  <View style={style.container} key={index}>
-    <Image source={{ uri: item.url }} style={style.image} />
-  </View>
-);
-
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.color1,
     width: ITEM_WIDTH,
@@ -202,15 +211,15 @@ const style = StyleSheet.create({
   },
   image: {
     width: ITEM_WIDTH,
-    resizeMode: "contain",
+    resizeMode: 'contain',
     height: 250,
   },
   quantity: {
     backgroundColor: colors.color4,
     height: 25,
     width: 25,
-    textAlignVertical: "center",
-    textAlign: "center",
+    textAlignVertical: 'center',
+    textAlign: 'center',
     borderWidth: 1,
     borderRadius: 5,
     borderColor: colors.color5,
@@ -220,6 +229,33 @@ const style = StyleSheet.create({
     borderRadius: 100,
     padding: 5,
     marginVertical: 35,
+  },
+  comment: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  cmtInputContainer: {
+    height: 70,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  cmtInput: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: backgroundColor.primaryBackground,
+    borderRadius: 20,
+    fontSize: 16,
+    marginHorizontal: 20,
+    width: '70%',
+  },
+  cmtSubmit: {
+    padding: 15,
+    backgroundColor: buttonColors.primaryButton,
+    borderRadius: 20,
+    color: textColors.whiteText,
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
 export default ProductDetails;

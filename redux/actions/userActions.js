@@ -1,30 +1,30 @@
-import axios from "axios";
-import { server } from "../store";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from 'axios';
+import { server } from '../store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const register = (formData) => async (dispatch) => {
   try {
     dispatch({
-      type: "registerRequest",
+      type: 'registerRequest',
     });
 
     const { data } = await axios.post(`${server}/user/new`, formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        'Content-Type': 'multipart/form-data',
       },
       withCredentials: true,
     });
 
     // save to storage
-    await AsyncStorage.setItem("token", data.token);
+    await AsyncStorage.setItem('token', data.token);
 
     dispatch({
-      type: "registerSuccess",
+      type: 'registerSuccess',
       payload: data.message,
     });
   } catch (error) {
     dispatch({
-      type: "registerFail",
+      type: 'registerFail',
       payload: error.response.data.message,
     });
   }
@@ -33,7 +33,7 @@ export const register = (formData) => async (dispatch) => {
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({
-      type: "loginRequest",
+      type: 'loginRequest',
     });
 
     //    Axios here
@@ -46,22 +46,22 @@ export const login = (email, password) => async (dispatch) => {
       },
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
       }
     );
 
     // save to storage
-    await AsyncStorage.setItem("token", data.token);
+    await AsyncStorage.setItem('token', data.token);
 
     dispatch({
-      type: "loginSuccess",
+      type: 'loginSuccess',
       payload: data.message,
     });
   } catch (error) {
     dispatch({
-      type: "loginFail",
+      type: 'loginFail',
       payload: error.response.data.message,
     });
   }
@@ -70,29 +70,28 @@ export const login = (email, password) => async (dispatch) => {
 export const loadUser = () => async (dispatch) => {
   try {
     // save to storage
-    const token = await AsyncStorage.getItem("token");
+    const token = await AsyncStorage.getItem('token');
     if (!token) {
       dispatch({
-        type: "loadUserFail",
-        payload: "Please login or register new account",
+        type: 'loadUserFail',
+        payload: 'Please login or register new account',
       });
     } else {
       dispatch({
-        type: "loadUserRequest",
+        type: 'loadUserRequest',
       });
       const { data } = await axios.get(`${server}/user/me?token=${token}`, {
         withCredentials: true,
       });
-      console.log(data);
 
       dispatch({
-        type: "loadUserSuccess",
+        type: 'loadUserSuccess',
         payload: data.user,
       });
     }
   } catch (error) {
     dispatch({
-      type: "loadUserFail",
+      type: 'loadUserFail',
       payload: error.response.data.message,
     });
   }
@@ -101,25 +100,25 @@ export const loadUser = () => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   try {
     // save to storage
-    const token = await AsyncStorage.getItem("token");
+    const token = await AsyncStorage.getItem('token');
 
     // remove item
-    if (token) await AsyncStorage.removeItem("token");
+    if (token) await AsyncStorage.removeItem('token');
 
     dispatch({
-      type: "logoutRequest",
+      type: 'logoutRequest',
     });
     const { data } = await axios.get(`${server}/user/logout?token=${token}`, {
       withCredentials: true,
     });
 
     dispatch({
-      type: "logoutSuccess",
+      type: 'logoutSuccess',
       payload: data.message,
     });
   } catch (error) {
     dispatch({
-      type: "logoutFail",
+      type: 'logoutFail',
       payload: error.response.data.message,
     });
   }

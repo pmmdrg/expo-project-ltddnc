@@ -105,8 +105,6 @@ export const getProductDetails = (id) => async (dispatch) => {
       withCredentials: true,
     });
 
-    console.log('get product detail', data);
-
     dispatch({
       type: 'getProductDetailsSuccess',
       payload: data.product,

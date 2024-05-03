@@ -1,15 +1,15 @@
-import axios from "axios";
-import { server } from "../store";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from 'axios';
+import { server } from '../store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const updatePassword =
   (oldPassword, newPassword) => async (dispatch) => {
     // save to storage
-    const token = await AsyncStorage.getItem("token");
+    const token = await AsyncStorage.getItem('token');
 
     try {
       dispatch({
-        type: "updatePasswordRequest",
+        type: 'updatePasswordRequest',
       });
 
       const { data } = await axios.put(
@@ -20,19 +20,19 @@ export const updatePassword =
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           withCredentials: true,
         }
       );
 
       dispatch({
-        type: "updatePasswordSuccess",
+        type: 'updatePasswordSuccess',
         payload: data.message,
       });
     } catch (error) {
       dispatch({
-        type: "updatePasswordFail",
+        type: 'updatePasswordFail',
         payload: error.response.data.message,
       });
     }
@@ -41,10 +41,10 @@ export const updatePassword =
 export const updateProfile =
   (name, email, address, city, country, pinCode) => async (dispatch) => {
     // save to storage
-    const token = await AsyncStorage.getItem("token");
+    const token = await AsyncStorage.getItem('token');
     try {
       dispatch({
-        type: "updateProfileRequest",
+        type: 'updateProfileRequest',
       });
 
       const { data } = await axios.put(
@@ -59,20 +59,19 @@ export const updateProfile =
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           withCredentials: true,
         }
       );
 
       dispatch({
-        type: "updateProfileSuccess",
+        type: 'updateProfileSuccess',
         payload: data.message,
       });
     } catch (error) {
-      console.log(error.response.data);
       dispatch({
-        type: "updateProfileFail",
+        type: 'updateProfileFail',
         payload: error.response.data.message,
       });
     }
@@ -81,10 +80,10 @@ export const updateProfile =
 export const updatePic = (formData) => async (dispatch) => {
   try {
     // save to storage
-    const token = await AsyncStorage.getItem("token");
+    const token = await AsyncStorage.getItem('token');
 
     dispatch({
-      type: "updatePicRequest",
+      type: 'updatePicRequest',
     });
 
     const { data } = await axios.put(
@@ -92,19 +91,19 @@ export const updatePic = (formData) => async (dispatch) => {
       formData,
       {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
         withCredentials: true,
       }
     );
 
     dispatch({
-      type: "updatePicSuccess",
+      type: 'updatePicSuccess',
       payload: data.message,
     });
   } catch (error) {
     dispatch({
-      type: "updatePicFail",
+      type: 'updatePicFail',
       payload: error.response.data.message,
     });
   }
@@ -123,10 +122,10 @@ export const placeOrder =
   ) =>
   async (dispatch) => {
     // save to storage
-    const token = await AsyncStorage.getItem("token");
+    const token = await AsyncStorage.getItem('token');
     try {
       dispatch({
-        type: "placeOrderRequest",
+        type: 'placeOrderRequest',
       });
 
       const { data } = await axios.post(
@@ -143,18 +142,18 @@ export const placeOrder =
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           withCredentials: true,
         }
       );
       dispatch({
-        type: "placeOrderSuccess",
+        type: 'placeOrderSuccess',
         payload: data.message,
       });
     } catch (error) {
       dispatch({
-        type: "placeOrderFail",
+        type: 'placeOrderFail',
         payload: error.response.data.message,
       });
     }
@@ -162,11 +161,11 @@ export const placeOrder =
 
 export const processOrder = (id) => async (dispatch) => {
   // save to storage
-  const token = await AsyncStorage.getItem("token");
+  const token = await AsyncStorage.getItem('token');
 
   try {
     dispatch({
-      type: "processOrderRequest",
+      type: 'processOrderRequest',
     });
 
     const { data } = await axios.put(
@@ -178,12 +177,12 @@ export const processOrder = (id) => async (dispatch) => {
       }
     );
     dispatch({
-      type: "processOrderSuccess",
+      type: 'processOrderSuccess',
       payload: data.message,
     });
   } catch (error) {
     dispatch({
-      type: "processOrderFail",
+      type: 'processOrderFail',
       payload: error.response.data.message,
     });
   }
@@ -191,11 +190,11 @@ export const processOrder = (id) => async (dispatch) => {
 
 export const addCategory = (category) => async (dispatch) => {
   // save to storage
-  const token = await AsyncStorage.getItem("token");
+  const token = await AsyncStorage.getItem('token');
 
   try {
     dispatch({
-      type: "addCategoryRequest",
+      type: 'addCategoryRequest',
     });
 
     const { data } = await axios.post(
@@ -206,18 +205,18 @@ export const addCategory = (category) => async (dispatch) => {
       },
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
       }
     );
     dispatch({
-      type: "addCategorySuccess",
+      type: 'addCategorySuccess',
       payload: data.message,
     });
   } catch (error) {
     dispatch({
-      type: "addCategoryFail",
+      type: 'addCategoryFail',
       payload: error.response.data.message,
     });
   }
@@ -225,11 +224,11 @@ export const addCategory = (category) => async (dispatch) => {
 
 export const deleteCategory = (id) => async (dispatch) => {
   // save to storage
-  const token = await AsyncStorage.getItem("token");
+  const token = await AsyncStorage.getItem('token');
 
   try {
     dispatch({
-      type: "deleteCategoryRequest",
+      type: 'deleteCategoryRequest',
     });
 
     const { data } = await axios.delete(
@@ -240,12 +239,12 @@ export const deleteCategory = (id) => async (dispatch) => {
       }
     );
     dispatch({
-      type: "deleteCategorySuccess",
+      type: 'deleteCategorySuccess',
       payload: data.message,
     });
   } catch (error) {
     dispatch({
-      type: "deleteCategoryFail",
+      type: 'deleteCategoryFail',
       payload: error.response.data.message,
     });
   }
@@ -253,11 +252,11 @@ export const deleteCategory = (id) => async (dispatch) => {
 
 export const createProduct = (formData) => async (dispatch) => {
   // save to storage
-  const token = await AsyncStorage.getItem("token");
+  const token = await AsyncStorage.getItem('token');
 
   try {
     dispatch({
-      type: "addProductRequest",
+      type: 'addProductRequest',
     });
 
     const { data } = await axios.post(
@@ -265,19 +264,19 @@ export const createProduct = (formData) => async (dispatch) => {
       formData,
       {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
         withCredentials: true,
       }
     );
 
     dispatch({
-      type: "addProductSuccess",
+      type: 'addProductSuccess',
       payload: data.message,
     });
   } catch (error) {
     dispatch({
-      type: "addProductFail",
+      type: 'addProductFail',
       payload: error.response.data.message,
     });
   }
@@ -286,11 +285,11 @@ export const createProduct = (formData) => async (dispatch) => {
 export const updateProduct =
   (id, name, description, price, stock, category) => async (dispatch) => {
     // save to storage
-    const token = await AsyncStorage.getItem("token");
+    const token = await AsyncStorage.getItem('token');
 
     try {
       dispatch({
-        type: "updateProductRequest",
+        type: 'updateProductRequest',
       });
       const { data } = await axios.put(
         `${server}/product/single/${id}?token=${token}`,
@@ -303,19 +302,19 @@ export const updateProduct =
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           withCredentials: true,
         }
       );
 
       dispatch({
-        type: "updateProductSuccess",
+        type: 'updateProductSuccess',
         payload: data.message,
       });
     } catch (error) {
       dispatch({
-        type: "updateProductFail",
+        type: 'updateProductFail',
         payload: error.response.data.message,
       });
     }
@@ -323,11 +322,11 @@ export const updateProduct =
 
 export const updateProductImage = (productId, formData) => async (dispatch) => {
   // save to storage
-  const token = await AsyncStorage.getItem("token");
+  const token = await AsyncStorage.getItem('token');
 
   try {
     dispatch({
-      type: "updateProductImageRequest",
+      type: 'updateProductImageRequest',
     });
 
     const { data } = await axios.post(
@@ -335,19 +334,19 @@ export const updateProductImage = (productId, formData) => async (dispatch) => {
       formData,
       {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
         withCredentials: true,
       }
     );
 
     dispatch({
-      type: "updateProductImageSuccess",
+      type: 'updateProductImageSuccess',
       payload: data.message,
     });
   } catch (error) {
     dispatch({
-      type: "updateProductImageFail",
+      type: 'updateProductImageFail',
       payload: error.response.data.message,
     });
   }
@@ -355,11 +354,11 @@ export const updateProductImage = (productId, formData) => async (dispatch) => {
 
 export const deleteProductImage = (productId, imageId) => async (dispatch) => {
   // save to storage
-  const token = await AsyncStorage.getItem("token");
+  const token = await AsyncStorage.getItem('token');
 
   try {
     dispatch({
-      type: "deleteProductImageRequest",
+      type: 'deleteProductImageRequest',
     });
 
     const { data } = await axios.delete(
@@ -370,12 +369,12 @@ export const deleteProductImage = (productId, imageId) => async (dispatch) => {
     );
 
     dispatch({
-      type: "deleteProductImageSuccess",
+      type: 'deleteProductImageSuccess',
       payload: data.message,
     });
   } catch (error) {
     dispatch({
-      type: "deleteProductImageFail",
+      type: 'deleteProductImageFail',
       payload: error.response.data.message,
     });
   }
@@ -383,11 +382,11 @@ export const deleteProductImage = (productId, imageId) => async (dispatch) => {
 
 export const deleteProduct = (productId) => async (dispatch) => {
   // save to storage
-  const token = await AsyncStorage.getItem("token");
+  const token = await AsyncStorage.getItem('token');
 
   try {
     dispatch({
-      type: "deleteProductRequest",
+      type: 'deleteProductRequest',
     });
 
     const { data } = await axios.delete(
@@ -398,12 +397,12 @@ export const deleteProduct = (productId) => async (dispatch) => {
     );
 
     dispatch({
-      type: "deleteProductSuccess",
+      type: 'deleteProductSuccess',
       payload: data.message,
     });
   } catch (error) {
     dispatch({
-      type: "deleteProductFail",
+      type: 'deleteProductFail',
       payload: error.response.data.message,
     });
   }
@@ -412,7 +411,7 @@ export const deleteProduct = (productId) => async (dispatch) => {
 export const forgetPassword = (email) => async (dispatch) => {
   try {
     dispatch({
-      type: "forgetPasswordRequest",
+      type: 'forgetPasswordRequest',
     });
     const { data } = await axios.post(
       `${server}/user/forgetpassword`,
@@ -421,19 +420,19 @@ export const forgetPassword = (email) => async (dispatch) => {
       },
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
       }
     );
 
     dispatch({
-      type: "forgetPasswordSuccess",
+      type: 'forgetPasswordSuccess',
       payload: data.message,
     });
   } catch (error) {
     dispatch({
-      type: "forgetPasswordFail",
+      type: 'forgetPasswordFail',
       payload: error.response.data.message,
     });
   }
@@ -442,7 +441,7 @@ export const forgetPassword = (email) => async (dispatch) => {
 export const resetPassword = (otp, password) => async (dispatch) => {
   try {
     dispatch({
-      type: "resetPasswordRequest",
+      type: 'resetPasswordRequest',
     });
     const { data } = await axios.put(
       `${server}/user/forgetpassword`,
@@ -452,19 +451,19 @@ export const resetPassword = (otp, password) => async (dispatch) => {
       },
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
       }
     );
 
     dispatch({
-      type: "resetPasswordSuccess",
+      type: 'resetPasswordSuccess',
       payload: data.message,
     });
   } catch (error) {
     dispatch({
-      type: "resetPasswordFail",
+      type: 'resetPasswordFail',
       payload: error.response.data.message,
     });
   }

@@ -67,7 +67,7 @@ const ProductCard = ({
             }
             textColor={textColors.whiteText}
           >
-            Thêm Vào Giỏ Hàng
+            <Text>Thêm Vào Giỏ Hàng</Text>
           </Button>
         </TouchableOpacity>
       </View>
