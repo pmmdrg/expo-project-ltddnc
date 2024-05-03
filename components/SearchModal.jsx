@@ -12,7 +12,6 @@ import {
   TextInput,
   StyleSheet,
 } from 'react-native';
-import { Headline } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
 import {
@@ -23,11 +22,10 @@ import {
 } from '../assets/colors/colors';
 import { colors } from '../styles/styles';
 import { useDispatch } from 'react-redux';
-import { getAllProducts } from '../redux/actions/productAction';
+import { getProductByName } from '../redux/actions/productAction';
 
 const SearchModal = ({
   searchQuery,
-  category,
   setActiveSearch,
   setSearchQuery,
   products = [],
@@ -35,7 +33,6 @@ const SearchModal = ({
   const navigate = useNavigation();
   const dispatch = useDispatch();
 
-  console.log(searchQuery, category);
   const backAction = () => {
     setSearchQuery('');
     setActiveSearch(false);
@@ -66,7 +63,7 @@ const SearchModal = ({
             <TouchableOpacity
               style={styles.searchBtn}
               onPress={() => {
-                dispatch(getAllProducts(searchQuery, category));
+                dispatch(getProductByName(searchQuery));
               }}
             >
               <Image source={require('../assets/icons/white-search.png')} />

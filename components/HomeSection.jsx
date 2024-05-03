@@ -48,25 +48,33 @@ const HomeSection = ({ title, list }) => {
           <Text style={styles.sectionMore}>Xem tất cả</Text>
         </TouchableOpacity>
       </View>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.listItem}
-      >
-        {list.map((item, index) => (
-          <ProductCard
-            stock={item.stock}
-            name={item.name}
-            price={item.price}
-            image={item.images[0]?.url}
-            addToCardHandler={addToCardHandler}
-            id={item._id}
-            key={item._id}
-            i={index}
-            navigate={navigate}
-          />
-        ))}
-      </ScrollView>
+      {list.length !== 0 ? (
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.listItem}
+        >
+          {list.map((item, index) => (
+            <ProductCard
+              stock={item.stock}
+              name={item.name}
+              price={item.price}
+              image={item.images[0]?.url}
+              addToCardHandler={addToCardHandler}
+              id={item._id}
+              key={item._id}
+              i={index}
+              navigate={navigate}
+            />
+          ))}
+        </ScrollView>
+      ) : (
+        <View style={styles.noProd}>
+          <Text style={{ color: textColors.secondaryText }}>
+            Không có sản phẩm phù hợp
+          </Text>
+        </View>
+      )}
     </View>
   );
 };
@@ -92,6 +100,12 @@ const styles = StyleSheet.create({
   listItem: {
     paddingHorizontal: 15,
     marginBottom: 30,
+  },
+  noProd: {
+    marginHorizontal: 15,
+    height: 200,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

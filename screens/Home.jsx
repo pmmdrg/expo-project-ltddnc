@@ -19,7 +19,11 @@ import SearchModal from '../components/SearchModal';
 import Footer from '../components/Footer';
 import HomeSection from '../components/HomeSection';
 
-import { getAllProducts } from '../redux/actions/productAction';
+import {
+  getAllProducts,
+  getProductByCategory,
+  getProductByName,
+} from '../redux/actions/productAction';
 import { useSetCategories } from '../utils/hooks';
 
 import {
@@ -43,15 +47,30 @@ const Home = () => {
   const { products } = useSelector((state) => state.product);
   const { user } = useSelector((state) => state.user);
 
-  const categoryButtonHandler = (id) => {
-    setCategory(id);
+  const categoryButtonHandler = (category) => {
+    setCategory(category);
+  };
+  const handleSearch = () => {
+    if (searchQuery === '') {
+      return Toast.show({
+        type: 'error',
+        text1: 'Nội dung tìm kiếm không được trống',
+      });
+    } else {
+      dispatch(getProductByName(searchQuery));
+      setActiveSearch(true);
+    }
   };
 
   useSetCategories(setCategories, isFocused);
 
   useEffect(() => {
     const timeOutId = setTimeout(() => {
-      dispatch(getAllProducts(searchQuery, category));
+      if (category === '' && activeSearch === false) {
+        dispatch(getAllProducts());
+      } else if (category !== '' && activeSearch === false) {
+        dispatch(getProductByCategory(category));
+      }
     }, 500);
 
     return () => {
@@ -103,12 +122,7 @@ const Home = () => {
             onChangeText={(query) => setSearchQuery(query)}
             style={styles.input}
           />
-          <TouchableOpacity
-            onPress={() => {
-              setActiveSearch(true);
-            }}
-            style={styles.searchBtn}
-          >
+          <TouchableOpacity onPress={handleSearch} style={styles.searchBtn}>
             <Image source={require('../assets/icons/white-search.png')} />
           </TouchableOpacity>
         </View>
@@ -128,27 +142,32 @@ const Home = () => {
             }}
             showsHorizontalScrollIndicator={false}
           >
-            {categories.map((item, index) => (
-              <Button
-                key={item._id}
-                style={{
-                  backgroundColor:
-                    category === item._id ? colors.color1 : colors.color5,
-                  borderRadius: 100,
-                  margin: 5,
-                }}
-                onPress={() => categoryButtonHandler(item._id)}
-              >
-                <Text
+            {categories.map((item, index) => {
+              return (
+                <Button
+                  key={item._id}
                   style={{
-                    fontSize: 12,
-                    color: category === item._id ? colors.color2 : 'gray',
+                    backgroundColor:
+                      category === item.category
+                        ? colors.color1
+                        : colors.color5,
+                    borderRadius: 100,
+                    margin: 5,
                   }}
+                  onPress={() => categoryButtonHandler(item.category)}
                 >
-                  {item.category}
-                </Text>
-              </Button>
-            ))}
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      color:
+                        category === item.category ? colors.color2 : 'gray',
+                    }}
+                  >
+                    {item.category}
+                  </Text>
+                </Button>
+              );
+            })}
           </ScrollView>
         </View>
 
