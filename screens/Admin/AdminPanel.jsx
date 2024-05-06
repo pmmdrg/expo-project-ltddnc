@@ -1,5 +1,11 @@
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
-import React from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
+import React, { useState } from 'react';
 import { colors, defaultStyle, formHeading } from '../../styles/styles';
 import Header from '../../components/Header';
 import Loader from '../../components/Loader';
@@ -13,8 +19,10 @@ import { useIsFocused } from '@react-navigation/native';
 import { deleteProduct } from '../../redux/actions/otherAction';
 import { getAdminProducts } from '../../redux/actions/productAction';
 import { backgroundColor } from '../../assets/colors/colors';
+import Pagination from '../../components/Pagination';
 
 const AdminPanel = ({ navigation }) => {
+  const [curPage, setCurPage] = useState(1);
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
@@ -51,6 +59,14 @@ const AdminPanel = ({ navigation }) => {
     null,
     getAdminProducts
   );
+
+  const indexOfLastProduct = curPage * 10;
+  const indexOfFirstProduct = indexOfLastProduct - 10;
+  const productsForRender = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+  const totalPages = Math.ceil(products.length / 10);
 
   return (
     <View style={[defaultStyle, styles.container]}>
@@ -110,7 +126,7 @@ const AdminPanel = ({ navigation }) => {
           <ScrollView showsVerticalScrollIndicator={false}>
             <View>
               {!loadingDelete &&
-                products.map((item, index) => (
+                productsForRender.map((item, index) => (
                   <ProductListItem
                     navigate={navigation}
                     deleteHandler={deleteProductHandler}
@@ -126,6 +142,11 @@ const AdminPanel = ({ navigation }) => {
                 ))}
             </View>
           </ScrollView>
+          <Pagination
+            curPage={curPage}
+            setCurPage={setCurPage}
+            totalPages={totalPages}
+          />
         </>
       )}
     </View>
