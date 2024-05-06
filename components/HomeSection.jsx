@@ -21,7 +21,7 @@ const HomeSection = ({ title, list }) => {
     if (stock === 0)
       return Toast.show({
         type: 'error',
-        text1: 'Out Of Stock',
+        text1: 'Hết hàng',
       });
     dispatch({
       type: 'addToCart',
@@ -36,7 +36,7 @@ const HomeSection = ({ title, list }) => {
     });
     Toast.show({
       type: 'success',
-      text1: 'Added To Cart',
+      text1: 'Đã thêm vào giỏ hàng',
     });
   };
 
@@ -49,24 +49,26 @@ const HomeSection = ({ title, list }) => {
         </TouchableOpacity>
       </View>
       {list.length !== 0 ? (
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.listItem}
-        >
-          {list.map((item, index) => (
-            <ProductCard
-              stock={item.stock}
-              name={item.name}
-              price={item.price}
-              image={item.images[0]?.url}
-              addToCardHandler={addToCardHandler}
-              id={item._id}
-              key={item._id}
-              navigate={navigate}
-            />
-          ))}
-        </ScrollView>
+        <View style={{ marginRight: 20 }}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.listItem}
+          >
+            {list.map((item, index) => (
+              <ProductCard
+                stock={item.stock}
+                name={item.name}
+                price={item.price}
+                image={item.images[0]?.url}
+                addToCardHandler={addToCardHandler}
+                id={item._id}
+                key={item._id}
+                navigate={navigate}
+              />
+            ))}
+          </ScrollView>
+        </View>
       ) : (
         <View style={styles.noProd}>
           <Text style={{ color: textColors.secondaryText }}>

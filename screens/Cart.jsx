@@ -20,7 +20,7 @@ const Cart = () => {
     if (stock <= quantity)
       return Toast.show({
         type: 'error',
-        text1: 'Maximum value added',
+        text1: 'Đạt giá trị tối đa',
       });
     dispatch({
       type: 'addToCart',

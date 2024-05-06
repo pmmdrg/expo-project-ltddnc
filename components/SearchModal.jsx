@@ -11,6 +11,7 @@ import {
   BackHandler,
   TextInput,
   StyleSheet,
+  FlatList,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -43,7 +44,7 @@ const SearchModal = ({
     if (stock === 0)
       return Toast.show({
         type: 'error',
-        text1: 'Out Of Stock',
+        text1: 'Hết hàng',
       });
     dispatch({
       type: 'addToCart',
@@ -58,7 +59,7 @@ const SearchModal = ({
     });
     Toast.show({
       type: 'success',
-      text1: 'Added To Cart',
+      text1: 'Đã thêm vào giỏ hàng',
     });
   };
 
@@ -72,7 +73,7 @@ const SearchModal = ({
 
   return (
     <View style={styles.container}>
-      <SafeAreaView>
+      <SafeAreaView style={{ alignItems: 'center' }}>
         <View style={styles.headerContainer}>
           <TouchableOpacity onPress={backAction} style={styles.backButton}>
             <Image source={require('../assets/icons/back.png')} />
@@ -95,79 +96,34 @@ const SearchModal = ({
           </View>
         </View>
 
-        <ScrollView>
-          <View
-            style={{
-              paddingVertical: 30,
-              paddingHorizontal: 10,
+        <View>
+          <FlatList
+            data={products}
+            numColumns={2}
+            keyExtractor={(item) => {
+              return item?._id;
             }}
-          >
-            {products.map((i) => (
-              // <SearchItem
-              //   key={i._id}
-              //   imgSrc={i.images[0]?.url}
-              //   name={i.name}
-              //   price={i.price}
-              //   handler={() =>
-              //     navigate.navigate('productdetails', { id: i._id })
-              //   }
-              // />
-              <ProductCard
-                stock={i.stock}
-                name={i.name}
-                price={i.price}
-                image={i.images[0]?.url}
-                addToCardHandler={addToCardHandler}
-                id={i._id}
-                key={i._id}
-                navigate={navigate}
-              />
-            ))}
-          </View>
-        </ScrollView>
+            renderItem={({ item }) => {
+              return (
+                <View style={{ marginBottom: 20 }}>
+                  <ProductCard
+                    stock={item?.stock}
+                    name={item?.name}
+                    price={item?.price}
+                    image={item?.images[0]?.url}
+                    addToCardHandler={addToCardHandler}
+                    id={item?._id}
+                    navigate={navigate}
+                  />
+                </View>
+              );
+            }}
+          />
+        </View>
       </SafeAreaView>
     </View>
   );
 };
-
-const SearchItem = ({ price, name, imgSrc, handler }) => (
-  <TouchableOpacity onPress={handler}>
-    <View
-      style={{
-        padding: 20,
-        borderRadius: 10,
-        backgroundColor: colors.color2,
-        elevation: 5,
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        flexDirection: 'row',
-        marginVertical: 30,
-      }}
-    >
-      <Image
-        source={{
-          uri: imgSrc,
-        }}
-        style={{
-          width: 80,
-          height: 80,
-          position: 'absolute',
-          resizeMode: 'contain',
-          top: -15,
-          left: 10,
-          borderTopLeftRadius: 20,
-          borderBottomRightRadius: 20,
-        }}
-      />
-
-      <View style={{ width: '80%', paddingHorizontal: 30 }}>
-        <Text numberOfLines={1}>{name}</Text>
-        <Text>{price} VND</Text>
-      </View>
-    </View>
-  </TouchableOpacity>
-);
 
 const styles = StyleSheet.create({
   container: {

@@ -468,3 +468,28 @@ export const resetPassword = (otp, password) => async (dispatch) => {
     });
   }
 };
+
+export const postComment = (productId, comment, vote) => async (dispatch) => {
+  try {
+    dispatch({ type: 'postCommentRequest' });
+    const isBought = await axios.get(
+      `${server}/user/havebought?productId=${productId}`
+    );
+    console.log(isBought);
+    const { data } = await axios.post(
+      `${server}/product/comment/${productId}`,
+      { comment, vote },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      }
+    );
+
+    dispatch({ type: 'postCommentSuccess', payload: data.message });
+  } catch (error) {
+    console.log('vao error: ' + error);
+    dispatch({ type: 'postCommentFail', payload: error.response.data.message });
+  }
+};

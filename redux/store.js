@@ -13,5 +13,5 @@ export const store = configureStore({
   },
 });
 
-export const server = 'http://192.168.1.2:3000/api/v1';
+export const server = 'http://192.168.0.105:3000/api/v1';
 //export const server = 'http://172.16.30.42:3000/api/v1';
