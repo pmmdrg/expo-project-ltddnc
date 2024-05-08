@@ -115,7 +115,7 @@ const Profile = ({ navigation, route }) => {
                   loading={loadingPic}
                   textColor={colors.color2}
                 >
-                  Change Photo
+                  Thay đổi ảnh
                 </Button>
               </TouchableOpacity>
 
@@ -171,7 +171,7 @@ const Profile = ({ navigation, route }) => {
                 <ButtonBox
                   handler={navigateHandler}
                   handlerText={'Password'}
-                  displayText={'Quên mật khẩu'}
+                  displayText={'Đổi mật khẩu'}
                   icon={'pencil'}
                 />
                 <ButtonBox

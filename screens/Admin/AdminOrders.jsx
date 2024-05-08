@@ -1,14 +1,14 @@
-import { View, Text, ScrollView } from "react-native";
-import React from "react";
-import { colors, defaultStyle, formHeading } from "../../styles/styles";
-import Header from "../../components/Header";
-import Loader from "../../components/Loader";
-import OrderItem from "../../components/OrderItem";
-import { useGetOrders, useMessageAndErrorOther } from "../../utils/hooks";
-import { useIsFocused } from "@react-navigation/native";
-import { Headline } from "react-native-paper";
-import { useDispatch } from "react-redux";
-import { processOrder } from "../../redux/actions/otherAction";
+import { View, Text, ScrollView } from 'react-native';
+import React from 'react';
+import { colors, defaultStyle, formHeading } from '../../styles/styles';
+import Header from '../../components/Header';
+import Loader from '../../components/Loader';
+import OrderItem from '../../components/OrderItem';
+import { useGetOrders, useMessageAndErrorOther } from '../../utils/hooks';
+import { useIsFocused } from '@react-navigation/native';
+import { Headline } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
+import { processOrder } from '../../redux/actions/otherAction';
 
 const AdminOrders = ({ navigation }) => {
   const isFocused = useIsFocused();
@@ -19,7 +19,7 @@ const AdminOrders = ({ navigation }) => {
   const processOrderLoading = useMessageAndErrorOther(
     dispatch,
     navigation,
-    "adminpanel"
+    'adminpanel'
   );
 
   const updateHandler = (id) => {
@@ -36,7 +36,7 @@ const AdminOrders = ({ navigation }) => {
 
       {/* Heading */}
       <View style={{ marginBottom: 20, paddingTop: 70 }}>
-        <Text style={formHeading}>All Orders</Text>
+        <Text style={formHeading}>Tất cả đơn hàng</Text>
       </View>
 
       {loading ? (
@@ -58,7 +58,7 @@ const AdminOrders = ({ navigation }) => {
                   price={item.totalAmount}
                   status={item.orderStatus}
                   paymentMethod={item.paymentMethod}
-                  orderedOn={item.createdAt.split("T")[0]}
+                  orderedOn={item.createdAt.split('T')[0]}
                   address={`${item.shippingInfo.address}, ${item.shippingInfo.city}, ${item.shippingInfo.country} ${item.shippingInfo.pinCode}`}
                   admin={true}
                   updateHandler={updateHandler}
@@ -66,7 +66,9 @@ const AdminOrders = ({ navigation }) => {
                 />
               ))
             ) : (
-              <Headline style={{ textAlign: "center" }}>No Orders Yet</Headline>
+              <Headline style={{ textAlign: 'center' }}>
+                Chưa có đơn hàng nào
+              </Headline>
             )}
           </ScrollView>
         </View>

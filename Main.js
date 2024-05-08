@@ -24,6 +24,7 @@ import ProductImages from './screens/Admin/ProductImages';
 import Camera from './screens/Camera';
 import { useDispatch } from 'react-redux';
 import { loadUser } from './redux/actions/userActions';
+import AllProducts from './screens/AllProducts';
 
 const Stack = createNativeStackNavigator();
 
@@ -55,6 +56,7 @@ const Main = () => {
           <Stack.Screen name='changepassword' component={ChangePassword} />
           <Stack.Screen name='orders' component={Orders} />
           <Stack.Screen name='camera' component={Camera} />
+          <Stack.Screen name='allproducts' component={AllProducts} />
 
           {/* Password Reseting Route */}
           <Stack.Screen name='forgetpassword' component={ForgetPassword} />

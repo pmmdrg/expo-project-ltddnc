@@ -1,4 +1,4 @@
-import { createReducer } from "@reduxjs/toolkit";
+import { createReducer } from '@reduxjs/toolkit';
 
 export const cartReducer = createReducer(
   {
@@ -6,7 +6,7 @@ export const cartReducer = createReducer(
   },
   (builder) => {
     builder
-      .addCase("addToCart", (state, action) => {
+      .addCase('addToCart', (state, action) => {
         const item = action.payload;
         const isExist = state.cartItems.find((i) => i.product === item.product);
         if (isExist) {
@@ -20,11 +20,11 @@ export const cartReducer = createReducer(
           }
         } else state.cartItems.push(item);
       })
-      .addCase("removeFromCart", (state, action) => {
+      .addCase('removeFromCart', (state, action) => {
         const id = action.payload;
         state.cartItems = state.cartItems.filter((i) => i.product !== id);
       })
-      .addCase("clearCart", (state) => {
+      .addCase('clearCart', (state) => {
         state.cartItems = [];
       });
   }

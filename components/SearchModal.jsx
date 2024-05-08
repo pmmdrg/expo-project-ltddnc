@@ -22,7 +22,7 @@ import {
   textColors,
 } from '../assets/colors/colors';
 import { colors } from '../styles/styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getProductByName } from '../redux/actions/productAction';
 import ProductCard from './ProductCard';
 
@@ -32,6 +32,7 @@ const SearchModal = ({
   setSearchQuery,
   products = [],
 }) => {
+  const { loading, isAuthenticated } = useSelector((state) => state.user);
   const navigate = useNavigation();
   const dispatch = useDispatch();
 
@@ -40,7 +41,13 @@ const SearchModal = ({
     setActiveSearch(false);
   };
 
-  const addToCardHandler = (id, name, price, image, stock) => {
+  const addToCartHandler = (id, name, price, image, stock) => {
+    if (!isAuthenticated) {
+      return Toast.show({
+        type: 'error',
+        text1: 'Vui lòng đăng nhập',
+      });
+    }
     if (stock === 0)
       return Toast.show({
         type: 'error',
@@ -96,29 +103,36 @@ const SearchModal = ({
           </View>
         </View>
 
-        <View>
-          <FlatList
-            data={products}
-            numColumns={2}
-            keyExtractor={(item) => {
-              return item?._id;
-            }}
-            renderItem={({ item }) => {
-              return (
-                <View style={{ marginBottom: 20 }}>
-                  <ProductCard
-                    stock={item?.stock}
-                    name={item?.name}
-                    price={item?.price}
-                    image={item?.images[0]?.url}
-                    addToCardHandler={addToCardHandler}
-                    id={item?._id}
-                    navigate={navigate}
-                  />
-                </View>
-              );
-            }}
-          />
+        <View style={{ height: '80%' }}>
+          {products.length === 0 ? (
+            <Text style={{ color: textColors.secondaryText }}>
+              Không có kết quả phù hợp
+            </Text>
+          ) : (
+            <FlatList
+              data={products}
+              numColumns={2}
+              keyExtractor={(item) => {
+                return item?._id;
+              }}
+              showsVerticalScrollIndicator={false}
+              renderItem={({ item }) => {
+                return (
+                  <View style={{ marginBottom: 20 }}>
+                    <ProductCard
+                      stock={item?.stock}
+                      name={item?.name}
+                      price={item?.price}
+                      image={item?.images[0]?.url}
+                      addToCartHandler={addToCartHandler}
+                      id={item?._id}
+                      navigate={navigate}
+                    />
+                  </View>
+                );
+              }}
+            />
+          )}
         </View>
       </SafeAreaView>
     </View>

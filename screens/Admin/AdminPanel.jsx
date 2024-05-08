@@ -66,6 +66,7 @@ const AdminPanel = ({ navigation }) => {
     indexOfFirstProduct,
     indexOfLastProduct
   );
+
   const totalPages = Math.ceil(products.length / 10);
 
   return (
@@ -130,14 +131,14 @@ const AdminPanel = ({ navigation }) => {
                   <ProductListItem
                     navigate={navigation}
                     deleteHandler={deleteProductHandler}
-                    key={item._id}
-                    id={item._id}
+                    key={item?._id}
+                    id={item?._id}
                     i={index}
-                    price={item.price}
-                    stock={item.stock}
-                    name={item.name}
-                    category={item.category?.category}
-                    imgSrc={item.images[0].url}
+                    price={item?.price}
+                    stock={item?.stock}
+                    name={item?.name}
+                    category={item?.category?.category}
+                    imgSrc={item?.images[0]?.url}
                   />
                 ))}
             </View>

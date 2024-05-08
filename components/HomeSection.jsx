@@ -8,16 +8,23 @@ import {
 } from 'react-native';
 
 import { textColors } from '../assets/colors/colors';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import ProductCard from './ProductCard';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 const HomeSection = ({ title, list }) => {
+  const { loading, isAuthenticated } = useSelector((state) => state.user);
   const navigate = useNavigation();
   const dispatch = useDispatch();
 
-  const addToCardHandler = (id, name, price, image, stock) => {
+  const addToCartHandler = (id, name, price, image, stock) => {
+    if (!isAuthenticated) {
+      return Toast.show({
+        type: 'error',
+        text1: 'Vui lòng đăng nhập',
+      });
+    }
     if (stock === 0)
       return Toast.show({
         type: 'error',
@@ -44,7 +51,11 @@ const HomeSection = ({ title, list }) => {
     <View>
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>{title}</Text>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigate.navigate('allproducts');
+          }}
+        >
           <Text style={styles.sectionMore}>Xem tất cả</Text>
         </TouchableOpacity>
       </View>
@@ -61,7 +72,7 @@ const HomeSection = ({ title, list }) => {
                 name={item.name}
                 price={item.price}
                 image={item.images[0]?.url}
-                addToCardHandler={addToCardHandler}
+                addToCartHandler={addToCartHandler}
                 id={item._id}
                 key={item._id}
                 navigate={navigate}

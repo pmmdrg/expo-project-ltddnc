@@ -1,22 +1,22 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
-import { colors, defaultStyle } from "../styles/styles";
-import Header from "../components/Header";
-import Heading from "../components/Heading";
-import { Button, RadioButton } from "react-native-paper";
-import { useDispatch, useSelector } from "react-redux";
-import { placeOrder } from "../redux/actions/otherAction";
-import { useMessageAndErrorOther } from "../utils/hooks";
-import { useStripe } from "@stripe/stripe-react-native";
-import { Toast } from "react-native-toast-message/lib/src/Toast";
-import axios from "axios";
-import { server } from "../redux/store";
-import Loader from "../components/Loader";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { backgroundColor } from "../assets/colors/colors";
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { colors, defaultStyle } from '../styles/styles';
+import Header from '../components/Header';
+import Heading from '../components/Heading';
+import { Button, RadioButton } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
+import { placeOrder } from '../redux/actions/otherAction';
+import { useMessageAndErrorOther } from '../utils/hooks';
+import { useStripe } from '@stripe/stripe-react-native';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import axios from 'axios';
+import { server } from '../redux/store';
+import Loader from '../components/Loader';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { backgroundColor } from '../assets/colors/colors';
 
 const Payment = ({ navigation, route }) => {
-  const [paymentMethod, setPaymentMethod] = useState("COD");
+  const [paymentMethod, setPaymentMethod] = useState('COD');
   const [loaderLoading, setLoaderLoading] = useState(false);
 
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ const Payment = ({ navigation, route }) => {
   const { cartItems } = useSelector((state) => state.cart);
 
   const redirectToLogin = () => {
-    navigation.navigate("login");
+    navigation.navigate('login');
   };
   const codHandler = (paymentInfo) => {
     const shippingInfo = {
@@ -56,7 +56,7 @@ const Payment = ({ navigation, route }) => {
   };
   const onlineHandler = async () => {
     // save to storage
-    const token = await AsyncStorage.getItem("token");
+    const token = await AsyncStorage.getItem('token');
 
     try {
       const {
@@ -68,7 +68,7 @@ const Payment = ({ navigation, route }) => {
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           withCredentials: true,
         }
@@ -76,31 +76,31 @@ const Payment = ({ navigation, route }) => {
 
       const init = await stripe.initPaymentSheet({
         paymentIntentClientSecret: client_secret,
-        merchantDisplayName: "6PackEcom",
+        merchantDisplayName: '6PackEcom',
       });
 
       if (init.error)
-        return Toast.show({ type: "error", text1: init.error.message });
+        return Toast.show({ type: 'error', text1: init.error.message });
 
       const presentSheet = await stripe.presentPaymentSheet();
       setLoaderLoading(true);
 
       if (presentSheet.error) {
         setLoaderLoading(false);
-        return Toast.show({ type: "error", text1: presentSheet.error.message });
+        return Toast.show({ type: 'error', text1: presentSheet.error.message });
       }
 
       const { paymentIntent } = await stripe.retrievePaymentIntent(
         client_secret
       );
 
-      if (paymentIntent.status === "Succeeded") {
+      if (paymentIntent.status === 'Succeeded') {
         codHandler({ id: paymentIntent.id, status: paymentIntent.status });
       }
     } catch (error) {
       return Toast.show({
-        type: "error",
-        text1: "Some Error",
+        type: 'error',
+        text1: 'Some Error',
         text2: error,
       });
     }
@@ -109,9 +109,9 @@ const Payment = ({ navigation, route }) => {
   const loading = useMessageAndErrorOther(
     dispatch,
     navigation,
-    "profile",
+    'profile',
     () => ({
-      type: "clearCart",
+      type: 'clearCart',
     })
   );
 
@@ -125,8 +125,8 @@ const Payment = ({ navigation, route }) => {
           paddingTop: 70,
           paddingHorizontal: 15,
         }}
-        text1="Payment"
-        text2="Method"
+        text1='Payment'
+        text2='Method'
       />
 
       <View style={{ paddingHorizontal: 15, flex: 1 }}>
@@ -140,7 +140,7 @@ const Payment = ({ navigation, route }) => {
               <RadioButton
                 color={colors.color2}
                 backgroundColor={colors.color3}
-                value={"COD"}
+                value={'COD'}
               />
             </View>
             <View style={styles.radioStyle}>
@@ -148,7 +148,7 @@ const Payment = ({ navigation, route }) => {
               <RadioButton
                 color={colors.color2}
                 backgroundColor={colors.color3}
-                value={"ONLINE"}
+                value={'ONLINE'}
               />
             </View>
           </RadioButton.Group>
@@ -160,7 +160,7 @@ const Payment = ({ navigation, route }) => {
         onPress={
           !isAuthenticated
             ? redirectToLogin
-            : paymentMethod === "COD"
+            : paymentMethod === 'COD'
             ? () => codHandler()
             : onlineHandler
         }
@@ -171,10 +171,10 @@ const Payment = ({ navigation, route }) => {
           style={styles.btn}
           textColor={colors.color2}
           icon={
-            paymentMethod === "COD" ? "check-circle" : "circle-multiple-outline"
+            paymentMethod === 'COD' ? 'check-circle' : 'circle-multiple-outline'
           }
         >
-          {paymentMethod === "COD" ? "Place Order" : "Pay"}
+          {paymentMethod === 'COD' ? 'Place Order' : 'Pay'}
         </Button>
       </TouchableOpacity>
     </View>
@@ -186,19 +186,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginVertical: 20,
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
 
   radioStyle: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     marginVertical: 5,
   },
   radioStyleText: {
-    fontWeight: "600",
+    fontWeight: '600',
     fontSize: 18,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
     // color: colors.color2,
   },
   btn: {

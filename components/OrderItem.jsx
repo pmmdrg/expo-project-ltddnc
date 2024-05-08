@@ -1,7 +1,7 @@
-import { View, Text, StyleSheet } from "react-native";
-import React from "react";
-import { colors } from "../styles/styles";
-import { Button } from "react-native-paper";
+import { View, Text, StyleSheet } from 'react-native';
+import React from 'react';
+import { colors } from '../styles/styles';
+import { Button } from 'react-native-paper';
 
 const OrderItem = ({
   id,
@@ -31,20 +31,20 @@ const OrderItem = ({
         ID - #{id}
       </Text>
 
-      <TextBox title={"Address"} value={address} i={i} />
-      <TextBox title={"Ordered On"} value={orderedOn} i={i} />
-      <TextBox title={"Price"} value={price} i={i} />
-      <TextBox title={"Status"} value={status} i={i} />
-      <TextBox title={"Payment Method"} value={paymentMethod} i={i} />
+      <TextBox title={'Address'} value={address} i={i} />
+      <TextBox title={'Ordered On'} value={orderedOn} i={i} />
+      <TextBox title={'Price'} value={price} i={i} />
+      <TextBox title={'Status'} value={status} i={i} />
+      <TextBox title={'Payment Method'} value={paymentMethod} i={i} />
 
       {admin && (
         <Button
-          icon={"update"}
-          mode={"contained"}
+          icon={'update'}
+          mode={'contained'}
           textColor={i % 2 === 0 ? colors.color2 : colors.color3}
           style={{
             width: 120,
-            alignSelf: "center",
+            alignSelf: 'center',
             marginTop: 10,
             backgroundColor: i % 2 === 0 ? colors.color3 : colors.color2,
           }}
@@ -66,9 +66,8 @@ const TextBox = ({ title, value, i }) => (
       color: i % 2 === 0 ? colors.color3 : colors.color2,
     }}
   >
-    <Text style={{ fontWeight: "900" }}>{title} - </Text>
-    {title === "Price" ? "VND" : ""}
-    {value}
+    <Text style={{ fontWeight: '900' }}>{title} - </Text>
+    {`${value} ${title === 'Price' ? 'VND' : ''}`}
   </Text>
 );
 
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
   text: {
     color: colors.color2,
     fontSize: 16,
-    fontWeight: "900",
+    fontWeight: '900',
     marginHorizontal: -20,
     marginTop: -20,
     marginBottom: 10,

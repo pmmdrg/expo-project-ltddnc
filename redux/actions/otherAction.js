@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { server } from '../store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 
 export const updatePassword =
   (oldPassword, newPassword) => async (dispatch) => {
@@ -470,26 +471,37 @@ export const resetPassword = (otp, password) => async (dispatch) => {
 };
 
 export const postComment = (productId, comment, vote) => async (dispatch) => {
+  const token = await AsyncStorage.getItem('token');
+
   try {
     dispatch({ type: 'postCommentRequest' });
-    const isBought = await axios.get(
-      `${server}/user/havebought?productId=${productId}`
+    const { data } = await axios.get(
+      `${server}/user/havebought?productId=${productId}&token=${token}`
     );
-    console.log(isBought);
-    const { data } = await axios.post(
-      `${server}/product/comment/${productId}`,
-      { comment, vote },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      }
-    );
+    if (data.success) {
+      const { data } = await axios.post(
+        `${server}/product/comment?productId=${productId}&token=${token}`,
+        { comment, vote },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true,
+        }
+      );
 
-    dispatch({ type: 'postCommentSuccess', payload: data.message });
+      dispatch({ type: 'postCommentSuccess', payload: data.message });
+      Toast.show({
+        type: 'success',
+        text1: 'Đã đăng bình luận',
+      });
+    } else {
+      Toast.show({
+        type: 'error',
+        text1: 'Bạn chưa mua sản phẩm này',
+      });
+    }
   } catch (error) {
-    console.log('vao error: ' + error);
     dispatch({ type: 'postCommentFail', payload: error.response.data.message });
   }
 };

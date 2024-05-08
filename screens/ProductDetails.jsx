@@ -62,7 +62,13 @@ const ProductDetails = ({ route: { params } }) => {
     setQuantity((prev) => prev - 1);
   };
 
-  const addToCardHandler = () => {
+  const addToCartHandler = () => {
+    if (!isAuthenticated) {
+      return Toast.show({
+        type: 'error',
+        text1: 'Vui lòng đăng nhập',
+      });
+    }
     if (stock === 0)
       return Toast.show({
         type: 'error',
@@ -101,6 +107,8 @@ const ProductDetails = ({ route: { params } }) => {
     if (!loading) {
       dispatch(postComment(params.id, comment, vote));
     }
+    setComment('');
+    setVote(0);
   };
 
   useEffect(() => {
@@ -196,7 +204,7 @@ const ProductDetails = ({ route: { params } }) => {
               </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity activeOpacity={0.9} onPress={addToCardHandler}>
+          <TouchableOpacity activeOpacity={0.9} onPress={addToCartHandler}>
             <Button icon={'cart'} style={styles.btn} textColor={colors.color2}>
               <Text>Thêm vào giỏ hàng</Text>
             </Button>

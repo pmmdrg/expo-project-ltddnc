@@ -16,8 +16,7 @@ const ProductCard = ({
   price,
   image,
   id,
-  addToCardHandler,
-
+  addToCartHandler,
   navigate,
 }) => {
   const { user } = useSelector((state) => state.user);
@@ -58,7 +57,7 @@ const ProductCard = ({
           <Button
             onPress={
               user
-                ? () => addToCardHandler(id, name, price, image, stock)
+                ? () => addToCartHandler(id, name, price, image, stock)
                 : () =>
                     Toast.show({
                       type: 'error',

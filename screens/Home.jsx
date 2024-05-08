@@ -47,6 +47,8 @@ const Home = () => {
   const { products } = useSelector((state) => state.product);
   const { user } = useSelector((state) => state.user);
 
+  const displayProduct = products.slice(0, 10);
+
   const categoryButtonHandler = (category) => {
     setCategory(category);
   };
@@ -172,10 +174,10 @@ const Home = () => {
         </View>
 
         {/* Products */}
-        <HomeSection title='Sản phẩm nổi bật' list={products} />
-        <HomeSection title='Bán chạy nhất' list={products} />
-        <HomeSection title='Hàng mới về' list={products} />
-        <HomeSection title='Ưu đãi đặc biệt' list={products} />
+        <HomeSection title='Sản phẩm nổi bật' list={displayProduct} />
+        <HomeSection title='Bán chạy nhất' list={displayProduct} />
+        <HomeSection title='Hàng mới về' list={displayProduct} />
+        <HomeSection title='Ưu đãi đặc biệt' list={displayProduct} />
       </ScrollView>
 
       <Footer />
