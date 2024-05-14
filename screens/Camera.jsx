@@ -1,9 +1,9 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
-import { Camera, CameraType } from "expo-camera";
-import { Avatar } from "react-native-paper";
-import { colors, defaultStyle } from "../styles/styles";
-import * as ImagePicker from "expo-image-picker";
+import { View, Text, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Camera, CameraType } from 'expo-camera';
+import { Avatar } from 'react-native-paper';
+import { colors, defaultStyle } from '../styles/styles';
+import * as ImagePicker from 'expo-image-picker';
 
 const CameraComponent = ({ navigation, route }) => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -14,25 +14,25 @@ const CameraComponent = ({ navigation, route }) => {
       await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (permissionResult.granted === false)
-      return alert("Permission to access gallery is required");
+      return alert('Permission to access gallery is required');
 
     const data = await ImagePicker.launchImageLibraryAsync();
 
     if (route.params?.newProduct)
-      return navigation.navigate("newproduct", {
+      return navigation.navigate('newproduct', {
         image: data.assets[0].uri,
       });
 
     if (route.params?.updateProduct)
-      return navigation.navigate("productimages", {
+      return navigation.navigate('productimages', {
         image: data.assets[0].uri,
       });
     if (route.params?.updateProfile)
-      return navigation.navigate("profile", {
+      return navigation.navigate('profile', {
         image: data.assets[0].uri,
       });
     else
-      return navigation.navigate("signup", {
+      return navigation.navigate('signup', {
         image: data.assets[0].uri,
       });
   };
@@ -41,20 +41,20 @@ const CameraComponent = ({ navigation, route }) => {
     const data = await camera.takePictureAsync();
 
     if (route.params?.newProduct)
-      return navigation.navigate("newproduct", {
+      return navigation.navigate('newproduct', {
         image: data.uri,
       });
 
     if (route.params?.updateProduct)
-      return navigation.navigate("productimages", {
+      return navigation.navigate('productimages', {
         image: data.uri,
       });
     if (route.params?.updateProfile)
-      return navigation.navigate("profile", {
+      return navigation.navigate('profile', {
         image: data.uri,
       });
     else
-      return navigation.navigate("signup", {
+      return navigation.navigate('signup', {
         image: data.uri,
       });
   };
@@ -62,7 +62,7 @@ const CameraComponent = ({ navigation, route }) => {
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === "granted");
+      setHasPermission(status === 'granted');
     })();
   }, []);
 
@@ -71,7 +71,7 @@ const CameraComponent = ({ navigation, route }) => {
   if (hasPermission === false)
     return (
       <View style={defaultStyle}>
-        <Text>No access to camera</Text>
+        <Text>Không có quyền truy cập vào camera</Text>
       </View>
     );
 
@@ -87,23 +87,23 @@ const CameraComponent = ({ navigation, route }) => {
           flex: 1,
           aspectRatio: 1,
         }}
-        ratio={"1:1"}
+        ratio={'1:1'}
         ref={(e) => setCamera(e)}
       />
 
       <View
         style={{
-          flexDirection: "row",
+          flexDirection: 'row',
           bottom: 10,
-          width: "100%",
-          justifyContent: "space-evenly",
-          position: "absolute",
+          width: '100%',
+          justifyContent: 'space-evenly',
+          position: 'absolute',
         }}
       >
-        <MyIcon icon="image" handler={openImagePicker} />
-        <MyIcon icon="camera" handler={clickPicture} />
+        <MyIcon icon='image' handler={openImagePicker} />
+        <MyIcon icon='camera' handler={clickPicture} />
         <MyIcon
-          icon="camera-flip"
+          icon='camera-flip'
           handler={() => {
             setType((prevType) =>
               prevType === CameraType.back ? CameraType.front : CameraType.back

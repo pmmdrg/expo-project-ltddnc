@@ -1,32 +1,32 @@
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
-import Header from "../../components/Header";
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import Header from '../../components/Header';
 import {
   colors,
   defaultStyle,
   formHeading,
   inputOptions,
   inputStyling,
-} from "../../styles/styles";
-import { Avatar, Button, TextInput } from "react-native-paper";
-import SelectComponent from "../../components/SelectComponent";
-import { useSetCategories, useMessageAndErrorOther } from "../../utils/hooks";
-import { useIsFocused } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
-import mime from "mime";
-import { createProduct } from "../../redux/actions/otherAction";
+} from '../../styles/styles';
+import { Avatar, Button, TextInput } from 'react-native-paper';
+import SelectComponent from '../../components/SelectComponent';
+import { useSetCategories, useMessageAndErrorOther } from '../../utils/hooks';
+import { useIsFocused } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import mime from 'mime';
+import { createProduct } from '../../redux/actions/otherAction';
 
 const NewProduct = ({ navigation, route }) => {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
 
-  const [image, setImage] = useState("");
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [stock, setStock] = useState("");
-  const [category, setCategory] = useState("Choose Category");
+  const [image, setImage] = useState('');
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [price, setPrice] = useState('');
+  const [stock, setStock] = useState('');
+  const [category, setCategory] = useState('Choose Category');
   const [categoryID, setCategoryID] = useState(undefined);
   const [categories, setCategories] = useState([]);
 
@@ -37,22 +37,22 @@ const NewProduct = ({ navigation, route }) => {
 
   const submitHandler = () => {
     const myForm = new FormData();
-    myForm.append("name", name);
-    myForm.append("description", description);
-    myForm.append("price", price);
-    myForm.append("stock", stock);
-    myForm.append("file", {
+    myForm.append('name', name);
+    myForm.append('description', description);
+    myForm.append('price', price);
+    myForm.append('stock', stock);
+    myForm.append('file', {
       uri: image,
       type: mime.getType(image),
-      name: image.split("/").pop(),
+      name: image.split('/').pop(),
     });
 
-    if (categoryID) myForm.append("category", categoryID);
+    if (categoryID) myForm.append('category', categoryID);
 
     dispatch(createProduct(myForm));
   };
 
-  const loading = useMessageAndErrorOther(dispatch, navigation, "adminpanel");
+  const loading = useMessageAndErrorOther(dispatch, navigation, 'adminpanel');
 
   useEffect(() => {
     if (route.params?.image) setImage(route.params.image);
@@ -70,7 +70,7 @@ const NewProduct = ({ navigation, route }) => {
 
         {/* Heading */}
         <View style={{ marginBottom: 20, paddingTop: 70 }}>
-          <Text style={formHeading}>New Product</Text>
+          <Text style={formHeading}>Sản phẩm mới</Text>
         </View>
 
         <ScrollView
@@ -83,7 +83,7 @@ const NewProduct = ({ navigation, route }) => {
         >
           <View
             style={{
-              justifyContent: "center",
+              justifyContent: 'center',
               height: 650,
             }}
           >
@@ -91,7 +91,7 @@ const NewProduct = ({ navigation, route }) => {
               style={{
                 width: 80,
                 height: 80,
-                alignSelf: "center",
+                alignSelf: 'center',
                 marginBottom: 20,
               }}
             >
@@ -106,16 +106,16 @@ const NewProduct = ({ navigation, route }) => {
               />
               <TouchableOpacity
                 onPress={() =>
-                  navigation.navigate("camera", { newProduct: true })
+                  navigation.navigate('camera', { newProduct: true })
                 }
               >
                 <Avatar.Icon
-                  icon={"camera"}
+                  icon={'camera'}
                   size={30}
                   color={colors.color3}
                   style={{
                     backgroundColor: colors.color2,
-                    position: "absolute",
+                    position: 'absolute',
                     bottom: 0,
                     right: -5,
                   }}
@@ -125,28 +125,28 @@ const NewProduct = ({ navigation, route }) => {
 
             <TextInput
               {...inputOptions}
-              placeholder="Name"
+              placeholder='Tên'
               value={name}
               onChangeText={setName}
             />
             <TextInput
               {...inputOptions}
-              placeholder="Description"
+              placeholder='Mô tả'
               value={description}
               onChangeText={setDescription}
             />
 
             <TextInput
               {...inputOptions}
-              placeholder="Price"
-              keyboardType="number-pad"
+              placeholder='Giá'
+              keyboardType='number-pad'
               value={price}
               onChangeText={setPrice}
             />
             <TextInput
               {...inputOptions}
-              keyboardType="number-pad"
-              placeholder="Stock"
+              keyboardType='number-pad'
+              placeholder='Hàng trong kho'
               value={stock}
               onChangeText={setStock}
             />
@@ -154,8 +154,8 @@ const NewProduct = ({ navigation, route }) => {
             <Text
               style={{
                 ...inputStyling,
-                textAlign: "center",
-                textAlignVertical: "center",
+                textAlign: 'center',
+                textAlignVertical: 'center',
                 borderRadius: 3,
               }}
               onPress={() => setVisible(true)}
@@ -174,7 +174,7 @@ const NewProduct = ({ navigation, route }) => {
               loading={loading}
               disabled={disableBtnCondition || loading}
             >
-              Create
+              Tạo
             </Button>
           </View>
         </ScrollView>

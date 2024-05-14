@@ -6,11 +6,11 @@ import { backgroundColor, textColors } from '../assets/colors/colors';
 const ProductListHeading = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Image</Text>
-      <Text style={styles.text}>Price</Text>
-      <Text style={{ ...styles.text, width: null, maxWidth: 120 }}>Name</Text>
-      <Text style={{ ...styles.text, width: 60 }}>Category</Text>
-      <Text style={styles.text}>Stock</Text>
+      <Text style={styles.text}>Ảnh</Text>
+      <Text style={styles.text}>Giá</Text>
+      <Text style={{ ...styles.text, width: 110 }}>Tên</Text>
+      <Text style={{ ...styles.text, width: 80 }}>Danh mục</Text>
+      <Text style={{ ...styles.text, width: 70 }}>Trong kho</Text>
     </View>
   );
 };
@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: backgroundColor.secondaryBackground,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     height: 40,
     alignItems: 'center',
     borderRadius: 5,
@@ -27,7 +26,7 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    width: 40,
+    width: 60,
     color: textColors.primaryText,
     fontWeight: '900',
   },

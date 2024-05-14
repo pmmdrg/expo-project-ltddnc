@@ -1,28 +1,28 @@
-import { View, Text } from "react-native";
-import React, { useState } from "react";
+import { View, Text } from 'react-native';
+import React, { useState } from 'react';
 import {
   colors,
   defaultStyle,
   formHeading,
   inputOptions,
   formStyles as styles,
-} from "../styles/styles";
-import { Button, TextInput } from "react-native-paper";
-import Header from "../components/Header";
-import { useDispatch } from "react-redux";
-import { updatePassword } from "../redux/actions/otherAction";
-import { useMessageAndErrorOther } from "../utils/hooks";
+} from '../styles/styles';
+import { Button, TextInput } from 'react-native-paper';
+import Header from '../components/Header';
+import { useDispatch } from 'react-redux';
+import { updatePassword } from '../redux/actions/otherAction';
+import { useMessageAndErrorOther } from '../utils/hooks';
 
 const ChangePassword = () => {
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
   const dispatch = useDispatch();
   const loading = useMessageAndErrorOther(dispatch);
 
   const submitHandler = () => {
     dispatch(updatePassword(oldPassword, newPassword));
-    setOldPassword("");
-    setNewPassword("");
+    setOldPassword('');
+    setNewPassword('');
   };
   return (
     <View style={defaultStyle}>
@@ -30,18 +30,18 @@ const ChangePassword = () => {
 
       <View style={styles.container}>
         <View style={{ marginBottom: 20 }}>
-          <Text style={formHeading}>Change Password</Text>
+          <Text style={formHeading}>Thay đổi mật khẩu</Text>
         </View>
         <TextInput
           {...inputOptions}
-          placeholder="Old Password"
+          placeholder='Mật khẩu cũ'
           secureTextEntry={true}
           value={oldPassword}
           onChangeText={setOldPassword}
         />
         <TextInput
           {...inputOptions}
-          placeholder="New Password"
+          placeholder='Mật khẩu mới'
           secureTextEntry={true}
           value={newPassword}
           onChangeText={setNewPassword}
@@ -53,7 +53,7 @@ const ChangePassword = () => {
           style={styles.btn}
           onPress={submitHandler}
         >
-          Change
+          Thay đổi
         </Button>
       </View>
     </View>

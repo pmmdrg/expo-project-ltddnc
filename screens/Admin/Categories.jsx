@@ -4,23 +4,23 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-} from "react-native";
-import React, { useState } from "react";
+} from 'react-native';
+import React, { useState } from 'react';
 import {
   colors,
   defaultStyle,
   formHeading,
   inputOptions,
-} from "../../styles/styles";
-import Header from "../../components/Header";
-import { Avatar, Button, TextInput } from "react-native-paper";
-import { useMessageAndErrorOther, useSetCategories } from "../../utils/hooks";
-import { useIsFocused } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
-import { addCategory, deleteCategory } from "../../redux/actions/otherAction";
+} from '../../styles/styles';
+import Header from '../../components/Header';
+import { Avatar, Button, TextInput } from 'react-native-paper';
+import { useMessageAndErrorOther, useSetCategories } from '../../utils/hooks';
+import { useIsFocused } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { addCategory, deleteCategory } from '../../redux/actions/otherAction';
 
 const Categories = ({ navigation }) => {
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState('');
   const [categories, setCategories] = useState([]);
 
   const isFocused = useIsFocused();
@@ -28,7 +28,7 @@ const Categories = ({ navigation }) => {
 
   useSetCategories(setCategories, isFocused);
 
-  const loading = useMessageAndErrorOther(dispatch, navigation, "adminpanel");
+  const loading = useMessageAndErrorOther(dispatch, navigation, 'adminpanel');
 
   const deleteHandler = (id) => {
     dispatch(deleteCategory(id));
@@ -44,7 +44,7 @@ const Categories = ({ navigation }) => {
 
       {/* Heading */}
       <View style={{ marginBottom: 20, paddingTop: 70 }}>
-        <Text style={formHeading}>Categories</Text>
+        <Text style={formHeading}>Danh mục</Text>
       </View>
 
       <ScrollView
@@ -73,7 +73,7 @@ const Categories = ({ navigation }) => {
       <View style={styles.container}>
         <TextInput
           {...inputOptions}
-          placeholder="Category"
+          placeholder='Danh mục'
           value={category}
           onChangeText={setCategory}
         />
@@ -89,7 +89,7 @@ const Categories = ({ navigation }) => {
           disabled={!category}
           onPress={submitHandler}
         >
-          Add
+          Thêm
         </Button>
       </View>
     </View>
@@ -101,7 +101,7 @@ const CategoryCard = ({ name, id, deleteHandler }) => (
     <Text style={styles.cardText}>{name}</Text>
     <TouchableOpacity onPress={() => deleteHandler(id)}>
       <Avatar.Icon
-        icon={"delete"}
+        icon={'delete'}
         size={30}
         style={{
           backgroundColor: colors.color1,
@@ -125,14 +125,14 @@ const styles = StyleSheet.create({
     elevation: 5,
     margin: 10,
     padding: 15,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     borderRadius: 10,
   },
   cardText: {
-    fontWeight: "600",
-    textTransform: "uppercase",
+    fontWeight: '600',
+    textTransform: 'uppercase',
     letterSpacing: 1,
   },
 });

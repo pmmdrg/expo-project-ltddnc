@@ -37,6 +37,7 @@ const ProductListItem = ({
             style={{
               width: 40,
               height: 40,
+              marginEnd: 20,
               resizeMode: 'contain',
             }}
           />
@@ -45,16 +46,18 @@ const ProductListItem = ({
             style={{
               width: 60,
               color: textColors.primaryText,
+              paddingEnd: 5,
             }}
             numberOfLines={1}
           >
-            {price} VND
+            {price}VND
           </Text>
 
           <Text
             style={{
-              maxWidth: 120,
+              width: 110,
               color: textColors.primaryText,
+              paddingEnd: 5,
             }}
             numberOfLines={1}
           >
@@ -63,8 +66,9 @@ const ProductListItem = ({
 
           <Text
             style={{
-              width: 60,
+              width: 80,
               color: textColors.primaryText,
+              paddingEnd: 5,
             }}
             numberOfLines={1}
           >
@@ -73,8 +77,9 @@ const ProductListItem = ({
 
           <Text
             style={{
-              width: 40,
+              width: 70,
               color: textColors.primaryText,
+              paddingEnd: 5,
             }}
             numberOfLines={1}
           >
@@ -98,7 +103,6 @@ const ProductListItem = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     height: 70,
     alignItems: 'center',
     padding: 10,

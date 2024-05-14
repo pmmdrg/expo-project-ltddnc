@@ -4,8 +4,8 @@ import {
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
-} from "react-native";
-import React, { useEffect, useState } from "react";
+} from 'react-native';
+import React, { useEffect, useState } from 'react';
 import {
   colors,
   defaultStyle,
@@ -13,23 +13,23 @@ import {
   inputOptions,
   formStyles as styles,
   defaultImg,
-} from "../styles/styles";
-import { Avatar, Button, TextInput } from "react-native-paper";
-import Footer from "../components/Footer";
-import mime from "mime";
-import { useDispatch } from "react-redux";
-import { register } from "../redux/actions/userActions";
-import { useMessageAndErrorUser } from "../utils/hooks";
+} from '../styles/styles';
+import { Avatar, Button, TextInput } from 'react-native-paper';
+import Footer from '../components/Footer';
+import mime from 'mime';
+import { useDispatch } from 'react-redux';
+import { register } from '../redux/actions/userActions';
+import { useMessageAndErrorUser } from '../utils/hooks';
 
 const SignUp = ({ navigation, route }) => {
-  const [avatar, setAvatar] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
-  const [pinCode, setPinCode] = useState("");
+  const [avatar, setAvatar] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [address, setAddress] = useState('');
+  const [city, setCity] = useState('');
+  const [country, setCountry] = useState('');
+  const [pinCode, setPinCode] = useState('');
 
   const dispatch = useDispatch();
 
@@ -39,26 +39,26 @@ const SignUp = ({ navigation, route }) => {
   const submitHandler = () => {
     const myForm = new FormData();
 
-    myForm.append("name", name);
-    myForm.append("email", email);
-    myForm.append("password", password);
-    myForm.append("address", address);
-    myForm.append("city", city);
-    myForm.append("country", country);
-    myForm.append("pinCode", pinCode);
+    myForm.append('name', name);
+    myForm.append('email', email);
+    myForm.append('password', password);
+    myForm.append('address', address);
+    myForm.append('city', city);
+    myForm.append('country', country);
+    myForm.append('pinCode', pinCode);
 
-    if (avatar !== "") {
-      myForm.append("file", {
+    if (avatar !== '') {
+      myForm.append('file', {
         uri: avatar,
         type: mime.getType(avatar),
-        name: avatar.split("/").pop(),
+        name: avatar.split('/').pop(),
       });
     }
 
     dispatch(register(myForm));
   };
 
-  const loading = useMessageAndErrorUser(navigation, dispatch, "profile");
+  const loading = useMessageAndErrorUser(navigation, dispatch, 'profile');
 
   useEffect(() => {
     if (route.params?.image) setAvatar(route.params.image);
@@ -76,7 +76,7 @@ const SignUp = ({ navigation, route }) => {
           <View style={{ minHeight: 900, paddingTop: 20, paddingBottom: 100 }}>
             <Avatar.Image
               style={{
-                alignSelf: "center",
+                alignSelf: 'center',
                 backgroundColor: colors.color1,
               }}
               size={80}
@@ -84,22 +84,22 @@ const SignUp = ({ navigation, route }) => {
                 uri: avatar ? avatar : defaultImg,
               }}
             />
-            <TouchableOpacity onPress={() => navigation.navigate("camera")}>
-              <Button textColor={colors.color1}>Change Photo</Button>
+            <TouchableOpacity onPress={() => navigation.navigate('camera')}>
+              <Button textColor={colors.color1}>Thay đổi ảnh</Button>
             </TouchableOpacity>
 
             <TextInput
               {...inputOptions}
-              placeholder="Name"
+              placeholder='Tên'
               value={name}
               onChangeText={setName}
             />
 
             <TextInput
               {...inputOptions}
-              placeholder="Email"
-              autoCapitalize="none"
-              keyboardType="email-address"
+              placeholder='Email'
+              autoCapitalize='none'
+              keyboardType='email-address'
               value={email}
               onChangeText={setEmail}
             />
@@ -107,34 +107,34 @@ const SignUp = ({ navigation, route }) => {
             <TextInput
               {...inputOptions}
               secureTextEntry={true}
-              placeholder="Password"
-              autoCapitalize="none"
+              placeholder='Mật khẩu'
+              autoCapitalize='none'
               value={password}
               onChangeText={setPassword}
             />
 
             <TextInput
               {...inputOptions}
-              placeholder="Address"
+              placeholder='Địa chỉ'
               value={address}
               onChangeText={setAddress}
             />
             <TextInput
               {...inputOptions}
-              placeholder="City"
+              placeholder='Thành phố'
               value={city}
               onChangeText={setCity}
             />
             <TextInput
               {...inputOptions}
-              placeholder="Country"
+              placeholder='Quốc gia'
               value={country}
               onChangeText={setCountry}
             />
 
             <TextInput
               {...inputOptions}
-              placeholder="Pin Code"
+              placeholder='Mã bưu chính'
               value={pinCode}
               onChangeText={setPinCode}
             />
@@ -145,24 +145,24 @@ const SignUp = ({ navigation, route }) => {
               style={styles.btn}
               onPress={submitHandler}
             >
-              Sign Up
+              Đăng ký
             </Button>
 
-            <Text style={styles.or}>OR</Text>
+            <Text style={styles.or}>Hoặc</Text>
 
             <Button
               loading={loading}
               textColor={colors.color2}
               style={styles.btn}
-              onPress={() => navigation.navigate("login")}
+              onPress={() => navigation.navigate('login')}
             >
-              Login
+              Đăng nhập
             </Button>
           </View>
         </ScrollView>
       </View>
 
-      <Footer activeRoute="profile" />
+      <Footer activeRoute='profile' />
     </SafeAreaView>
   );
 };

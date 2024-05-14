@@ -31,11 +31,11 @@ const OrderItem = ({
         ID - #{id}
       </Text>
 
-      <TextBox title={'Address'} value={address} i={i} />
-      <TextBox title={'Ordered On'} value={orderedOn} i={i} />
-      <TextBox title={'Price'} value={price} i={i} />
-      <TextBox title={'Status'} value={status} i={i} />
-      <TextBox title={'Payment Method'} value={paymentMethod} i={i} />
+      <TextBox title={'Địa chỉ'} value={address} i={i} />
+      <TextBox title={'Đặt hàng vào'} value={orderedOn} i={i} />
+      <TextBox title={'Giá'} value={price} i={i} />
+      <TextBox title={'Trạng thái'} value={status} i={i} />
+      <TextBox title={'Phương thức thanh toán'} value={paymentMethod} i={i} />
 
       {admin && (
         <Button
@@ -52,7 +52,7 @@ const OrderItem = ({
           loading={loading}
           disabled={loading}
         >
-          Update
+          Cập nhật
         </Button>
       )}
     </View>
@@ -67,7 +67,7 @@ const TextBox = ({ title, value, i }) => (
     }}
   >
     <Text style={{ fontWeight: '900' }}>{title} - </Text>
-    {`${value} ${title === 'Price' ? 'VND' : ''}`}
+    {`${value} ${title === 'Giá' ? 'VND' : ''}`}
   </Text>
 );
 

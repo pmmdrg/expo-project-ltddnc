@@ -4,10 +4,10 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-} from "react-native";
-import React from "react";
-import { Avatar, Headline } from "react-native-paper";
-import { colors } from "../styles/styles";
+} from 'react-native';
+import React from 'react';
+import { Avatar, Headline } from 'react-native-paper';
+import { colors } from '../styles/styles';
 
 const SelectComponent = ({
   visible,
@@ -29,13 +29,13 @@ const SelectComponent = ({
           <Avatar.Icon
             size={30}
             style={{
-              alignSelf: "flex-end",
+              alignSelf: 'flex-end',
               backgroundColor: colors.color1,
             }}
-            icon={"close"}
+            icon={'close'}
           />
         </TouchableOpacity>
-        <Headline style={styles.heading}> Select a Category</Headline>
+        <Headline style={styles.heading}> Chọn danh mục</Headline>
         <ScrollView>
           {categories.map((i) => (
             <Text
@@ -57,17 +57,17 @@ export default SelectComponent;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.color2,
-    position: "absolute",
+    position: 'absolute',
     padding: 35,
     borderRadius: 20,
-    width: "90%",
-    height: "90%",
-    alignSelf: "center",
+    width: '90%',
+    height: '90%',
+    alignSelf: 'center',
     elevation: 5,
     top: 50,
   },
   heading: {
-    textAlign: "center",
+    textAlign: 'center',
     marginVertical: 10,
     backgroundColor: colors.color3,
     borderRadius: 5,
@@ -76,8 +76,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 17,
-    fontWeight: "100",
-    textTransform: "uppercase",
+    fontWeight: '100',
+    textTransform: 'uppercase',
     marginVertical: 10,
   },
 });

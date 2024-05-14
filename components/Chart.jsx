@@ -9,13 +9,13 @@ const screenWidth = Dimensions.get('screen').width - 60 - 75;
 const Chart = ({ inStock = 0, outOfStock = 0 }) => {
   const data = [
     {
-      name: 'Out of Stock',
+      name: 'Hết hàng',
       population: outOfStock,
       color: colors.color1_light,
       legendFontColor: textColors.primaryText,
     },
     {
-      name: 'In Stock',
+      name: 'Còn hàng',
       population: inStock,
       color: colors.color1_light2,
       legendFontColor: textColors.primaryText,

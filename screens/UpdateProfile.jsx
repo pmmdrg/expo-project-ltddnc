@@ -43,12 +43,12 @@ const UpdateProfile = ({ navigation }) => {
       >
         {/* Heading */}
         <View style={{ marginBottom: 10, paddingTop: 70 }}>
-          <Text style={formHeading}>Edit Profile</Text>
+          <Text style={formHeading}>Chỉnh sửa hồ sơ</Text>
         </View>
         <View>
           <TextInput
             {...inputOptions}
-            placeholder='Name'
+            placeholder='Tên'
             value={name}
             onChangeText={setName}
           />
@@ -63,26 +63,26 @@ const UpdateProfile = ({ navigation }) => {
 
           <TextInput
             {...inputOptions}
-            placeholder='Address'
+            placeholder='Địa chỉ'
             value={address}
             onChangeText={setAddress}
           />
           <TextInput
             {...inputOptions}
-            placeholder='City'
+            placeholder='Thành phố'
             value={city}
             onChangeText={setCity}
           />
           <TextInput
             {...inputOptions}
-            placeholder='Country'
+            placeholder='Quốc gia'
             value={country}
             onChangeText={setCountry}
           />
 
           <TextInput
             {...inputOptions}
-            placeholder='Pin Code'
+            placeholder='Mã bưu chính'
             value={pinCode}
             onChangeText={setPinCode}
           />
@@ -93,7 +93,7 @@ const UpdateProfile = ({ navigation }) => {
             style={styles.btn}
             onPress={submitHandler}
           >
-            Update
+            Cập nhật
           </Button>
         </View>
       </ScrollView>

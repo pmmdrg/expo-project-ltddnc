@@ -1,21 +1,21 @@
-import { View, Text, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
-import Header from "../../components/Header";
+import { View, Text, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import Header from '../../components/Header';
 import {
   colors,
   defaultStyle,
   formHeading,
   inputOptions,
   inputStyling,
-} from "../../styles/styles";
-import Loader from "../../components/Loader";
-import { Button, TextInput } from "react-native-paper";
-import SelectComponent from "../../components/SelectComponent";
-import { useMessageAndErrorOther, useSetCategories } from "../../utils/hooks";
-import { useIsFocused } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";
-import { getProductDetails } from "../../redux/actions/productAction";
-import { updateProduct } from "../../redux/actions/otherAction";
+} from '../../styles/styles';
+import Loader from '../../components/Loader';
+import { Button, TextInput } from 'react-native-paper';
+import SelectComponent from '../../components/SelectComponent';
+import { useMessageAndErrorOther, useSetCategories } from '../../utils/hooks';
+import { useIsFocused } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProductDetails } from '../../redux/actions/productAction';
+import { updateProduct } from '../../redux/actions/otherAction';
 
 const UpdateProduct = ({ navigation, route }) => {
   const isFocused = useIsFocused();
@@ -25,12 +25,12 @@ const UpdateProduct = ({ navigation, route }) => {
   const { product, loading } = useSelector((state) => state.product);
 
   const [id] = useState(route.params.id);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [stock, setStock] = useState("");
-  const [category, setCategory] = useState("");
-  const [categoryID, setCategoryID] = useState("");
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [price, setPrice] = useState('');
+  const [stock, setStock] = useState('');
+  const [category, setCategory] = useState('');
+  const [categoryID, setCategoryID] = useState('');
   const [categories, setCategories] = useState([]);
 
   useSetCategories(setCategories, isFocused);
@@ -42,7 +42,7 @@ const UpdateProduct = ({ navigation, route }) => {
   const loadingOther = useMessageAndErrorOther(
     dispatch,
     navigation,
-    "adminpanel"
+    'adminpanel'
   );
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const UpdateProduct = ({ navigation, route }) => {
 
         {/* Heading */}
         <View style={{ marginBottom: 20, paddingTop: 70 }}>
-          <Text style={formHeading}>Update Product</Text>
+          <Text style={formHeading}>Cập nhật sản phẩm</Text>
         </View>
 
         {loading ? (
@@ -88,55 +88,55 @@ const UpdateProduct = ({ navigation, route }) => {
           >
             <View
               style={{
-                justifyContent: "center",
+                justifyContent: 'center',
                 height: 650,
               }}
             >
               <Button
                 onPress={() =>
-                  navigation.navigate("productimages", {
+                  navigation.navigate('productimages', {
                     id,
                     images: product.images,
                   })
                 }
                 textColor={colors.color1}
               >
-                Manage Images
+                Quản lý hình ảnh
               </Button>
 
               <TextInput
                 {...inputOptions}
-                placeholder="Name"
+                placeholder='Tên'
                 value={name}
                 onChangeText={setName}
               />
               <TextInput
                 {...inputOptions}
-                placeholder="Description"
+                placeholder='Mô tả'
                 value={description}
                 onChangeText={setDescription}
               />
 
               <TextInput
                 {...inputOptions}
-                placeholder="Price"
-                keyboardType="number-pad"
+                placeholder='Giá'
+                keyboardType='number-pad'
                 value={price}
                 onChangeText={setPrice}
               />
               <TextInput
                 {...inputOptions}
-                placeholder="Stock"
+                placeholder='Hàng trong kho'
                 value={stock}
-                keyboardType="number-pad"
+                keyboardType='number-pad'
                 onChangeText={setStock}
               />
 
               <Text
                 style={{
                   ...inputStyling,
-                  textAlign: "center",
-                  textAlignVertical: "center",
+                  textAlign: 'center',
+                  textAlignVertical: 'center',
                   borderRadius: 3,
                 }}
                 onPress={() => setVisible(true)}
@@ -155,7 +155,7 @@ const UpdateProduct = ({ navigation, route }) => {
                 loading={loadingOther}
                 disabled={loadingOther}
               >
-                Update
+                Cập nhật
               </Button>
             </View>
           </ScrollView>

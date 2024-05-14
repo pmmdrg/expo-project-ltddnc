@@ -50,9 +50,9 @@ const styles = StyleSheet.create({
   incDecBtn: {
     borderWidth: 1,
     borderColor: 'black',
-    borderRadius: 100,
-    height: 30,
-    width: 30,
+    borderRadius: 5,
+    height: 40,
+    width: 40,
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: 10,

@@ -74,7 +74,7 @@ const AdminPanel = ({ navigation }) => {
       <Header back={true} />
       {/* Heading */}
       <View style={{ paddingTop: 70, marginBottom: 20 }}>
-        <Text style={formHeading}>Admin Panel</Text>
+        <Text style={formHeading}>Bảng điều khiển admin</Text>
       </View>
 
       {loading ? (

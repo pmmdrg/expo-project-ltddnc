@@ -25,6 +25,7 @@ import { colors } from '../styles/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductByName } from '../redux/actions/productAction';
 import ProductCard from './ProductCard';
+import Toast from 'react-native-toast-message';
 
 const SearchModal = ({
   searchQuery,

@@ -100,7 +100,7 @@ const Payment = ({ navigation, route }) => {
     } catch (error) {
       return Toast.show({
         type: 'error',
-        text1: 'Some Error',
+        text1: 'Xảy ra lỗi',
         text2: error,
       });
     }
@@ -125,8 +125,8 @@ const Payment = ({ navigation, route }) => {
           paddingTop: 70,
           paddingHorizontal: 15,
         }}
-        text1='Payment'
-        text2='Method'
+        text1='Phương thức'
+        text2='Thanh toán'
       />
 
       <View style={{ paddingHorizontal: 15, flex: 1 }}>
@@ -136,7 +136,9 @@ const Payment = ({ navigation, route }) => {
             value={paymentMethod}
           >
             <View style={styles.radioStyle}>
-              <Text style={styles.radioStyleText}>Cash On Delivery</Text>
+              <Text style={styles.radioStyleText}>
+                Thanh toán khi nhận hàng
+              </Text>
               <RadioButton
                 color={colors.color2}
                 backgroundColor={colors.color3}
@@ -144,7 +146,7 @@ const Payment = ({ navigation, route }) => {
               />
             </View>
             <View style={styles.radioStyle}>
-              <Text style={styles.radioStyleText}>ONLINE</Text>
+              <Text style={styles.radioStyleText}>Trực tuyến</Text>
               <RadioButton
                 color={colors.color2}
                 backgroundColor={colors.color3}
@@ -174,7 +176,7 @@ const Payment = ({ navigation, route }) => {
             paymentMethod === 'COD' ? 'check-circle' : 'circle-multiple-outline'
           }
         >
-          {paymentMethod === 'COD' ? 'Place Order' : 'Pay'}
+          {paymentMethod === 'COD' ? 'Đặt hàng' : 'Thanh toán'}
         </Button>
       </TouchableOpacity>
     </View>

@@ -1,24 +1,24 @@
-import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
-import React, { useState } from "react";
+import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
+import React, { useState } from 'react';
 import {
   colors,
   defaultStyle,
   formHeading,
   inputOptions,
   formStyles as styles,
-} from "../styles/styles";
-import { Button, TextInput } from "react-native-paper";
-import Footer from "../components/Footer";
-import { useDispatch } from "react-redux";
-import { login } from "../redux/actions/userActions";
-import { useMessageAndErrorUser } from "../utils/hooks";
+} from '../styles/styles';
+import { Button, TextInput } from 'react-native-paper';
+import Footer from '../components/Footer';
+import { useDispatch } from 'react-redux';
+import { login } from '../redux/actions/userActions';
+import { useMessageAndErrorUser } from '../utils/hooks';
 
 const Login = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
-  const loading = useMessageAndErrorUser(navigation, dispatch, "profile");
+  const loading = useMessageAndErrorUser(navigation, dispatch, 'profile');
 
   const submitHandler = () => {
     dispatch(login(email, password));
@@ -32,17 +32,17 @@ const Login = ({ navigation }) => {
           </View>
           <TextInput
             {...inputOptions}
-            placeholder="Email"
-            autoCapitalize="none"
-            keyboardType="email-address"
+            placeholder='Email'
+            autoCapitalize='none'
+            keyboardType='email-address'
             value={email}
             onChangeText={setEmail}
           />
 
           <TextInput
             {...inputOptions}
-            autoCapitalize="none"
-            placeholder="Password"
+            autoCapitalize='none'
+            placeholder='Mật khẩu'
             secureTextEntry={true}
             value={password}
             onChangeText={setPassword}
@@ -50,9 +50,9 @@ const Login = ({ navigation }) => {
 
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => navigation.navigate("forgetpassword")}
+            onPress={() => navigation.navigate('forgetpassword')}
           >
-            <Text style={styles.forget}>Forget Password?</Text>
+            <Text style={styles.forget}>Quên mật khẩu?</Text>
           </TouchableOpacity>
 
           <Button
@@ -61,22 +61,22 @@ const Login = ({ navigation }) => {
             style={styles.btn}
             onPress={submitHandler}
           >
-            Log In
+            Đăng nhập
           </Button>
 
-          <Text style={styles.or}>OR</Text>
+          <Text style={styles.or}>Đăng nhập</Text>
 
           <Button
             textColor={colors.color2}
             style={styles.btn}
-            onPress={() => navigation.navigate("signup")}
+            onPress={() => navigation.navigate('signup')}
           >
-            Sign Up
+            Đăng ký tài khoản
           </Button>
         </View>
       </View>
 
-      <Footer activeRoute="profile" />
+      <Footer activeRoute='profile' />
     </SafeAreaView>
   );
 };

@@ -1,16 +1,16 @@
-import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
-import { colors, defaultStyle, formHeading } from "../../styles/styles";
-import Header from "../../components/Header";
-import ImageCard from "../../components/ImageCard";
-import { Avatar, Button } from "react-native-paper";
-import { useMessageAndErrorOther } from "../../utils/hooks";
-import { useDispatch } from "react-redux";
-import mime from "mime";
+import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { colors, defaultStyle, formHeading } from '../../styles/styles';
+import Header from '../../components/Header';
+import ImageCard from '../../components/ImageCard';
+import { Avatar, Button } from 'react-native-paper';
+import { useMessageAndErrorOther } from '../../utils/hooks';
+import { useDispatch } from 'react-redux';
+import mime from 'mime';
 import {
   deleteProductImage,
   updateProductImage,
-} from "../../redux/actions/otherAction";
+} from '../../redux/actions/otherAction';
 
 const ProductImages = ({ navigation, route }) => {
   const [images] = useState(route.params.images);
@@ -20,7 +20,7 @@ const ProductImages = ({ navigation, route }) => {
 
   const dispatch = useDispatch();
 
-  const loading = useMessageAndErrorOther(dispatch, navigation, "adminpanel");
+  const loading = useMessageAndErrorOther(dispatch, navigation, 'adminpanel');
 
   const deleteHandler = (imageId) => {
     dispatch(deleteProductImage(productId, imageId));
@@ -29,10 +29,10 @@ const ProductImages = ({ navigation, route }) => {
   const submitHandler = () => {
     const myForm = new FormData();
 
-    myForm.append("file", {
+    myForm.append('file', {
       uri: image,
       type: mime.getType(image),
-      name: image.split("/").pop(),
+      name: image.split('/').pop(),
     });
 
     dispatch(updateProductImage(productId, myForm));
@@ -56,7 +56,7 @@ const ProductImages = ({ navigation, route }) => {
 
       {/* Heading */}
       <View style={{ marginBottom: 20, paddingTop: 70 }}>
-        <Text style={formHeading}>Images</Text>
+        <Text style={formHeading}>Hình ảnh</Text>
       </View>
 
       <ScrollView
@@ -94,26 +94,26 @@ const ProductImages = ({ navigation, route }) => {
             backgroundColor: colors.color2,
             width: 100,
             height: 100,
-            alignSelf: "center",
-            resizeMode: "contain",
+            alignSelf: 'center',
+            resizeMode: 'contain',
           }}
           source={{ uri: image }}
         />
 
         <View
           style={{
-            flexDirection: "row",
-            justifyContent: "center",
+            flexDirection: 'row',
+            justifyContent: 'center',
           }}
         >
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() =>
-              navigation.navigate("camera", { updateProduct: true })
+              navigation.navigate('camera', { updateProduct: true })
             }
           >
             <Avatar.Icon
-              icon={"camera"}
+              icon={'camera'}
               style={{
                 backgroundColor: colors.color2,
                 margin: 10,
@@ -134,7 +134,7 @@ const ProductImages = ({ navigation, route }) => {
           onPress={submitHandler}
           disabled={!imageChanged}
         >
-          Add
+          Thêm
         </Button>
       </View>
     </View>
