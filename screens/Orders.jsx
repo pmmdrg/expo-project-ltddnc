@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, SafeAreaView } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { colors, defaultStyle, formHeading } from '../styles/styles';
 import Header from '../components/Header';
 import Loader from '../components/Loader';
@@ -7,6 +7,7 @@ import { Headline } from 'react-native-paper';
 import OrderItem from '../components/OrderItem';
 import { useGetOrders } from '../utils/hooks';
 import { useIsFocused } from '@react-navigation/native';
+import Pagination from '../components/Pagination';
 
 const statusMaps = {
   Shipped: 'Vận chuyển',
@@ -14,9 +15,21 @@ const statusMaps = {
   Preparing: 'Đang chuẩn bị',
 };
 
+const paymentMaps = {
+  ONLINE: 'Trực tuyến',
+  COD: 'Thanh toán khi nhận hàng',
+};
+
 const Orders = () => {
+  const [curPage, setCurPage] = useState(1);
   const isFocused = useIsFocused();
   const { loading, orders } = useGetOrders(isFocused);
+
+  const indexOfLastOrder = curPage * 10;
+  const indexOfFirstOrder = indexOfLastOrder - 10;
+  const ordersForRender = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+
+  const totalPages = Math.ceil(orders.length / 10);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -41,15 +54,15 @@ const Orders = () => {
               <Text style={formHeading}>Đơn hàng</Text>
             </View>
             <ScrollView showsVerticalScrollIndicator={false}>
-              {orders.length > 0 ? (
-                orders.map((item, index) => (
+              {ordersForRender.length > 0 ? (
+                ordersForRender.map((item, index) => (
                   <OrderItem
                     key={item._id}
                     id={item._id}
                     i={index}
                     price={item.totalAmount}
                     status={statusMaps[item.orderStatus]}
-                    paymentMethod={item.paymentMethod}
+                    paymentMethod={paymentMaps[item.paymentMethod]}
                     orderedOn={item.createdAt.split('T')[0]}
                     address={`${item.shippingInfo.address}, ${item.shippingInfo.city}, ${item.shippingInfo.country} ${item.shippingInfo.pinCode}`}
                   />
@@ -60,6 +73,13 @@ const Orders = () => {
                 </Headline>
               )}
             </ScrollView>
+            <View>
+              <Pagination
+                curPage={curPage}
+                setCurPage={setCurPage}
+                totalPages={totalPages}
+              />
+            </View>
           </View>
         )}
       </View>

@@ -143,11 +143,13 @@ const AdminPanel = ({ navigation }) => {
                 ))}
             </View>
           </ScrollView>
-          <Pagination
-            curPage={curPage}
-            setCurPage={setCurPage}
-            totalPages={totalPages}
-          />
+          <View>
+            <Pagination
+              curPage={curPage}
+              setCurPage={setCurPage}
+              totalPages={totalPages}
+            />
+          </View>
         </>
       )}
     </View>
