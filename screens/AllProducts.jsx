@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   FlatList,
   Platform,
@@ -11,8 +11,11 @@ import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../components/Header';
 import Toast from 'react-native-toast-message';
+import Pagination from '../components/Pagination';
+import { defaultStyle } from '../styles/styles';
 
 const AllProducts = () => {
+  const [curPage, setCurPage] = useState(1);
   const navigate = useNavigation();
   const { loading, isAuthenticated } = useSelector((state) => state.user);
   const { products } = useSelector((state) => state.product);
@@ -44,18 +47,22 @@ const AllProducts = () => {
       text1: 'Đã thêm vào giỏ hàng',
     });
   };
+
+  const indexOfLastProduct = curPage * 10;
+  const indexOfFirstProduct = indexOfLastProduct - 10;
+  const productsForRender = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  const totalPages = Math.ceil(products.length / 10);
+
   return (
-    <SafeAreaView
-      style={{
-        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-      }}
-    >
+    <View style={defaultStyle}>
       <Header back={true} />
-      <View
-        style={{ alignItems: 'center', paddingTop: 20, paddingBottom: 150 }}
-      >
+      <View style={{ alignItems: 'center', flex: 1 }}>
         <FlatList
-          data={products}
+          data={productsForRender}
           numColumns={2}
           keyExtractor={(item) => {
             return item?._id;
@@ -78,7 +85,14 @@ const AllProducts = () => {
           }}
         />
       </View>
-    </SafeAreaView>
+      <View>
+        <Pagination
+          curPage={curPage}
+          setCurPage={setCurPage}
+          totalPages={totalPages}
+        />
+      </View>
+    </View>
   );
 };
 
