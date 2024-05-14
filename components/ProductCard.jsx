@@ -66,7 +66,11 @@ const ProductCard = ({
             }
             textColor={textColors.whiteText}
           >
-            <Text>Thêm Vào Giỏ Hàng</Text>
+            {stock === 0 ? (
+              <Text>Hết hàng</Text>
+            ) : (
+              <Text>Thêm Vào Giỏ Hàng</Text>
+            )}
           </Button>
         </TouchableOpacity>
       </View>

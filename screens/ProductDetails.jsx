@@ -205,9 +205,19 @@ const ProductDetails = ({ route: { params } }) => {
             </View>
           </View>
           <TouchableOpacity activeOpacity={0.9} onPress={addToCartHandler}>
-            <Button icon={'cart'} style={styles.btn} textColor={colors.color2}>
-              <Text>Thêm vào giỏ hàng</Text>
-            </Button>
+            {stock === 0 ? (
+              <Button style={styles.btn} textColor={colors.color2}>
+                <Text>Hết hàng</Text>
+              </Button>
+            ) : (
+              <Button
+                icon={'cart'}
+                style={styles.btn}
+                textColor={colors.color2}
+              >
+                <Text>Thêm vào giỏ hàng</Text>
+              </Button>
+            )}
           </TouchableOpacity>
           <View>
             <Text style={styles.comment}>
