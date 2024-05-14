@@ -78,6 +78,7 @@ const AllProducts = () => {
                   image={item?.images[0]?.url}
                   addToCartHandler={addToCartHandler}
                   id={item?._id}
+                  avgScore={item?.avgScore}
                   navigate={navigate}
                 />
               </View>

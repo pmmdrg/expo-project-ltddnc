@@ -75,6 +75,7 @@ const HomeSection = ({ title, list }) => {
                 addToCartHandler={addToCartHandler}
                 id={item._id}
                 key={item._id}
+                avgScore={item.avgScore}
                 navigate={navigate}
               />
             ))}

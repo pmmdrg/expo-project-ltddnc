@@ -18,6 +18,7 @@ const ProductCard = ({
   id,
   addToCartHandler,
   navigate,
+  avgScore,
 }) => {
   const { user } = useSelector((state) => state.user);
 
@@ -40,7 +41,20 @@ const ProductCard = ({
           <Text numberOfLines={2} style={styles.prodName}>
             {name}
           </Text>
-          <Text style={styles.prodPrice}>{price} VND</Text>
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+          >
+            <Text style={styles.prodPrice}>{price} VND</Text>
+            {avgScore && (
+              <View style={styles.voteInfo}>
+                <Text style={styles.vote}>{avgScore}</Text>
+                <Image
+                  style={styles.voteIcon}
+                  source={require('../assets/icons/star.png')}
+                />
+              </View>
+            )}
+          </View>
         </View>
         <TouchableOpacity
           style={{
@@ -105,6 +119,18 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   prodPrice: { fontSize: 14, fontWeight: 'bold', color: textColors.redText },
+  voteInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  vote: {
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  voteIcon: {
+    height: 16,
+    width: 16,
+  },
 });
 
 export default ProductCard;

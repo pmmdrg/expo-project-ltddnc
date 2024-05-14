@@ -39,7 +39,7 @@ export const iconOptions = {
 
 const ProductDetails = ({ route: { params } }) => {
   const {
-    product: { name, price, stock, description, images, comments },
+    product: { name, price, stock, description, images, comments, avgScore },
   } = useSelector((state) => state.product);
   const { loading, isAuthenticated } = useSelector((state) => state.user);
 
@@ -153,14 +153,27 @@ const ProductDetails = ({ route: { params } }) => {
           >
             {name}
           </Text>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: '900',
-            }}
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-between' }}
           >
-            {price} VND
-          </Text>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: '900',
+              }}
+            >
+              {price} VND
+            </Text>
+            {avgScore && (
+              <View style={styles.voteInfo}>
+                <Text style={styles.vote}>{avgScore}</Text>
+                <Image
+                  style={styles.voteIcon}
+                  source={require('../assets/icons/star.png')}
+                />
+              </View>
+            )}
+          </View>
           <Text
             style={{
               letterSpacing: 1,
@@ -265,7 +278,7 @@ const ProductDetails = ({ route: { params } }) => {
               fontSize: 16,
             }}
           >
-            Gửi
+            Đăng
           </Text>
         </TouchableOpacity>
       </View>
@@ -284,6 +297,18 @@ const styles = StyleSheet.create({
     width: ITEM_WIDTH,
     resizeMode: 'contain',
     height: 250,
+  },
+  voteInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  vote: {
+    fontSize: 16,
+    marginRight: 5,
+  },
+  voteIcon: {
+    height: 20,
+    width: 20,
   },
   quantity: {
     backgroundColor: colors.color4,
