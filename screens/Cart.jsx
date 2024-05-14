@@ -52,6 +52,7 @@ const Cart = () => {
       },
     });
   };
+
   return (
     <View
       style={{
