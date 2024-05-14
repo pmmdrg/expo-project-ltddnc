@@ -1,23 +1,16 @@
-import { View, TouchableOpacity } from 'react-native';
-import React from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { colors } from '../styles/styles';
-import { useSelector } from 'react-redux';
+import { View } from 'react-native';
 import Toast from 'react-native-toast-message';
-
-import {
-  backgroundColor,
-  borderColor,
-  textColors,
-} from '../assets/colors/colors';
+import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 import NavigationItem from './NavigationItem';
 
-const Footer = ({ activeRoute = 'home' }) => {
-  const navigate = useNavigation();
-  const { user } = useSelector((state) => state.user);
+import { borderColor } from '../assets/colors/colors';
 
+const Footer = () => {
   const { loading, isAuthenticated } = useSelector((state) => state.user);
+
+  const navigate = useNavigation();
 
   const navigationHandler = (key) => {
     switch (key) {
@@ -40,14 +33,6 @@ const Footer = ({ activeRoute = 'home' }) => {
         navigate.navigate('home');
         break;
     }
-  };
-
-  const avatarOptions = {
-    color: colors.color2,
-    size: 50,
-    style: {
-      backgroundColor: colors.color1,
-    },
   };
 
   return (

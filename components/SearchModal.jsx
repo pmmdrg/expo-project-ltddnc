@@ -1,11 +1,10 @@
-import React, { startTransition, useEffect } from 'react';
+import { useEffect } from 'react';
 import {
   View,
   Text,
   Platform,
   StatusBar,
   SafeAreaView,
-  ScrollView,
   TouchableOpacity,
   Image,
   BackHandler,
@@ -13,19 +12,21 @@ import {
   StyleSheet,
   FlatList,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+
+import { getProductByName } from '../redux/actions/productAction';
+
+import ProductCard from './ProductCard';
 
 import {
   backgroundColor,
-  borderColor,
   buttonColors,
   textColors,
 } from '../assets/colors/colors';
+
 import { colors } from '../styles/styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { getProductByName } from '../redux/actions/productAction';
-import ProductCard from './ProductCard';
-import Toast from 'react-native-toast-message';
 
 const SearchModal = ({
   searchQuery,
@@ -34,7 +35,9 @@ const SearchModal = ({
   products = [],
 }) => {
   const { loading, isAuthenticated } = useSelector((state) => state.user);
+
   const navigate = useNavigation();
+
   const dispatch = useDispatch();
 
   const backAction = () => {
@@ -49,11 +52,14 @@ const SearchModal = ({
         text1: 'Vui lòng đăng nhập',
       });
     }
-    if (stock === 0)
+
+    if (stock === 0) {
       return Toast.show({
         type: 'error',
         text1: 'Hết hàng',
       });
+    }
+
     dispatch({
       type: 'addToCart',
       payload: {
@@ -65,6 +71,7 @@ const SearchModal = ({
         quantity: 1,
       },
     });
+
     Toast.show({
       type: 'success',
       text1: 'Đã thêm vào giỏ hàng',
@@ -103,7 +110,6 @@ const SearchModal = ({
             </TouchableOpacity>
           </View>
         </View>
-
         <View style={{ height: '80%' }}>
           {products.length === 0 ? (
             <Text style={{ color: textColors.secondaryText }}>

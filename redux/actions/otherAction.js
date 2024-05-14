@@ -1,11 +1,12 @@
-import axios from 'axios';
-import { server } from '../store';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+
+import { server } from '../store';
 
 export const updatePassword =
   (oldPassword, newPassword) => async (dispatch) => {
-    // save to storage
+    // get from storage
     const token = await AsyncStorage.getItem('token');
 
     try {
@@ -41,8 +42,9 @@ export const updatePassword =
 
 export const updateProfile =
   (name, email, address, city, country, pinCode) => async (dispatch) => {
-    // save to storage
+    // get from storage
     const token = await AsyncStorage.getItem('token');
+
     try {
       dispatch({
         type: 'updateProfileRequest',
@@ -80,7 +82,7 @@ export const updateProfile =
 
 export const updatePic = (formData) => async (dispatch) => {
   try {
-    // save to storage
+    // get from storage
     const token = await AsyncStorage.getItem('token');
 
     dispatch({
@@ -122,8 +124,9 @@ export const placeOrder =
     paymentInfo
   ) =>
   async (dispatch) => {
-    // save to storage
+    // get from storage
     const token = await AsyncStorage.getItem('token');
+
     try {
       dispatch({
         type: 'placeOrderRequest',
@@ -148,6 +151,7 @@ export const placeOrder =
           withCredentials: true,
         }
       );
+
       dispatch({
         type: 'placeOrderSuccess',
         payload: data.message,
@@ -161,7 +165,7 @@ export const placeOrder =
   };
 
 export const processOrder = (id) => async (dispatch) => {
-  // save to storage
+  // get from storage
   const token = await AsyncStorage.getItem('token');
 
   try {
@@ -171,12 +175,12 @@ export const processOrder = (id) => async (dispatch) => {
 
     const { data } = await axios.put(
       `${server}/order/single/${id}?token=${token}`,
-
       {},
       {
         withCredentials: true,
       }
     );
+
     dispatch({
       type: 'processOrderSuccess',
       payload: data.message,
@@ -190,7 +194,7 @@ export const processOrder = (id) => async (dispatch) => {
 };
 
 export const addCategory = (category) => async (dispatch) => {
-  // save to storage
+  // get from storage
   const token = await AsyncStorage.getItem('token');
 
   try {
@@ -200,7 +204,6 @@ export const addCategory = (category) => async (dispatch) => {
 
     const { data } = await axios.post(
       `${server}/product/category?token=${token}`,
-
       {
         category,
       },
@@ -211,6 +214,7 @@ export const addCategory = (category) => async (dispatch) => {
         withCredentials: true,
       }
     );
+
     dispatch({
       type: 'addCategorySuccess',
       payload: data.message,
@@ -224,7 +228,7 @@ export const addCategory = (category) => async (dispatch) => {
 };
 
 export const deleteCategory = (id) => async (dispatch) => {
-  // save to storage
+  // get from storage
   const token = await AsyncStorage.getItem('token');
 
   try {
@@ -234,11 +238,11 @@ export const deleteCategory = (id) => async (dispatch) => {
 
     const { data } = await axios.delete(
       `${server}/product/category/${id}?token=${token}`,
-
       {
         withCredentials: true,
       }
     );
+
     dispatch({
       type: 'deleteCategorySuccess',
       payload: data.message,
@@ -252,7 +256,7 @@ export const deleteCategory = (id) => async (dispatch) => {
 };
 
 export const createProduct = (formData) => async (dispatch) => {
-  // save to storage
+  // get from storage
   const token = await AsyncStorage.getItem('token');
 
   try {
@@ -285,13 +289,14 @@ export const createProduct = (formData) => async (dispatch) => {
 
 export const updateProduct =
   (id, name, description, price, stock, category) => async (dispatch) => {
-    // save to storage
+    // get from storage
     const token = await AsyncStorage.getItem('token');
 
     try {
       dispatch({
         type: 'updateProductRequest',
       });
+
       const { data } = await axios.put(
         `${server}/product/single/${id}?token=${token}`,
         {
@@ -322,7 +327,7 @@ export const updateProduct =
   };
 
 export const updateProductImage = (productId, formData) => async (dispatch) => {
-  // save to storage
+  // get from storage
   const token = await AsyncStorage.getItem('token');
 
   try {
@@ -354,7 +359,7 @@ export const updateProductImage = (productId, formData) => async (dispatch) => {
 };
 
 export const deleteProductImage = (productId, imageId) => async (dispatch) => {
-  // save to storage
+  // get from storage
   const token = await AsyncStorage.getItem('token');
 
   try {
@@ -382,7 +387,7 @@ export const deleteProductImage = (productId, imageId) => async (dispatch) => {
 };
 
 export const deleteProduct = (productId) => async (dispatch) => {
-  // save to storage
+  // get from storage
   const token = await AsyncStorage.getItem('token');
 
   try {
@@ -414,6 +419,7 @@ export const forgetPassword = (email) => async (dispatch) => {
     dispatch({
       type: 'forgetPasswordRequest',
     });
+
     const { data } = await axios.post(
       `${server}/user/forgetpassword`,
       {
@@ -444,6 +450,7 @@ export const resetPassword = (otp, password) => async (dispatch) => {
     dispatch({
       type: 'resetPasswordRequest',
     });
+
     const { data } = await axios.put(
       `${server}/user/forgetpassword`,
       {
@@ -471,13 +478,16 @@ export const resetPassword = (otp, password) => async (dispatch) => {
 };
 
 export const postComment = (productId, comment, vote) => async (dispatch) => {
+  // get from storage
   const token = await AsyncStorage.getItem('token');
 
   try {
     dispatch({ type: 'postCommentRequest' });
+
     const { data } = await axios.get(
       `${server}/user/havebought?productId=${productId}&token=${token}`
     );
+
     if (data.success) {
       const { data } = await axios.post(
         `${server}/product/comment?productId=${productId}&token=${token}`,
@@ -491,6 +501,7 @@ export const postComment = (productId, comment, vote) => async (dispatch) => {
       );
 
       dispatch({ type: 'postCommentSuccess', payload: data.message });
+
       Toast.show({
         type: 'success',
         text1: 'Đã đăng bình luận',

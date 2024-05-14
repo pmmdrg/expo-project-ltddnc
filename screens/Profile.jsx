@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -5,33 +6,31 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import {
-  colors,
-  defaultImg,
-  defaultStyle,
-  formHeading,
-} from '../styles/styles';
 import { Avatar, Button } from 'react-native-paper';
-import ButtonBox from '../components/ButtonBox';
-import Footer from '../components/Footer';
-import Loader from '../components/Loader';
 import { useDispatch, useSelector } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
+import mime from 'mime';
+
 import { loadUser, logout } from '../redux/actions/userActions';
+import { updatePic } from '../redux/actions/otherAction';
+
 import {
   useMessageAndErrorOther,
   useMessageAndErrorUser,
 } from '../utils/hooks';
-import { useIsFocused } from '@react-navigation/native';
-import mime from 'mime';
-import { updatePic } from '../redux/actions/otherAction';
+
+import ButtonBox from '../components/ButtonBox';
+import Footer from '../components/Footer';
+import Loader from '../components/Loader';
+
+import { colors, defaultImg, defaultStyle } from '../styles/styles';
 
 const Profile = ({ navigation, route }) => {
-  const { user } = useSelector((state) => state.user);
   const [avatar, setAvatar] = useState(defaultImg);
+  const { user } = useSelector((state) => state.user);
+  const isFocused = useIsFocused();
 
   const dispatch = useDispatch();
-  const isFocused = useIsFocused();
 
   const loading = useMessageAndErrorUser(navigation, dispatch, 'login');
 
@@ -56,9 +55,7 @@ const Profile = ({ navigation, route }) => {
       case 'Sign Out':
         logoutHandler();
         break;
-
       default:
-      case 'Orders':
         navigation.navigate('orders');
         break;
     }
@@ -68,14 +65,16 @@ const Profile = ({ navigation, route }) => {
 
   useEffect(() => {
     if (route.params?.image) {
-      setAvatar(route.params.image);
-      // dispatch updatePic Here
       const myForm = new FormData();
+
+      setAvatar(route.params.image);
+
       myForm.append('file', {
         uri: route.params.image,
         type: mime.getType(route.params.image),
         name: route.params.image.split('/').pop(),
       });
+
       dispatch(updatePic(myForm));
     }
 
@@ -103,7 +102,6 @@ const Profile = ({ navigation, route }) => {
                 size={100}
                 style={{ backgroundColor: colors.color1 }}
               />
-
               <TouchableOpacity
                 disabled={loadingPic}
                 onPress={() =>
@@ -118,7 +116,6 @@ const Profile = ({ navigation, route }) => {
                   Thay đổi ảnh
                 </Button>
               </TouchableOpacity>
-
               <Text style={styles.name}>{user?.name}</Text>
               <Text
                 style={{
@@ -129,7 +126,6 @@ const Profile = ({ navigation, route }) => {
                 {user?.email}
               </Text>
             </View>
-
             <View>
               <View
                 style={{
@@ -160,7 +156,6 @@ const Profile = ({ navigation, route }) => {
                   icon={'pencil'}
                 />
               </View>
-
               <View
                 style={{
                   flexDirection: 'row',

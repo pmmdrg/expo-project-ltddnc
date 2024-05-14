@@ -1,14 +1,16 @@
+import { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { Camera, CameraType } from 'expo-camera';
 import { Avatar } from 'react-native-paper';
-import { colors, defaultStyle } from '../styles/styles';
+import { Camera, CameraType } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
+
+import { colors, defaultStyle } from '../styles/styles';
 
 const CameraComponent = ({ navigation, route }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(CameraType.back);
   const [camera, setCamera] = useState(null);
+
   const openImagePicker = async () => {
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -18,62 +20,70 @@ const CameraComponent = ({ navigation, route }) => {
 
     const data = await ImagePicker.launchImageLibraryAsync();
 
-    if (route.params?.newProduct)
+    if (route.params?.newProduct) {
       return navigation.navigate('newproduct', {
         image: data.assets[0].uri,
       });
+    }
 
-    if (route.params?.updateProduct)
+    if (route.params?.updateProduct) {
       return navigation.navigate('productimages', {
         image: data.assets[0].uri,
       });
-    if (route.params?.updateProfile)
+    }
+    if (route.params?.updateProfile) {
       return navigation.navigate('profile', {
         image: data.assets[0].uri,
       });
-    else
+    } else {
       return navigation.navigate('signup', {
         image: data.assets[0].uri,
       });
+    }
   };
 
   const clickPicture = async () => {
     const data = await camera.takePictureAsync();
 
-    if (route.params?.newProduct)
+    if (route.params?.newProduct) {
       return navigation.navigate('newproduct', {
         image: data.uri,
       });
+    }
 
-    if (route.params?.updateProduct)
+    if (route.params?.updateProduct) {
       return navigation.navigate('productimages', {
         image: data.uri,
       });
-    if (route.params?.updateProfile)
+    }
+    if (route.params?.updateProfile) {
       return navigation.navigate('profile', {
         image: data.uri,
       });
-    else
+    } else {
       return navigation.navigate('signup', {
         image: data.uri,
       });
+    }
   };
 
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
+
       setHasPermission(status === 'granted');
     })();
   }, []);
 
   if (hasPermission === null) return <View />;
 
-  if (hasPermission === false)
+  if (hasPermission === false) {
     return (
       <View style={defaultStyle}>
         <Text>Không có quyền truy cập vào camera</Text>
       </View>
     );
+  }
 
   return (
     <View
@@ -90,7 +100,6 @@ const CameraComponent = ({ navigation, route }) => {
         ratio={'1:1'}
         ref={(e) => setCamera(e)}
       />
-
       <View
         style={{
           flexDirection: 'row',
@@ -115,17 +124,19 @@ const CameraComponent = ({ navigation, route }) => {
   );
 };
 
-const MyIcon = ({ icon, handler }) => (
-  <TouchableOpacity onPress={handler}>
-    <Avatar.Icon
-      icon={icon}
-      size={40}
-      color={colors.color2}
-      style={{
-        backgroundColor: colors.color1,
-      }}
-    />
-  </TouchableOpacity>
-);
+const MyIcon = ({ icon, handler }) => {
+  return (
+    <TouchableOpacity onPress={handler}>
+      <Avatar.Icon
+        icon={icon}
+        size={40}
+        color={colors.color2}
+        style={{
+          backgroundColor: colors.color1,
+        }}
+      />
+    </TouchableOpacity>
+  );
+};
 
 export default CameraComponent;

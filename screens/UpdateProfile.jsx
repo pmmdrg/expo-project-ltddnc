@@ -1,5 +1,14 @@
+import { useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import React, { useState } from 'react';
+import { Button, TextInput } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { updateProfile } from '../redux/actions/otherAction';
+
+import { useMessageAndErrorOther } from '../utils/hooks';
+
+import Header from '../components/Header';
+
 import {
   colors,
   defaultStyle,
@@ -7,15 +16,9 @@ import {
   inputOptions,
   formStyles as styles,
 } from '../styles/styles';
-import { Button, TextInput } from 'react-native-paper';
-import Header from '../components/Header';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateProfile } from '../redux/actions/otherAction';
-import { useMessageAndErrorOther } from '../utils/hooks';
 
 const UpdateProfile = ({ navigation }) => {
   const { user } = useSelector((state) => state.user);
-
   const [name, setName] = useState(user?.name);
   const [email, setEmail] = useState(user?.email);
   const [address, setAddress] = useState(user?.address);
@@ -30,10 +33,10 @@ const UpdateProfile = ({ navigation }) => {
   const submitHandler = () => {
     dispatch(updateProfile(name, email, address, city, country, pinCode));
   };
+
   return (
     <View style={defaultStyle}>
       <Header back={true} />
-
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{
@@ -52,7 +55,6 @@ const UpdateProfile = ({ navigation }) => {
             value={name}
             onChangeText={setName}
           />
-
           <TextInput
             {...inputOptions}
             placeholder='Email'
@@ -60,7 +62,6 @@ const UpdateProfile = ({ navigation }) => {
             value={email}
             onChangeText={setEmail}
           />
-
           <TextInput
             {...inputOptions}
             placeholder='Địa chỉ'
@@ -79,14 +80,12 @@ const UpdateProfile = ({ navigation }) => {
             value={country}
             onChangeText={setCountry}
           />
-
           <TextInput
             {...inputOptions}
             placeholder='Mã bưu chính'
             value={pinCode}
             onChangeText={setPinCode}
           />
-
           <Button
             loading={loading}
             textColor={colors.color2}

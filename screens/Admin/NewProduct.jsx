@@ -1,6 +1,17 @@
+import { useEffect, useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { Avatar, Button, TextInput } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
+import mime from 'mime';
+
+import { createProduct } from '../../redux/actions/otherAction';
+
+import { useSetCategories, useMessageAndErrorOther } from '../../utils/hooks';
+
 import Header from '../../components/Header';
+import SelectComponent from '../../components/SelectComponent';
+
 import {
   colors,
   defaultStyle,
@@ -8,19 +19,9 @@ import {
   inputOptions,
   inputStyling,
 } from '../../styles/styles';
-import { Avatar, Button, TextInput } from 'react-native-paper';
-import SelectComponent from '../../components/SelectComponent';
-import { useSetCategories, useMessageAndErrorOther } from '../../utils/hooks';
-import { useIsFocused } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
-import mime from 'mime';
-import { createProduct } from '../../redux/actions/otherAction';
 
 const NewProduct = ({ navigation, route }) => {
-  const isFocused = useIsFocused();
-  const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
-
   const [image, setImage] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -29,14 +30,19 @@ const NewProduct = ({ navigation, route }) => {
   const [category, setCategory] = useState('Choose Category');
   const [categoryID, setCategoryID] = useState(undefined);
   const [categories, setCategories] = useState([]);
-
-  useSetCategories(setCategories, isFocused);
-
+  const isFocused = useIsFocused();
   const disableBtnCondition =
     !name || !description || !price || !stock || !image;
 
+  const dispatch = useDispatch();
+
+  const loading = useMessageAndErrorOther(dispatch, navigation, 'adminpanel');
+
+  useSetCategories(setCategories, isFocused);
+
   const submitHandler = () => {
     const myForm = new FormData();
+
     myForm.append('name', name);
     myForm.append('description', description);
     myForm.append('price', price);
@@ -52,8 +58,6 @@ const NewProduct = ({ navigation, route }) => {
     dispatch(createProduct(myForm));
   };
 
-  const loading = useMessageAndErrorOther(dispatch, navigation, 'adminpanel');
-
   useEffect(() => {
     if (route.params?.image) setImage(route.params.image);
   }, [route.params]);
@@ -67,12 +71,10 @@ const NewProduct = ({ navigation, route }) => {
         }}
       >
         <Header back={true} />
-
         {/* Heading */}
         <View style={{ marginBottom: 20, paddingTop: 70 }}>
           <Text style={formHeading}>Sản phẩm mới</Text>
         </View>
-
         <ScrollView
           style={{
             padding: 20,
@@ -122,7 +124,6 @@ const NewProduct = ({ navigation, route }) => {
                 />
               </TouchableOpacity>
             </View>
-
             <TextInput
               {...inputOptions}
               placeholder='Tên'
@@ -135,7 +136,6 @@ const NewProduct = ({ navigation, route }) => {
               value={description}
               onChangeText={setDescription}
             />
-
             <TextInput
               {...inputOptions}
               placeholder='Giá'
@@ -150,7 +150,6 @@ const NewProduct = ({ navigation, route }) => {
               value={stock}
               onChangeText={setStock}
             />
-
             <Text
               style={{
                 ...inputStyling,
@@ -162,7 +161,6 @@ const NewProduct = ({ navigation, route }) => {
             >
               {category}
             </Text>
-
             <Button
               textColor={colors.color2}
               style={{
@@ -179,7 +177,6 @@ const NewProduct = ({ navigation, route }) => {
           </View>
         </ScrollView>
       </View>
-
       <SelectComponent
         categories={categories}
         setCategoryID={setCategoryID}

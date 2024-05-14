@@ -1,13 +1,16 @@
+import { useState } from 'react';
 import { View, Text, ScrollView, SafeAreaView } from 'react-native';
-import React, { useState } from 'react';
-import { colors, defaultStyle, formHeading } from '../styles/styles';
+import { Headline } from 'react-native-paper';
+import { useIsFocused } from '@react-navigation/native';
+
+import { useGetOrders } from '../utils/hooks';
+
 import Header from '../components/Header';
 import Loader from '../components/Loader';
-import { Headline } from 'react-native-paper';
 import OrderItem from '../components/OrderItem';
-import { useGetOrders } from '../utils/hooks';
-import { useIsFocused } from '@react-navigation/native';
 import Pagination from '../components/Pagination';
+
+import { colors, defaultStyle, formHeading } from '../styles/styles';
 
 const statusMaps = {
   Shipped: 'Vận chuyển',
@@ -24,11 +27,9 @@ const Orders = () => {
   const [curPage, setCurPage] = useState(1);
   const isFocused = useIsFocused();
   const { loading, orders } = useGetOrders(isFocused);
-
   const indexOfLastOrder = curPage * 10;
   const indexOfFirstOrder = indexOfLastOrder - 10;
   const ordersForRender = orders.slice(indexOfFirstOrder, indexOfLastOrder);
-
   const totalPages = Math.ceil(orders.length / 10);
 
   return (
@@ -40,7 +41,6 @@ const Orders = () => {
         }}
       >
         <Header back={true} />
-
         {loading ? (
           <Loader />
         ) : (

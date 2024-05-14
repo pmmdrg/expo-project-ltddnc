@@ -3,19 +3,21 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  FlatList,
   ScrollView,
 } from 'react-native';
-
-import { textColors } from '../assets/colors/colors';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+
 import ProductCard from './ProductCard';
-import { Toast } from 'react-native-toast-message/lib/src/Toast';
+
+import { textColors } from '../assets/colors/colors';
 
 const HomeSection = ({ title, list }) => {
   const { loading, isAuthenticated } = useSelector((state) => state.user);
+
   const navigate = useNavigation();
+
   const dispatch = useDispatch();
 
   const addToCartHandler = (id, name, price, image, stock) => {

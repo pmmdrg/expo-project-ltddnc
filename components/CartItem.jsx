@@ -1,8 +1,9 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import React from 'react';
-import { colors } from '../styles/styles';
 import { Avatar } from 'react-native-paper';
+
 import { iconOptions } from '../screens/ProductDetails';
+
+import { colors } from '../styles/styles';
 
 const CartItem = ({
   name,

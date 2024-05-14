@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import React from 'react';
-import { colors } from '../styles/styles';
 import { Avatar, Button } from 'react-native-paper';
+
+import { colors } from '../styles/styles';
 
 const MyModal = ({ id, deleteHandler, navigate, setOpenModal }) => {
   return (

@@ -1,11 +1,12 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import { useSelector } from 'react-redux';
-import { loadUser } from '../redux/actions/userActions';
-import { server } from '../redux/store';
-import { getAdminProducts } from '../redux/actions/productAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+
+import { server } from '../redux/store';
+import { loadUser } from '../redux/actions/userActions';
+import { getAdminProducts } from '../redux/actions/productAction';
 
 export const useMessageAndErrorUser = (
   navigation,
@@ -20,6 +21,7 @@ export const useMessageAndErrorUser = (
         type: 'error',
         text1: error,
       });
+
       dispatch({
         type: 'clearError',
       });
@@ -30,10 +32,12 @@ export const useMessageAndErrorUser = (
         index: 0,
         routes: [{ name: navigateTo }],
       });
+
       Toast.show({
         type: 'success',
         text1: message,
       });
+
       dispatch({
         type: 'clearMessage',
       });
@@ -58,6 +62,7 @@ export const useMessageAndErrorOther = (
         type: 'error',
         text1: error,
       });
+
       dispatch({
         type: 'clearError',
       });
@@ -68,6 +73,7 @@ export const useMessageAndErrorOther = (
         type: 'success',
         text1: message,
       });
+
       dispatch({
         type: 'clearMessage',
       });
@@ -94,23 +100,20 @@ export const useSetCategories = (setCategories, isFocused) => {
           text1: e.response.data.message,
         });
       });
-    // setCategories([
-    //   { _id: 1, category: "Headphone" },
-    //   { _id: 2, category: "In-ears" },
-    //   { _id: 3, category: "Bluetooth" },
-    // ]);
   }, [isFocused]);
 };
 
 export const useGetOrders = (isFocused, isAdmin = false) => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const init = async () => {
-      // save to storage
+      // get from storage
       const token = await AsyncStorage.getItem('token');
 
       setLoading(true);
+
       axios
         .get(`${server}/order/${isAdmin ? 'admin' : 'my'}?token=${token}`)
         .then((res) => {
@@ -122,6 +125,7 @@ export const useGetOrders = (isFocused, isAdmin = false) => {
             type: 'error',
             text1: e.response.data.message,
           });
+
           setLoading(false);
         });
     };

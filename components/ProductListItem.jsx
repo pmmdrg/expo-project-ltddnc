@@ -1,13 +1,13 @@
+import { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import React, { useState } from 'react';
-import { colors } from '../styles/styles';
+
 import MyModal from '../components/MyModal';
+
 import { backgroundColor, textColors } from '../assets/colors/colors';
 
 const ProductListItem = ({
   navigate,
   deleteHandler,
-  i,
   id,
   price,
   stock,
@@ -41,7 +41,6 @@ const ProductListItem = ({
               resizeMode: 'contain',
             }}
           />
-
           <Text
             style={{
               width: 60,
@@ -52,7 +51,6 @@ const ProductListItem = ({
           >
             {price}VND
           </Text>
-
           <Text
             style={{
               width: 110,
@@ -74,7 +72,6 @@ const ProductListItem = ({
           >
             {category}
           </Text>
-
           <Text
             style={{
               width: 70,
@@ -87,7 +84,6 @@ const ProductListItem = ({
           </Text>
         </View>
       </TouchableOpacity>
-
       {openModal && (
         <MyModal
           id={id}

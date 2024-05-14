@@ -1,13 +1,12 @@
-import { View, Text, Image } from "react-native";
-import React from "react";
+import { View, Text, Image } from 'react-native';
 
 const ConfirmOrderItem = ({ price, quantity, image, name }) => {
   return (
     <View
       style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         margin: 10,
       }}
     >
@@ -18,14 +17,14 @@ const ConfirmOrderItem = ({ price, quantity, image, name }) => {
         style={{
           width: 50,
           height: 50,
-          resizeMode: "contain",
+          resizeMode: 'contain',
         }}
       />
 
       <Text>{name}</Text>
       <View
         style={{
-          flexDirection: "row",
+          flexDirection: 'row',
         }}
       >
         <Text>{quantity}</Text>

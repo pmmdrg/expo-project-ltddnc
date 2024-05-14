@@ -7,8 +7,7 @@ import {
   buttonColors,
   textColors,
 } from '../assets/colors/colors';
-import { useDispatch, useSelector } from 'react-redux';
-import { getProductDetails } from '../redux/actions/productAction';
+import { useSelector } from 'react-redux';
 
 const ProductCard = ({
   stock,
@@ -20,7 +19,7 @@ const ProductCard = ({
   navigate,
   avgScore,
 }) => {
-  const { user } = useSelector((state) => state.user);
+  const { loading, isAuthenticated } = useSelector((state) => state.user);
 
   return (
     <TouchableOpacity
@@ -70,7 +69,7 @@ const ProductCard = ({
         >
           <Button
             onPress={
-              user
+              isAuthenticated
                 ? () => addToCartHandler(id, name, price, image, stock)
                 : () =>
                     Toast.show({

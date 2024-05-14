@@ -1,13 +1,14 @@
-import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const Pagination = ({ curPage, setCurPage, totalPages }) => {
   const handleIncPage = () => {
     setCurPage(curPage + 1);
   };
+
   const handleDecPage = () => {
     setCurPage(curPage - 1);
   };
+  
   return (
     <View
       style={{

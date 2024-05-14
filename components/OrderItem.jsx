@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
-import React from 'react';
-import { colors } from '../styles/styles';
 import { Button } from 'react-native-paper';
+
+import { colors } from '../styles/styles';
 
 const OrderItem = ({
   id,

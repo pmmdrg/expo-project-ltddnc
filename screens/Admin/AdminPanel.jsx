@@ -1,30 +1,36 @@
+import  { useState } from 'react';
 import {
   View,
   Text,
   ScrollView,
   StyleSheet,
-  TouchableOpacity,
+  
 } from 'react-native';
-import React, { useState } from 'react';
-import { colors, defaultStyle, formHeading } from '../../styles/styles';
+import { useDispatch } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
+
+import { deleteProduct } from '../../redux/actions/otherAction';
+import { getAdminProducts } from '../../redux/actions/productAction';
+
+import { useAdminProducts, useMessageAndErrorOther } from '../../utils/hooks';
+
 import Header from '../../components/Header';
 import Loader from '../../components/Loader';
 import ButtonBox from '../../components/ButtonBox';
 import ProductListHeading from '../../components/ProductListHeading';
 import ProductListItem from '../../components/ProductListItem';
 import Chart from '../../components/Chart';
-import { useAdminProducts, useMessageAndErrorOther } from '../../utils/hooks';
-import { useDispatch } from 'react-redux';
-import { useIsFocused } from '@react-navigation/native';
-import { deleteProduct } from '../../redux/actions/otherAction';
-import { getAdminProducts } from '../../redux/actions/productAction';
-import { backgroundColor } from '../../assets/colors/colors';
 import Pagination from '../../components/Pagination';
+
+import { defaultStyle, formHeading } from '../../styles/styles';
+
+import { backgroundColor } from '../../assets/colors/colors';
 
 const AdminPanel = ({ navigation }) => {
   const [curPage, setCurPage] = useState(1);
-  const dispatch = useDispatch();
   const isFocused = useIsFocused();
+
+  const dispatch = useDispatch();
 
   const { loading, products, inStock, outOfStock } = useAdminProducts(
     dispatch,
@@ -66,7 +72,6 @@ const AdminPanel = ({ navigation }) => {
     indexOfFirstProduct,
     indexOfLastProduct
   );
-
   const totalPages = Math.ceil(products.length / 10);
 
   return (
@@ -76,7 +81,6 @@ const AdminPanel = ({ navigation }) => {
       <View style={{ paddingTop: 70, marginBottom: 20 }}>
         <Text style={formHeading}>Bảng điều khiển admin</Text>
       </View>
-
       {loading ? (
         <Loader />
       ) : (
@@ -90,7 +94,6 @@ const AdminPanel = ({ navigation }) => {
           >
             <Chart inStock={inStock} outOfStock={outOfStock} />
           </View>
-
           <View>
             <View
               style={{
@@ -105,7 +108,6 @@ const AdminPanel = ({ navigation }) => {
                 handlerText={'Product'}
                 handler={navigationHandler}
               />
-
               <ButtonBox
                 icon={'format-list-bulleted-square'}
                 displayText={'Đơn hàng'}
@@ -121,9 +123,7 @@ const AdminPanel = ({ navigation }) => {
               />
             </View>
           </View>
-
           <ProductListHeading />
-
           <ScrollView showsVerticalScrollIndicator={false}>
             <View>
               {!loadingDelete &&

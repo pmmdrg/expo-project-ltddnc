@@ -1,33 +1,37 @@
+import { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
-import { colors, defaultStyle } from '../styles/styles';
+import { Button, RadioButton } from 'react-native-paper';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { useStripe } from '@stripe/stripe-react-native';
+
+import { server } from '../redux/store';
+import { placeOrder } from '../redux/actions/otherAction';
+
+import { useMessageAndErrorOther } from '../utils/hooks';
+
 import Header from '../components/Header';
 import Heading from '../components/Heading';
-import { Button, RadioButton } from 'react-native-paper';
-import { useDispatch, useSelector } from 'react-redux';
-import { placeOrder } from '../redux/actions/otherAction';
-import { useMessageAndErrorOther } from '../utils/hooks';
-import { useStripe } from '@stripe/stripe-react-native';
-import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import axios from 'axios';
-import { server } from '../redux/store';
 import Loader from '../components/Loader';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { backgroundColor } from '../assets/colors/colors';
+
+import { colors, defaultStyle } from '../styles/styles';
 
 const Payment = ({ navigation, route }) => {
   const [paymentMethod, setPaymentMethod] = useState('COD');
   const [loaderLoading, setLoaderLoading] = useState(false);
-
-  const dispatch = useDispatch();
-  const stripe = useStripe();
-
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const { cartItems } = useSelector((state) => state.cart);
+
+  const dispatch = useDispatch();
+
+  const stripe = useStripe();
 
   const redirectToLogin = () => {
     navigation.navigate('login');
   };
+
   const codHandler = (paymentInfo) => {
     const shippingInfo = {
       address: user.address,
@@ -35,7 +39,6 @@ const Payment = ({ navigation, route }) => {
       country: user.country,
       pinCode: user.pinCode,
     };
-
     const itemsPrice = route.params.itemsPrice;
     const shippingCharges = route.params.shippingCharges;
     const taxPrice = route.params.tax;
@@ -54,8 +57,9 @@ const Payment = ({ navigation, route }) => {
       )
     );
   };
+
   const onlineHandler = async () => {
-    // save to storage
+    // get from storage
     const token = await AsyncStorage.getItem('token');
 
     try {
@@ -79,14 +83,17 @@ const Payment = ({ navigation, route }) => {
         merchantDisplayName: '6PackEcom',
       });
 
-      if (init.error)
+      if (init.error) {
         return Toast.show({ type: 'error', text1: init.error.message });
+      }
 
       const presentSheet = await stripe.presentPaymentSheet();
+
       setLoaderLoading(true);
 
       if (presentSheet.error) {
         setLoaderLoading(false);
+
         return Toast.show({ type: 'error', text1: presentSheet.error.message });
       }
 
@@ -128,7 +135,6 @@ const Payment = ({ navigation, route }) => {
         text1='Phương thức'
         text2='Thanh toán'
       />
-
       <View style={{ paddingHorizontal: 15, flex: 1 }}>
         <View style={styles.container}>
           <RadioButton.Group
@@ -156,7 +162,6 @@ const Payment = ({ navigation, route }) => {
           </RadioButton.Group>
         </View>
       </View>
-
       <TouchableOpacity
         disabled={loading}
         onPress={
@@ -190,7 +195,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-
   radioStyle: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -201,7 +205,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 18,
     textTransform: 'uppercase',
-    // color: colors.color2,
   },
   btn: {
     backgroundColor: colors.color3,

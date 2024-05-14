@@ -1,7 +1,6 @@
 import { Text, TouchableOpacity } from 'react-native';
-import React from 'react';
-import { colors } from '../styles/styles';
 import { Avatar } from 'react-native-paper';
+
 import { backgroundColor, textColors } from '../assets/colors/colors';
 
 const ButtonBox = ({
@@ -9,7 +8,6 @@ const ButtonBox = ({
   displayText,
   handlerText,
   handler,
-  reverse = false,
   loading = false,
 }) => {
   return (

@@ -5,8 +5,8 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import React from 'react';
 import { Avatar, Headline } from 'react-native-paper';
+
 import { colors } from '../styles/styles';
 
 const SelectComponent = ({
@@ -35,7 +35,7 @@ const SelectComponent = ({
             icon={'close'}
           />
         </TouchableOpacity>
-        <Headline style={styles.heading}> Chọn danh mục</Headline>
+        <Headline style={styles.heading}>Chọn danh mục</Headline>
         <ScrollView>
           {categories.map((i) => (
             <Text

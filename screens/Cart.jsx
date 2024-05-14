@@ -1,27 +1,31 @@
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import React from 'react';
-import { colors, defaultStyle } from '../styles/styles';
-import Header from '../components/Header';
-import Heading from '../components/Heading';
 import { Button } from 'react-native-paper';
-import CartItem from '../components/CartItem';
-import { useNavigation } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+
+import Header from '../components/Header';
+import CartItem from '../components/CartItem';
+
+import { colors, defaultStyle } from '../styles/styles';
 
 const Cart = () => {
-  const navigate = useNavigation();
-  const dispatch = useDispatch();
-
   const { cartItems } = useSelector((state) => state.cart);
+
+  const navigate = useNavigation();
+
+  const dispatch = useDispatch();
 
   const incrementHandler = (id, name, price, image, stock, quantity) => {
     const newQty = quantity + 1;
-    if (stock <= quantity)
+
+    if (stock <= quantity) {
       return Toast.show({
         type: 'error',
         text1: 'Đạt giá trị tối đa',
       });
+    }
+
     dispatch({
       type: 'addToCart',
       payload: {
@@ -38,7 +42,9 @@ const Cart = () => {
   const decrementHandler = (id, name, price, image, stock, quantity) => {
     const newQty = quantity - 1;
 
-    if (1 >= quantity) return dispatch({ type: 'removeFromCart', payload: id });
+    if (1 >= quantity) {
+      return dispatch({ type: 'removeFromCart', payload: id });
+    }
 
     dispatch({
       type: 'addToCart',
@@ -62,7 +68,6 @@ const Cart = () => {
     >
       {/* Header */}
       <Header back={true} emptyCart={true} />
-
       {/* Heading */}
       <Text
         style={{
@@ -72,7 +77,6 @@ const Cart = () => {
       >
         Giỏ hàng
       </Text>
-
       <View
         style={{
           paddingVertical: 30,
@@ -103,7 +107,6 @@ const Cart = () => {
           )}
         </ScrollView>
       </View>
-
       <View
         style={{
           flexDirection: 'row',

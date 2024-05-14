@@ -1,6 +1,18 @@
+import { useEffect, useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { Button, TextInput } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
+
+import { getProductDetails } from '../../redux/actions/productAction';
+import { updateProduct } from '../../redux/actions/otherAction';
+
+import { useMessageAndErrorOther, useSetCategories } from '../../utils/hooks';
+
 import Header from '../../components/Header';
+import Loader from '../../components/Loader';
+import SelectComponent from '../../components/SelectComponent';
+
 import {
   colors,
   defaultStyle,
@@ -8,23 +20,10 @@ import {
   inputOptions,
   inputStyling,
 } from '../../styles/styles';
-import Loader from '../../components/Loader';
-import { Button, TextInput } from 'react-native-paper';
-import SelectComponent from '../../components/SelectComponent';
-import { useMessageAndErrorOther, useSetCategories } from '../../utils/hooks';
-import { useIsFocused } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
-import { getProductDetails } from '../../redux/actions/productAction';
-import { updateProduct } from '../../redux/actions/otherAction';
 
 const UpdateProduct = ({ navigation, route }) => {
-  const isFocused = useIsFocused();
-  const dispatch = useDispatch();
-  const [visible, setVisible] = useState(false);
-
-  const { product, loading } = useSelector((state) => state.product);
-
   const [id] = useState(route.params.id);
+  const [visible, setVisible] = useState(false);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
@@ -32,18 +31,22 @@ const UpdateProduct = ({ navigation, route }) => {
   const [category, setCategory] = useState('');
   const [categoryID, setCategoryID] = useState('');
   const [categories, setCategories] = useState([]);
+  const isFocused = useIsFocused();
+  const { product, loading } = useSelector((state) => state.product);
+
+  const dispatch = useDispatch();
 
   useSetCategories(setCategories, isFocused);
-
-  const submitHandler = () => {
-    dispatch(updateProduct(id, name, description, price, stock, categoryID));
-  };
 
   const loadingOther = useMessageAndErrorOther(
     dispatch,
     navigation,
     'adminpanel'
   );
+
+  const submitHandler = () => {
+    dispatch(updateProduct(id, name, description, price, stock, categoryID));
+  };
 
   useEffect(() => {
     dispatch(getProductDetails(id));
@@ -69,12 +72,10 @@ const UpdateProduct = ({ navigation, route }) => {
         }}
       >
         <Header back={true} />
-
         {/* Heading */}
         <View style={{ marginBottom: 20, paddingTop: 70 }}>
           <Text style={formHeading}>Cập nhật sản phẩm</Text>
         </View>
-
         {loading ? (
           <Loader />
         ) : (
@@ -103,7 +104,6 @@ const UpdateProduct = ({ navigation, route }) => {
               >
                 Quản lý hình ảnh
               </Button>
-
               <TextInput
                 {...inputOptions}
                 placeholder='Tên'
@@ -116,7 +116,6 @@ const UpdateProduct = ({ navigation, route }) => {
                 value={description}
                 onChangeText={setDescription}
               />
-
               <TextInput
                 {...inputOptions}
                 placeholder='Giá'
@@ -131,7 +130,6 @@ const UpdateProduct = ({ navigation, route }) => {
                 keyboardType='number-pad'
                 onChangeText={setStock}
               />
-
               <Text
                 style={{
                   ...inputStyling,
@@ -143,7 +141,6 @@ const UpdateProduct = ({ navigation, route }) => {
               >
                 {category}
               </Text>
-
               <Button
                 textColor={colors.color2}
                 style={{
@@ -161,7 +158,6 @@ const UpdateProduct = ({ navigation, route }) => {
           </ScrollView>
         )}
       </View>
-
       <SelectComponent
         categories={categories}
         setCategoryID={setCategoryID}

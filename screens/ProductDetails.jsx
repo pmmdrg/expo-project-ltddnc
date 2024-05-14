@@ -1,3 +1,4 @@
+import  { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -8,25 +9,29 @@ import {
   ScrollView,
   TextInput,
 } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
-import { colors, defaultStyle } from '../styles/styles';
-import Header from '../components/Header';
 import { Avatar, Button } from 'react-native-paper';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { Picker } from '@react-native-picker/picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIsFocused } from '@react-navigation/native';
+
 import { getProductDetails } from '../redux/actions/productAction';
+import { postComment } from '../redux/actions/otherAction';
+
+import Header from '../components/Header';
+import CommentItem from '../components/CommentItem';
+
 import {
   backgroundColor,
   buttonColors,
   textColors,
 } from '../assets/colors/colors';
-import CommentItem from '../components/CommentItem';
-import { postComment } from '../redux/actions/otherAction';
-import { Picker } from '@react-native-picker/picker';
+
+import { colors, defaultStyle } from '../styles/styles';
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = SLIDER_WIDTH;
+
 export const iconOptions = {
   size: 20,
   style: {
@@ -38,16 +43,16 @@ export const iconOptions = {
 };
 
 const ProductDetails = ({ route: { params } }) => {
+  const [quantity, setQuantity] = useState(1);
+  const [comment, setComment] = useState('');
+  const [vote, setVote] = useState(0);
   const {
     product: { name, price, stock, description, images, comments, avgScore },
   } = useSelector((state) => state.product);
   const { loading, isAuthenticated } = useSelector((state) => state.user);
-
-  const [quantity, setQuantity] = useState(1);
-  const [comment, setComment] = useState('');
-  const [vote, setVote] = useState(0);
-  const dispatch = useDispatch();
   const isFocused = useIsFocused();
+
+  const dispatch = useDispatch();
 
   const incrementQty = () => {
     if (stock <= quantity)
@@ -55,10 +60,13 @@ const ProductDetails = ({ route: { params } }) => {
         type: 'error',
         text1: 'Đạt giá trị tối đa',
       });
+
     setQuantity((prev) => prev + 1);
   };
+
   const decrementQty = () => {
     if (quantity <= 1) return;
+
     setQuantity((prev) => prev - 1);
   };
 
@@ -69,11 +77,14 @@ const ProductDetails = ({ route: { params } }) => {
         text1: 'Vui lòng đăng nhập',
       });
     }
-    if (stock === 0)
+
+    if (stock === 0){
       return Toast.show({
         type: 'error',
         text1: 'Hết hàng',
       });
+    }
+
     dispatch({
       type: 'addToCart',
       payload: {
@@ -85,6 +96,7 @@ const ProductDetails = ({ route: { params } }) => {
         quantity,
       },
     });
+
     Toast.show({
       type: 'success',
       text1: 'Đã thêm vào giỏ hàng',
@@ -98,15 +110,18 @@ const ProductDetails = ({ route: { params } }) => {
         text1: 'Vui lòng đăng nhập để bình luận',
       });
     }
+
     if (comment === '' || vote === 0) {
       return Toast.show({
         type: 'error',
         text1: 'Vui lòng nhập bình luận và đánh giá',
       });
     }
+
     if (!loading) {
       dispatch(postComment(params.id, comment, vote));
     }
+    
     setComment('');
     setVote(0);
   };

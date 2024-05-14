@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import  { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -12,19 +11,21 @@ import {
 } from 'react-native';
 import { Button } from 'react-native-paper';
 import Toast from 'react-native-toast-message';
-
+import { useDispatch, useSelector } from 'react-redux';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-
-import SearchModal from '../components/SearchModal';
-import Footer from '../components/Footer';
-import HomeSection from '../components/HomeSection';
 
 import {
   getAllProducts,
   getProductByCategory,
   getProductByName,
 } from '../redux/actions/productAction';
+
 import { useSetCategories } from '../utils/hooks';
+
+import SearchModal from '../components/SearchModal';
+import Footer from '../components/Footer';
+import HomeSection from '../components/HomeSection';
+
 
 import {
   backgroundColor,
@@ -32,6 +33,7 @@ import {
   buttonColors,
   textColors,
 } from '../assets/colors/colors';
+
 import { colors } from '../styles/styles';
 
 const Home = () => {
@@ -39,19 +41,23 @@ const Home = () => {
   const [activeSearch, setActiveSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [categories, setCategories] = useState([]);
-
-  const navigate = useNavigation();
-  const dispatch = useDispatch();
   const isFocused = useIsFocused();
-
+  const { loading, isAuthenticated } = useSelector((state) => state.user);
   const { products } = useSelector((state) => state.product);
-  const { user } = useSelector((state) => state.user);
-
   const displayProduct = products.slice(0, 10);
+  
+  const navigate = useNavigation();
+
+  const dispatch = useDispatch();
+  
+  useSetCategories(setCategories, isFocused);
+
+
 
   const categoryButtonHandler = (category) => {
     setCategory(category);
   };
+
   const handleSearch = () => {
     if (searchQuery === '') {
       return Toast.show({
@@ -64,7 +70,6 @@ const Home = () => {
     }
   };
 
-  useSetCategories(setCategories, isFocused);
 
   useEffect(() => {
     const timeOutId = setTimeout(() => {
@@ -91,7 +96,6 @@ const Home = () => {
           products={products}
         />
       )}
-
       {/* <Header /> */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Shop Tai nghe</Text>
@@ -101,7 +105,7 @@ const Home = () => {
         />
         <TouchableOpacity
           onPress={
-            user
+            isAuthenticated
               ? () => navigate.navigate('cart')
               : () =>
                   Toast.show({
@@ -114,7 +118,6 @@ const Home = () => {
           <Image source={require('../assets/icons/cart.png')} />
         </TouchableOpacity>
       </View>
-
       <ScrollView>
         {/* Search Bar */}
         <View style={styles.searchContainer}>
@@ -128,7 +131,6 @@ const Home = () => {
             <Image source={require('../assets/icons/white-search.png')} />
           </TouchableOpacity>
         </View>
-
         {/* Categories */}
         <View
           style={{
@@ -144,7 +146,7 @@ const Home = () => {
             }}
             showsHorizontalScrollIndicator={false}
           >
-            {categories.map((item, index) => {
+            {categories.map((item) => {
               return (
                 <Button
                   key={item._id}
@@ -172,14 +174,12 @@ const Home = () => {
             })}
           </ScrollView>
         </View>
-
         {/* Products */}
         <HomeSection title='Sản phẩm nổi bật' list={displayProduct} />
         <HomeSection title='Bán chạy nhất' list={displayProduct} />
         <HomeSection title='Hàng mới về' list={displayProduct} />
         <HomeSection title='Ưu đãi đặc biệt' list={displayProduct} />
       </ScrollView>
-
       <Footer />
     </SafeAreaView>
   );

@@ -1,6 +1,7 @@
-import axios from 'axios';
-import { server } from '../store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+
+import { server } from '../store';
 
 export const register = (formData) => async (dispatch) => {
   try {
@@ -36,8 +37,6 @@ export const login = (email, password) => async (dispatch) => {
       type: 'loginRequest',
     });
 
-    //    Axios here
-
     const { data } = await axios.post(
       `${server}/user/login`,
       {
@@ -68,9 +67,10 @@ export const login = (email, password) => async (dispatch) => {
 };
 
 export const loadUser = () => async (dispatch) => {
+  // get from storage
+  const token = await AsyncStorage.getItem('token');
+
   try {
-    // save to storage
-    const token = await AsyncStorage.getItem('token');
     if (!token) {
       dispatch({
         type: 'loadUserFail',
@@ -80,6 +80,7 @@ export const loadUser = () => async (dispatch) => {
       dispatch({
         type: 'loadUserRequest',
       });
+
       const { data } = await axios.get(`${server}/user/me?token=${token}`, {
         withCredentials: true,
       });
@@ -99,7 +100,7 @@ export const loadUser = () => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   try {
-    // save to storage
+    // get from storage
     const token = await AsyncStorage.getItem('token');
 
     // remove item
@@ -108,6 +109,7 @@ export const logout = () => async (dispatch) => {
     dispatch({
       type: 'logoutRequest',
     });
+    
     const { data } = await axios.get(`${server}/user/logout?token=${token}`, {
       withCredentials: true,
     });

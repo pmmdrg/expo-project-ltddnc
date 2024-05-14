@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
-import React from 'react';
-import { colors } from '../styles/styles';
+
 import { backgroundColor, textColors } from '../assets/colors/colors';
 
 const ProductListHeading = () => {
@@ -24,7 +23,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
   },
-
   text: {
     width: 60,
     color: textColors.primaryText,

@@ -1,16 +1,19 @@
+import { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { colors, defaultStyle, formHeading } from '../../styles/styles';
-import Header from '../../components/Header';
-import ImageCard from '../../components/ImageCard';
 import { Avatar, Button } from 'react-native-paper';
-import { useMessageAndErrorOther } from '../../utils/hooks';
 import { useDispatch } from 'react-redux';
 import mime from 'mime';
 import {
   deleteProductImage,
   updateProductImage,
 } from '../../redux/actions/otherAction';
+
+import { useMessageAndErrorOther } from '../../utils/hooks';
+
+import Header from '../../components/Header';
+import ImageCard from '../../components/ImageCard';
+
+import { colors, defaultStyle, formHeading } from '../../styles/styles';
 
 const ProductImages = ({ navigation, route }) => {
   const [images] = useState(route.params.images);
@@ -53,12 +56,10 @@ const ProductImages = ({ navigation, route }) => {
       }}
     >
       <Header back={true} />
-
       {/* Heading */}
       <View style={{ marginBottom: 20, paddingTop: 70 }}>
         <Text style={formHeading}>Hình ảnh</Text>
       </View>
-
       <ScrollView
         style={{
           marginBottom: 20,
@@ -81,7 +82,6 @@ const ProductImages = ({ navigation, route }) => {
           ))}
         </View>
       </ScrollView>
-
       <View
         style={{
           padding: 20,
@@ -99,7 +99,6 @@ const ProductImages = ({ navigation, route }) => {
           }}
           source={{ uri: image }}
         />
-
         <View
           style={{
             flexDirection: 'row',
@@ -123,7 +122,6 @@ const ProductImages = ({ navigation, route }) => {
             />
           </TouchableOpacity>
         </View>
-
         <Button
           style={{
             backgroundColor: colors.color1,

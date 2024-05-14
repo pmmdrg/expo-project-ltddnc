@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -5,21 +6,23 @@ import {
   ScrollView,
   SafeAreaView,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { Avatar, Button, TextInput } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
+import mime from 'mime';
+
+import { register } from '../redux/actions/userActions';
+
+import { useMessageAndErrorUser } from '../utils/hooks';
+
+import Footer from '../components/Footer';
+
 import {
   colors,
   defaultStyle,
-  formHeading,
   inputOptions,
   formStyles as styles,
   defaultImg,
 } from '../styles/styles';
-import { Avatar, Button, TextInput } from 'react-native-paper';
-import Footer from '../components/Footer';
-import mime from 'mime';
-import { useDispatch } from 'react-redux';
-import { register } from '../redux/actions/userActions';
-import { useMessageAndErrorUser } from '../utils/hooks';
 
 const SignUp = ({ navigation, route }) => {
   const [avatar, setAvatar] = useState('');
@@ -32,9 +35,6 @@ const SignUp = ({ navigation, route }) => {
   const [pinCode, setPinCode] = useState('');
 
   const dispatch = useDispatch();
-
-  const disableBtn =
-    !name || !email || !password || !address || !city || !country || !pinCode;
 
   const submitHandler = () => {
     const myForm = new FormData();
@@ -63,6 +63,7 @@ const SignUp = ({ navigation, route }) => {
   useEffect(() => {
     if (route.params?.image) setAvatar(route.params.image);
   }, [route.params]);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={defaultStyle}>
@@ -87,14 +88,12 @@ const SignUp = ({ navigation, route }) => {
             <TouchableOpacity onPress={() => navigation.navigate('camera')}>
               <Button textColor={colors.color1}>Thay đổi ảnh</Button>
             </TouchableOpacity>
-
             <TextInput
               {...inputOptions}
               placeholder='Tên'
               value={name}
               onChangeText={setName}
             />
-
             <TextInput
               {...inputOptions}
               placeholder='Email'
@@ -103,7 +102,6 @@ const SignUp = ({ navigation, route }) => {
               value={email}
               onChangeText={setEmail}
             />
-
             <TextInput
               {...inputOptions}
               secureTextEntry={true}
@@ -112,7 +110,6 @@ const SignUp = ({ navigation, route }) => {
               value={password}
               onChangeText={setPassword}
             />
-
             <TextInput
               {...inputOptions}
               placeholder='Địa chỉ'
@@ -131,14 +128,12 @@ const SignUp = ({ navigation, route }) => {
               value={country}
               onChangeText={setCountry}
             />
-
             <TextInput
               {...inputOptions}
               placeholder='Mã bưu chính'
               value={pinCode}
               onChangeText={setPinCode}
             />
-
             <Button
               loading={loading}
               textColor={colors.color2}
@@ -147,9 +142,7 @@ const SignUp = ({ navigation, route }) => {
             >
               Đăng ký
             </Button>
-
             <Text style={styles.or}>Hoặc</Text>
-
             <Button
               loading={loading}
               textColor={colors.color2}
@@ -161,8 +154,7 @@ const SignUp = ({ navigation, route }) => {
           </View>
         </ScrollView>
       </View>
-
-      <Footer activeRoute='profile' />
+      <Footer />
     </SafeAreaView>
   );
 };

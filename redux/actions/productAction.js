@@ -1,12 +1,14 @@
-import axios from 'axios';
-import { server } from '../store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+
+import { server } from '../store';
 
 export const getAllProducts = () => async (dispatch) => {
   try {
     dispatch({
       type: 'getAllProductsRequest',
     });
+
     const { data } = await axios.get(`${server}/product/all`, {
       withCredentials: true,
     });
@@ -28,6 +30,7 @@ export const getProductByName = (keyword) => async (dispatch) => {
     dispatch({
       type: 'getAllProductsRequest',
     });
+
     const { data } = await axios.get(
       `${server}/product/find?keyword=${keyword}`,
       {
@@ -52,6 +55,7 @@ export const getProductByCategory = (category) => async (dispatch) => {
     dispatch({
       type: 'getAllProductsRequest',
     });
+
     const { data } = await axios.get(
       `${server}/product/findCategory?category=${category}`,
       {
@@ -72,13 +76,14 @@ export const getProductByCategory = (category) => async (dispatch) => {
 };
 
 export const getAdminProducts = () => async (dispatch) => {
-  // save to storage
+  // get from storage
   const token = await AsyncStorage.getItem('token');
 
   try {
     dispatch({
       type: 'getAdminProductsRequest',
     });
+
     const { data } = await axios.get(`${server}/product/admin?token=${token}`, {
       withCredentials: true,
     });

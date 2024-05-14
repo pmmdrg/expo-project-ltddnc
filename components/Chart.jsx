@@ -1,7 +1,8 @@
 import { View, Dimensions } from 'react-native';
-import React from 'react';
 import { PieChart } from 'react-native-chart-kit';
+
 import { colors } from '../styles/styles';
+
 import { backgroundColor, textColors } from '../assets/colors/colors';
 
 const screenWidth = Dimensions.get('screen').width - 60 - 75;

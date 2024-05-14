@@ -1,15 +1,19 @@
+import { useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import React, { useState } from 'react';
-import { colors, defaultStyle, formHeading } from '../../styles/styles';
+import { Headline } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
+
+import { processOrder } from '../../redux/actions/otherAction';
+
+import { useGetOrders, useMessageAndErrorOther } from '../../utils/hooks';
+
 import Header from '../../components/Header';
 import Loader from '../../components/Loader';
 import OrderItem from '../../components/OrderItem';
-import { useGetOrders, useMessageAndErrorOther } from '../../utils/hooks';
-import { useIsFocused } from '@react-navigation/native';
-import { Headline } from 'react-native-paper';
-import { useDispatch } from 'react-redux';
-import { processOrder } from '../../redux/actions/otherAction';
 import Pagination from '../../components/Pagination';
+
+import { colors, defaultStyle, formHeading } from '../../styles/styles';
 
 const statusMaps = {
   Shipped: 'Vận chuyển',
@@ -25,9 +29,9 @@ const paymentMaps = {
 const AdminOrders = ({ navigation }) => {
   const [curPage, setCurPage] = useState(1);
   const isFocused = useIsFocused();
-  const dispatch = useDispatch();
-
   const { loading, orders } = useGetOrders(isFocused, true);
+
+  const dispatch = useDispatch();
 
   const processOrderLoading = useMessageAndErrorOther(
     dispatch,
@@ -42,7 +46,6 @@ const AdminOrders = ({ navigation }) => {
   const indexOfLastOrder = curPage * 10;
   const indexOfFirstOrder = indexOfLastOrder - 10;
   const ordersForRender = orders.slice(indexOfFirstOrder, indexOfLastOrder);
-
   const totalPages = Math.ceil(orders.length / 10);
 
   return (
@@ -53,12 +56,10 @@ const AdminOrders = ({ navigation }) => {
       }}
     >
       <Header back={true} />
-
       {/* Heading */}
       <View style={{ marginBottom: 20, paddingTop: 70 }}>
         <Text style={formHeading}>Tất cả đơn hàng</Text>
       </View>
-
       {loading ? (
         <Loader />
       ) : (

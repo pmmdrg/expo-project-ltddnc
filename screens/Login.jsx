@@ -1,5 +1,14 @@
+import { useState } from 'react';
 import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
-import React, { useState } from 'react';
+import { Button, TextInput } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
+
+import { login } from '../redux/actions/userActions';
+
+import { useMessageAndErrorUser } from '../utils/hooks';
+
+import Footer from '../components/Footer';
+
 import {
   colors,
   defaultStyle,
@@ -7,22 +16,19 @@ import {
   inputOptions,
   formStyles as styles,
 } from '../styles/styles';
-import { Button, TextInput } from 'react-native-paper';
-import Footer from '../components/Footer';
-import { useDispatch } from 'react-redux';
-import { login } from '../redux/actions/userActions';
-import { useMessageAndErrorUser } from '../utils/hooks';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
+
   const loading = useMessageAndErrorUser(navigation, dispatch, 'profile');
 
   const submitHandler = () => {
     dispatch(login(email, password));
   };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={defaultStyle}>
@@ -38,7 +44,6 @@ const Login = ({ navigation }) => {
             value={email}
             onChangeText={setEmail}
           />
-
           <TextInput
             {...inputOptions}
             autoCapitalize='none'
@@ -47,14 +52,12 @@ const Login = ({ navigation }) => {
             value={password}
             onChangeText={setPassword}
           />
-
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => navigation.navigate('forgetpassword')}
           >
             <Text style={styles.forget}>Quên mật khẩu?</Text>
           </TouchableOpacity>
-
           <Button
             loading={loading}
             textColor={colors.color2}
@@ -63,9 +66,7 @@ const Login = ({ navigation }) => {
           >
             Đăng nhập
           </Button>
-
           <Text style={styles.or}>Đăng nhập</Text>
-
           <Button
             textColor={colors.color2}
             style={styles.btn}
@@ -75,8 +76,7 @@ const Login = ({ navigation }) => {
           </Button>
         </View>
       </View>
-
-      <Footer activeRoute='profile' />
+      <Footer />
     </SafeAreaView>
   );
 };

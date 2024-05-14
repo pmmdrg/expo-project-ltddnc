@@ -1,18 +1,17 @@
-import { Image, SafeAreaView, TouchableOpacity, View } from 'react-native';
-import React from 'react';
-import { Avatar } from 'react-native-paper';
-import { colors } from '../styles/styles';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
-import { StyleSheet } from 'react-native';
-import { backgroundColor } from '../assets/colors/colors';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Toast from 'react-native-toast-message';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation, useRoute } from '@react-navigation/native';
+
+import { backgroundColor } from '../assets/colors/colors';
 
 const Header = ({ back, emptyCart = false }) => {
   const { loading, isAuthenticated } = useSelector((state) => state.user);
+
   const navigate = useNavigation();
+
   const dispatch = useDispatch();
-  const route = useRoute();
+
   const emptyCartHandler = () => {
     if (!isAuthenticated) {
       return Toast.show({
@@ -24,6 +23,7 @@ const Header = ({ back, emptyCart = false }) => {
       type: 'clearCart',
     });
   };
+
   const handleNavigateCart = () => {
     if (!isAuthenticated) {
       return Toast.show({

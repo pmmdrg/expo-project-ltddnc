@@ -1,4 +1,5 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
+
 import { textColors } from '../assets/colors/colors';
 
 const CommentItem = ({ comments }) => {

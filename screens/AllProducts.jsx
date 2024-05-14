@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import {
-  FlatList,
-  Platform,
-  SafeAreaView,
-  StatusBar,
-  View,
-} from 'react-native';
-import ProductCard from '../components/ProductCard';
-import { useSelector } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
-import Header from '../components/Header';
+import { useState } from 'react';
+import { FlatList, View } from 'react-native';
 import Toast from 'react-native-toast-message';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+
+import ProductCard from '../components/ProductCard';
+import Header from '../components/Header';
 import Pagination from '../components/Pagination';
+
 import { defaultStyle } from '../styles/styles';
 
 const AllProducts = () => {
   const [curPage, setCurPage] = useState(1);
-  const navigate = useNavigation();
   const { loading, isAuthenticated } = useSelector((state) => state.user);
   const { products } = useSelector((state) => state.product);
+
+  const dispatch = useDispatch();
+
+  const navigate = useNavigation();
+
   const addToCartHandler = (id, name, price, image, stock) => {
     if (!isAuthenticated) {
       return Toast.show({
@@ -26,11 +26,14 @@ const AllProducts = () => {
         text1: 'Vui lòng đăng nhập',
       });
     }
-    if (stock === 0)
+
+    if (stock === 0) {
       return Toast.show({
         type: 'error',
         text1: 'Hết hàng',
       });
+    }
+
     dispatch({
       type: 'addToCart',
       payload: {
@@ -42,6 +45,7 @@ const AllProducts = () => {
         quantity: 1,
       },
     });
+
     Toast.show({
       type: 'success',
       text1: 'Đã thêm vào giỏ hàng',
@@ -54,7 +58,6 @@ const AllProducts = () => {
     indexOfFirstProduct,
     indexOfLastProduct
   );
-
   const totalPages = Math.ceil(products.length / 10);
 
   return (

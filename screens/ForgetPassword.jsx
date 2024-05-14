@@ -1,5 +1,14 @@
-import { View, Text, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { View, Text } from 'react-native';
+import { Button, TextInput } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
+
+import { forgetPassword } from '../redux/actions/otherAction';
+
+import { useMessageAndErrorOther } from '../utils/hooks';
+
+import Footer from '../components/Footer';
+
 import {
   colors,
   defaultStyle,
@@ -7,14 +16,10 @@ import {
   inputOptions,
   formStyles as styles,
 } from '../styles/styles';
-import { Button, TextInput } from 'react-native-paper';
-import Footer from '../components/Footer';
-import { useDispatch } from 'react-redux';
-import { forgetPassword } from '../redux/actions/otherAction';
-import { useMessageAndErrorOther } from '../utils/hooks';
 
 const ForgetPassword = ({ navigation }) => {
   const [email, setEmail] = useState('');
+
   const dispatch = useDispatch();
 
   const loading = useMessageAndErrorOther(dispatch, navigation, 'verify');
@@ -22,6 +27,7 @@ const ForgetPassword = ({ navigation }) => {
   const submitHandler = () => {
     dispatch(forgetPassword(email));
   };
+
   return (
     <>
       <View style={defaultStyle}>
@@ -37,7 +43,6 @@ const ForgetPassword = ({ navigation }) => {
             value={email}
             onChangeText={setEmail}
           />
-
           <Button
             loading={loading}
             textColor={colors.color2}
@@ -46,9 +51,7 @@ const ForgetPassword = ({ navigation }) => {
           >
             Nhận mã OTP
           </Button>
-
           <Text style={styles.or}>Hoặc</Text>
-
           <Button
             loading={loading}
             textColor={colors.color2}
@@ -59,8 +62,7 @@ const ForgetPassword = ({ navigation }) => {
           </Button>
         </View>
       </View>
-
-      <Footer activeRoute='profile' />
+      <Footer />
     </>
   );
 };
