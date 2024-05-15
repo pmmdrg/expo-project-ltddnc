@@ -54,6 +54,7 @@ const UpdateProfile = ({ navigation }) => {
             placeholder='Tên'
             value={name}
             onChangeText={setName}
+            label="Name"
           />
           <TextInput
             {...inputOptions}
@@ -61,30 +62,35 @@ const UpdateProfile = ({ navigation }) => {
             keyboardType='email-address'
             value={email}
             onChangeText={setEmail}
+            label="Email"
           />
           <TextInput
             {...inputOptions}
             placeholder='Địa chỉ'
             value={address}
             onChangeText={setAddress}
+            label="Address"
           />
           <TextInput
             {...inputOptions}
             placeholder='Thành phố'
             value={city}
             onChangeText={setCity}
+            label="City"
           />
           <TextInput
             {...inputOptions}
             placeholder='Quốc gia'
             value={country}
             onChangeText={setCountry}
+            label="Country"
           />
           <TextInput
             {...inputOptions}
             placeholder='Mã bưu chính'
             value={pinCode}
             onChangeText={setPinCode}
+            label="Pin Code"
           />
           <Button
             loading={loading}

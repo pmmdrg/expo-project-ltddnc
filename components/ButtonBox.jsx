@@ -16,15 +16,18 @@ const ButtonBox = ({
       style={{
         backgroundColor: backgroundColor.secondaryBackground,
         height: 80,
-        width: 80,
+        width: 'auto',
         borderRadius: 10,
         alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        paddingRight: 15
       }}
       onPress={() => handler(handlerText)}
       disabled={loading}
     >
       <Avatar.Icon
-        size={50}
+        size={60}
         color={textColors.primaryText}
         style={[{ backgroundColor: backgroundColor.secondaryBackground }]}
         icon={icon}
@@ -33,7 +36,7 @@ const ButtonBox = ({
         style={{
           color: textColors.primaryText,
           textAlign: 'center',
-          fontSize: 12,
+          fontSize: 18,
         }}
       >
         {displayText}

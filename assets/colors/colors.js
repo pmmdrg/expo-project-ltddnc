@@ -15,7 +15,7 @@ const buttonColors = {
 
 const backgroundColor = {
   primaryBackground: '#ffffff',
-  secondaryBackground: '#fafafa',
+  secondaryBackground: '#f2f2f2',
   transparentBackground: 'transparent',
 };
 

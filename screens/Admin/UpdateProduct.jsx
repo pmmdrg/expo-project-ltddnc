@@ -84,7 +84,7 @@ const UpdateProduct = ({ navigation, route }) => {
               padding: 20,
               elevation: 10,
               borderRadius: 10,
-              backgroundColor: colors.color3,
+              backgroundColor: colors.color5,
             }}
           >
             <View
@@ -109,12 +109,14 @@ const UpdateProduct = ({ navigation, route }) => {
                 placeholder='Tên'
                 value={name}
                 onChangeText={setName}
+                label="Tên"
               />
               <TextInput
                 {...inputOptions}
                 placeholder='Mô tả'
                 value={description}
                 onChangeText={setDescription}
+                label="Mô tả"
               />
               <TextInput
                 {...inputOptions}
@@ -122,6 +124,7 @@ const UpdateProduct = ({ navigation, route }) => {
                 keyboardType='number-pad'
                 value={price}
                 onChangeText={setPrice}
+                label="Giá"
               />
               <TextInput
                 {...inputOptions}
@@ -129,6 +132,7 @@ const UpdateProduct = ({ navigation, route }) => {
                 value={stock}
                 keyboardType='number-pad'
                 onChangeText={setStock}
+                label="Hàng trong kho"
               />
               <Text
                 style={{

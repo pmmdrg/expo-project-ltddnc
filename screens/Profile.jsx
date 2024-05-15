@@ -1,29 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
-} from 'react-native';
-import { Avatar, Button } from 'react-native-paper';
-import { useDispatch, useSelector } from 'react-redux';
-import { useIsFocused } from '@react-navigation/native';
-import mime from 'mime';
+} from "react-native";
+import { Avatar, Button } from "react-native-paper";
+import { useDispatch, useSelector } from "react-redux";
+import { useIsFocused } from "@react-navigation/native";
+import mime from "mime";
 
-import { loadUser, logout } from '../redux/actions/userActions';
-import { updatePic } from '../redux/actions/otherAction';
+import { loadUser, logout } from "../redux/actions/userActions";
+import { updatePic } from "../redux/actions/otherAction";
 
 import {
   useMessageAndErrorOther,
   useMessageAndErrorUser,
-} from '../utils/hooks';
+} from "../utils/hooks";
 
-import ButtonBox from '../components/ButtonBox';
-import Footer from '../components/Footer';
-import Loader from '../components/Loader';
+import ButtonBox from "../components/ButtonBox";
+import Footer from "../components/Footer";
+import Loader from "../components/Loader";
 
-import { colors, defaultImg, defaultStyle } from '../styles/styles';
+import { colors, defaultImg, defaultStyle } from "../styles/styles";
 
 const Profile = ({ navigation, route }) => {
   const [avatar, setAvatar] = useState(defaultImg);
@@ -32,7 +32,7 @@ const Profile = ({ navigation, route }) => {
 
   const dispatch = useDispatch();
 
-  const loading = useMessageAndErrorUser(navigation, dispatch, 'login');
+  const loading = useMessageAndErrorUser(navigation, dispatch, "login");
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -40,23 +40,23 @@ const Profile = ({ navigation, route }) => {
 
   const navigateHandler = (text) => {
     switch (text) {
-      case 'Admin':
-        navigation.navigate('adminpanel');
+      case "Admin":
+        navigation.navigate("adminpanel");
         break;
-      case 'Orders':
-        navigation.navigate('orders');
+      case "Orders":
+        navigation.navigate("orders");
         break;
-      case 'Profile':
-        navigation.navigate('updateprofile');
+      case "Profile":
+        navigation.navigate("updateprofile");
         break;
-      case 'Password':
-        navigation.navigate('changepassword');
+      case "Password":
+        navigation.navigate("changepassword");
         break;
-      case 'Sign Out':
+      case "Sign Out":
         logoutHandler();
         break;
       default:
-        navigation.navigate('orders');
+        navigation.navigate("orders");
         break;
     }
   };
@@ -69,10 +69,10 @@ const Profile = ({ navigation, route }) => {
 
       setAvatar(route.params.image);
 
-      myForm.append('file', {
+      myForm.append("file", {
         uri: route.params.image,
         type: mime.getType(route.params.image),
-        name: route.params.image.split('/').pop(),
+        name: route.params.image.split("/").pop(),
       });
 
       dispatch(updatePic(myForm));
@@ -105,7 +105,7 @@ const Profile = ({ navigation, route }) => {
               <TouchableOpacity
                 disabled={loadingPic}
                 onPress={() =>
-                  navigation.navigate('camera', { updateProfile: true })
+                  navigation.navigate("camera", { updateProfile: true })
                 }
               >
                 <Button
@@ -119,63 +119,47 @@ const Profile = ({ navigation, route }) => {
               <Text style={styles.name}>{user?.name}</Text>
               <Text
                 style={{
-                  fontWeight: '300',
+                  fontWeight: "300",
                   color: colors.color2,
                 }}
               >
                 {user?.email}
               </Text>
             </View>
-            <View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  margin: 10,
-                  justifyContent: 'space-between',
-                }}
-              >
+            <View style={{display: 'flex', gap: 20}}>
+              <ButtonBox
+                handler={navigateHandler}
+                handlerText={"Orders"}
+                displayText={"Đơn hàng"}
+                icon={"format-list-bulleted-square"}
+              />
+              {user?.role === "admin" && (
                 <ButtonBox
                   handler={navigateHandler}
-                  handlerText={'Orders'}
-                  displayText={'Đơn hàng'}
-                  icon={'format-list-bulleted-square'}
+                  icon={"view-dashboard"}
+                  handlerText={"Admin"}
+                  displayText={"Admin"}
+                  reverse={true}
                 />
-                {user?.role === 'admin' && (
-                  <ButtonBox
-                    handler={navigateHandler}
-                    icon={'view-dashboard'}
-                    handlerText={'Admin'}
-                    displayText={'Admin'}
-                    reverse={true}
-                  />
-                )}
-                <ButtonBox
-                  handler={navigateHandler}
-                  handlerText={'Profile'}
-                  displayText={'Hồ sơ'}
-                  icon={'pencil'}
-                />
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  margin: 10,
-                  justifyContent: 'space-evenly',
-                }}
-              >
-                <ButtonBox
-                  handler={navigateHandler}
-                  handlerText={'Password'}
-                  displayText={'Đổi mật khẩu'}
-                  icon={'pencil'}
-                />
-                <ButtonBox
-                  handler={navigateHandler}
-                  handlerText={'Sign Out'}
-                  displayText={'Đăng xuất'}
-                  icon={'exit-to-app'}
-                />
-              </View>
+              )}
+              <ButtonBox
+                handler={navigateHandler}
+                handlerText={"Profile"}
+                displayText={"Hồ sơ"}
+                icon={"pencil"}
+              />
+              <ButtonBox
+                handler={navigateHandler}
+                handlerText={"Password"}
+                displayText={"Đổi mật khẩu"}
+                icon={"pencil"}
+              />
+              <ButtonBox
+                handler={navigateHandler}
+                handlerText={"Sign Out"}
+                displayText={"Đăng xuất"}
+                icon={"exit-to-app"}
+              />
             </View>
           </>
         )}
@@ -192,11 +176,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.color3,
     padding: 30,
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
   },
   name: {
     fontSize: 20,
-    fontWeight: '500',
+    fontWeight: "500",
     marginVertical: 10,
     color: colors.color2,
   },

@@ -19,12 +19,13 @@ import Loader from '../../components/Loader';
 import ButtonBox from '../../components/ButtonBox';
 import ProductListHeading from '../../components/ProductListHeading';
 import ProductListItem from '../../components/ProductListItem';
-import Chart from '../../components/Chart';
+import { CategoryChart, StockChart } from '../../components/Chart';
 import Pagination from '../../components/Pagination';
 
 import { defaultStyle, formHeading } from '../../styles/styles';
 
 import { backgroundColor } from '../../assets/colors/colors';
+import ProductListItems from '../../components/ProductListItems';
 
 const AdminPanel = ({ navigation }) => {
   const [curPage, setCurPage] = useState(1);
@@ -85,15 +86,7 @@ const AdminPanel = ({ navigation }) => {
         <Loader />
       ) : (
         <>
-          <View
-            style={{
-              backgroundColor: backgroundColor.secondaryBackground,
-              borderRadius: 20,
-              alignItems: 'center',
-            }}
-          >
-            <Chart inStock={inStock} outOfStock={outOfStock} />
-          </View>
+          
           <View>
             <View
               style={{
@@ -123,12 +116,21 @@ const AdminPanel = ({ navigation }) => {
               />
             </View>
           </View>
-          <ProductListHeading />
           <ScrollView showsVerticalScrollIndicator={false}>
+          <View
+            style={{
+              backgroundColor: backgroundColor.secondaryBackground,
+              borderRadius: 20,
+              alignItems: 'center',
+            }}
+          >
+            <StockChart inStock={inStock} outOfStock={outOfStock} />
+            <CategoryChart />
+          </View>
             <View>
               {!loadingDelete &&
                 productsForRender.map((item, index) => (
-                  <ProductListItem
+                  <ProductListItems
                     navigate={navigation}
                     deleteHandler={deleteProductHandler}
                     key={item?._id}

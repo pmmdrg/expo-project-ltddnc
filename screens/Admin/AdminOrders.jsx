@@ -1,19 +1,23 @@
-import { useState } from 'react';
-import { View, Text, ScrollView } from 'react-native';
-import { Headline } from 'react-native-paper';
-import { useDispatch } from 'react-redux';
-import { useIsFocused } from '@react-navigation/native';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
+import React, { useState } from "react";
+import { colors, defaultStyle, formHeading } from "../../styles/styles";
+import Header from "../../components/Header";
+import Loader from "../../components/Loader";
+import OrderItem from "../../components/OrderItem";
+import { useGetOrders, useMessageAndErrorOther } from "../../utils/hooks";
+import { useIsFocused } from "@react-navigation/native";
+import { Headline } from "react-native-paper";
+import { useDispatch } from "react-redux";
+import { processOrder } from "../../redux/actions/otherAction";
+import NavigationItem from "../../components/NavigationItem";
 
-import { processOrder } from '../../redux/actions/otherAction';
-
-import { useGetOrders, useMessageAndErrorOther } from '../../utils/hooks';
-
-import Header from '../../components/Header';
-import Loader from '../../components/Loader';
-import OrderItem from '../../components/OrderItem';
 import Pagination from '../../components/Pagination';
-
-import { colors, defaultStyle, formHeading } from '../../styles/styles';
 
 const statusMaps = {
   Shipped: 'Vận chuyển',
@@ -26,6 +30,7 @@ const paymentMaps = {
   COD: 'Thanh toán khi nhận hàng',
 };
 
+
 const AdminOrders = ({ navigation }) => {
   const [curPage, setCurPage] = useState(1);
   const isFocused = useIsFocused();
@@ -33,10 +38,54 @@ const AdminOrders = ({ navigation }) => {
 
   const dispatch = useDispatch();
 
+  const [filteredValue, setFilteredValue] = useState('');
+  const [isNewestOrder, setIsNewestOrder] = useState(true);
+
+  const sortOrder = orders.sort((a, b) => {
+    const dateA = new Date(a.createdAt).getTime();
+    const dateB = new Date(b.createdAt).getTime();
+
+    return isNewestOrder ? dateB - dateA : dateA - dateB;
+  });
+
+  const finalOrder = sortOrder.filter((order) => {
+    if (!filteredValue) return true;
+
+    return order.orderStatus === filteredValue;
+  });
+
+  function handleOrderStatus(orderStatus) {
+    setFilteredValue(orderStatus);
+  }
+
+  function toggleSortOrder() {
+    setIsNewestOrder((prevState) => !prevState);
+  }
+
+  const handleCreateOrderStatusButton = (...orderStatus) => {
+    let elements = [];
+    for (let i = 0; i < orderStatus.length; i++) {
+      elements.push(
+        <TouchableOpacity
+          key={i}
+          onPress={() => handleOrderStatus(orderStatus[i])}
+          style={[
+            styles.buttonOrderStatus,
+            filteredValue === orderStatus[i]
+              ? styles.buttonOrderStatusSelected
+              : styles.buttonOrderStatusUnselected,
+          ]}
+        >
+          <Text>{orderStatus[i] ? orderStatus[i] : "All"}</Text>
+        </TouchableOpacity>
+      );
+    }
+    return elements;
+  };
   const processOrderLoading = useMessageAndErrorOther(
     dispatch,
     navigation,
-    'adminpanel'
+    "adminpanel"
   );
 
   const updateHandler = (id) => {
@@ -70,8 +119,48 @@ const AdminOrders = ({ navigation }) => {
           }}
         >
           <ScrollView showsVerticalScrollIndicator={false}>
-            {ordersForRender.length > 0 ? (
-              ordersForRender.map((item, index) => (
+            <View style={styles.btnContainer}>
+              <View style={styles.statusContainer}>
+                {handleCreateOrderStatusButton(
+                  "",
+                  "Preparing",
+                  "Shipped",
+                  "Delivered"
+                )}
+              </View>
+              <View
+                style={{
+                  marginLeft: "auto",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 8,
+                }}
+              >
+                <View style={{ marginLeft: "auto" }}>
+                  <Text>{isNewestOrder ? "Newest:" : "Latest:"}</Text>
+                </View>
+                <TouchableOpacity
+                  style={{
+                    justifyContent: "center",
+                    height: 40,
+                    aspectRatio: 1,
+                    borderWidth: 1,
+                    borderColor: "#dadbd7",
+                    borderRadius: 10,
+                  }}
+                >
+                  <NavigationItem
+                    iconSrc={require("../../assets/icons/swap.png")}
+                    onPress={() => toggleSortOrder()}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            {finalOrder.length > 0 ? (
+              finalOrder.map((item, index) => (
                 <OrderItem
                   key={item._id}
                   id={item._id}
@@ -79,7 +168,7 @@ const AdminOrders = ({ navigation }) => {
                   price={item.totalAmount}
                   status={statusMaps[item.orderStatus]}
                   paymentMethod={paymentMaps[item.paymentMethod]}
-                  orderedOn={item.createdAt.split('T')[0]}
+                  orderedOn={item.createdAt.split("T")[0]}
                   address={`${item.shippingInfo.address}, ${item.shippingInfo.city}, ${item.shippingInfo.country} ${item.shippingInfo.pinCode}`}
                   admin={true}
                   updateHandler={updateHandler}
@@ -87,7 +176,7 @@ const AdminOrders = ({ navigation }) => {
                 />
               ))
             ) : (
-              <Headline style={{ textAlign: 'center' }}>
+              <Headline style={{ textAlign: "center" }}>
                 Chưa có đơn hàng nào
               </Headline>
             )}
@@ -104,5 +193,34 @@ const AdminOrders = ({ navigation }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  btnContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 20
+  },
+  statusContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    padding: 3,
+    borderRadius: 10,
+    backgroundColor: "#dadbd7",
+  },
+  buttonOrderStatus: {
+    paddingHorizontal: 25,
+    paddingVertical: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  itemStatus: {},
+  buttonOrderStatusSelected: {
+    backgroundColor: "#f7f7f5",
+  },
+  buttonOrderStatusUnselected: {},
+});
 
 export default AdminOrders;

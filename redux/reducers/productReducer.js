@@ -1,4 +1,4 @@
-import { createReducer } from '@reduxjs/toolkit';
+import { createReducer } from "@reduxjs/toolkit";
 
 export const productReducer = createReducer(
   {
@@ -7,46 +7,46 @@ export const productReducer = createReducer(
   },
   (builder) => {
     builder
-      .addCase('getAllProductsRequest', (state) => {
+      .addCase("getAllProductsRequest", (state) => {
         state.loading = true;
       })
-      .addCase('getAdminProductsRequest', (state) => {
+      .addCase("getAdminProductsRequest", (state) => {
         state.loading = true;
       })
-      .addCase('getProductDetailsRequest', (state) => {
+      .addCase("getProductDetailsRequest", (state) => {
         state.loading = true;
       })
-      .addCase('getAllProductsSuccess', (state, action) => {
+      .addCase("getAllProductsSuccess", (state, action) => {
         state.loading = false;
         state.products = action.payload;
       })
-      .addCase('getAdminProductsSuccess', (state, action) => {
+      .addCase("getAdminProductsSuccess", (state, action) => {
         state.loading = false;
         state.products = action.payload.products;
         state.inStock = action.payload.inStock;
         state.outOfStock = action.payload.outOfStock;
       })
-      .addCase('getProductDetailsSuccess', (state, action) => {
+      .addCase("getProductDetailsSuccess", (state, action) => {
         state.loading = false;
         state.product = action.payload;
       })
-      .addCase('getAllProductsFail', (state, action) => {
+      .addCase("getAllProductsFail", (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase('getAdminProductsFail', (state, action) => {
+      .addCase("getAdminProductsFail", (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase('getProductDetailsFail', (state, action) => {
+      .addCase("getProductDetailsFail", (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
 
-    builder.addCase('clearError', (state) => {
+    builder.addCase("clearError", (state) => {
       state.error = null;
     });
-    builder.addCase('clearMessage', (state) => {
+    builder.addCase("clearMessage", (state) => {
       state.message = null;
     });
   }
