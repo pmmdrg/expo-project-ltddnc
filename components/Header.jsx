@@ -1,7 +1,7 @@
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import { backgroundColor } from '../assets/colors/colors';
 
@@ -44,7 +44,6 @@ const Header = ({ back, emptyCart = false }) => {
           <Image source={require('../assets/icons/back.png')} />
         </TouchableOpacity>
       )}
-
       <TouchableOpacity
         style={styles.cartButton}
         onPress={emptyCart ? emptyCartHandler : handleNavigateCart}

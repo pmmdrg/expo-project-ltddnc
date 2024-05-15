@@ -68,7 +68,7 @@ const HomeSection = ({ title, list }) => {
             showsHorizontalScrollIndicator={false}
             style={styles.listItem}
           >
-            {list.map((item, index) => (
+            {list.map((item) => (
               <ProductCard
                 stock={item.stock}
                 name={item.name}

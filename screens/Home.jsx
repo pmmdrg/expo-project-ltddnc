@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -26,7 +26,6 @@ import SearchModal from '../components/SearchModal';
 import Footer from '../components/Footer';
 import HomeSection from '../components/HomeSection';
 
-
 import {
   backgroundColor,
   borderColor,
@@ -37,7 +36,7 @@ import {
 import { colors } from '../styles/styles';
 
 const Home = () => {
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('All');
   const [activeSearch, setActiveSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [categories, setCategories] = useState([]);
@@ -45,14 +44,12 @@ const Home = () => {
   const { loading, isAuthenticated } = useSelector((state) => state.user);
   const { products } = useSelector((state) => state.product);
   const displayProduct = products.slice(0, 10);
-  
+
   const navigate = useNavigation();
 
   const dispatch = useDispatch();
-  
+
   useSetCategories(setCategories, isFocused);
-
-
 
   const categoryButtonHandler = (category) => {
     setCategory(category);
@@ -70,12 +67,11 @@ const Home = () => {
     }
   };
 
-
   useEffect(() => {
     const timeOutId = setTimeout(() => {
-      if (category === '' && activeSearch === false) {
+      if (category === 'All' && activeSearch === false) {
         dispatch(getAllProducts());
-      } else if (category !== '' && activeSearch === false) {
+      } else if (category !== 'All' && activeSearch === false) {
         dispatch(getProductByCategory(category));
       }
     }, 500);
@@ -146,10 +142,10 @@ const Home = () => {
             }}
             showsHorizontalScrollIndicator={false}
           >
-            {categories.map((item) => {
+            {categories.map((item, index) => {
               return (
                 <Button
-                  key={item._id}
+                  key={item.index}
                   style={{
                     backgroundColor:
                       category === item.category
@@ -167,7 +163,7 @@ const Home = () => {
                         category === item.category ? colors.color2 : 'gray',
                     }}
                   >
-                    {item.category}
+                    {item.category === 'All' ? 'Tất cả' : item.category}
                   </Text>
                 </Button>
               );

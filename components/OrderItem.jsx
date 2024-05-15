@@ -30,13 +30,11 @@ const OrderItem = ({
       >
         ID - #{id}
       </Text>
-
       <TextBox title={'Địa chỉ'} value={address} i={i} />
       <TextBox title={'Đặt hàng vào'} value={orderedOn} i={i} />
       <TextBox title={'Giá'} value={price} i={i} />
       <TextBox title={'Trạng thái'} value={status} i={i} />
       <TextBox title={'Phương thức thanh toán'} value={paymentMethod} i={i} />
-
       {admin && (
         <Button
           icon={'update'}

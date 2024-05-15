@@ -29,18 +29,14 @@ const paymentMaps = {
   ONLINE: 'Trực tuyến',
   COD: 'Thanh toán khi nhận hàng',
 };
-import NavigationItem from "../components/NavigationItem";
+import NavigationItem from '../components/NavigationItem';
 
 const Orders = () => {
   const [curPage, setCurPage] = useState(1);
+  const [filteredValue, setFilteredValue] = useState('');
+  const [isNewestOrder, setIsNewestOrder] = useState(true);
   const isFocused = useIsFocused();
   const { loading, orders } = useGetOrders(isFocused);
-  const indexOfLastOrder = curPage * 10;
-  const indexOfFirstOrder = indexOfLastOrder - 10;
-  const ordersForRender = orders.slice(indexOfFirstOrder, indexOfLastOrder);
-  const totalPages = Math.ceil(orders.length / 10);
-  const [filteredValue, setFilteredValue] = useState("");
-  const [isNewestOrder, setIsNewestOrder] = useState(true);
 
   const sortOrder = orders.sort((a, b) => {
     const dateA = new Date(a.createdAt).getTime();
@@ -57,6 +53,7 @@ const Orders = () => {
 
   function handleOrderStatus(orderStatus) {
     setFilteredValue(orderStatus);
+    setCurPage(1);
   }
 
   function toggleSortOrder() {
@@ -65,6 +62,7 @@ const Orders = () => {
 
   const handleCreateOrderStatusButton = (...orderStatus) => {
     let elements = [];
+
     for (let i = 0; i < orderStatus.length; i++) {
       elements.push(
         <TouchableOpacity
@@ -77,12 +75,17 @@ const Orders = () => {
               : styles.buttonOrderStatusUnselected,
           ]}
         >
-          <Text>{orderStatus[i] ? orderStatus[i] : "All"}</Text>
+          <Text>{orderStatus[i] ? statusMaps[orderStatus[i]] : 'Tất cả'}</Text>
         </TouchableOpacity>
       );
     }
     return elements;
   };
+
+  const indexOfLastOrder = curPage * 10;
+  const indexOfFirstOrder = indexOfLastOrder - 10;
+  const ordersForRender = finalOrder.slice(indexOfFirstOrder, indexOfLastOrder);
+  const totalPages = Math.ceil(finalOrder.length / 10);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -93,6 +96,9 @@ const Orders = () => {
         }}
       >
         <Header back={true} />
+        <View style={{ marginBottom: 20, paddingTop: 20 }}>
+          <Text style={formHeading}>Đơn hàng</Text>
+        </View>
         {loading ? (
           <Loader />
         ) : (
@@ -102,52 +108,47 @@ const Orders = () => {
               flex: 1,
             }}
           >
-            <View style={{ marginBottom: 20, paddingTop: 70 }}>
-              <Text style={formHeading}>Đơn hàng</Text>
-            </View>
-            <ScrollView showsVerticalScrollIndicator={false}>
-              <View style={styles.btnContainer}>
-                <View style={styles.statusContainer}>
-                  {handleCreateOrderStatusButton(
-                    "",
-                    "Preparing",
-                    "Shipped",
-                    "Delivered"
-                  )}
+            <View style={styles.btnContainer}>
+              <View style={styles.statusContainer}>
+                {handleCreateOrderStatusButton(
+                  '',
+                  'Preparing',
+                  'Shipped',
+                  'Delivered'
+                )}
+              </View>
+              <View
+                style={{
+                  marginRight: 10,
+                  marginTop: 10,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  alignSelf: 'flex-end',
+                }}
+              >
+                <View style={{ marginRight: 10 }}>
+                  <Text>Sắp xếp: {isNewestOrder ? 'Mới nhất' : 'Cũ nhất'}</Text>
                 </View>
-                <View
+                <TouchableOpacity
                   style={{
-                    marginLeft: "auto",
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: 8,
+                    justifyContent: 'center',
+                    height: 40,
+                    aspectRatio: 1,
+                    borderWidth: 1,
+                    borderColor: '#dadbd7',
+                    borderRadius: 10,
                   }}
                 >
-                  <View style={{ marginLeft: "auto" }}>
-                    <Text>{isNewestOrder ? "Newest:" : "Latest:"}</Text>
-                  </View>
-                  <TouchableOpacity
-                    style={{
-                      justifyContent: "center",
-                      height: 40,
-                      aspectRatio: 1,
-                      borderWidth: 1,
-                      borderColor: "#dadbd7",
-                      borderRadius: 10,
-                    }}
-                  >
-                    <NavigationItem
-                      iconSrc={require("../assets/icons/swap.png")}
-                      onPress={() => toggleSortOrder()}
-                    />
-                  </TouchableOpacity>
-                </View>
+                  <NavigationItem
+                    iconSrc={require('../assets/icons/swap.png')}
+                    onPress={() => toggleSortOrder()}
+                  />
+                </TouchableOpacity>
               </View>
-
-              {finalOrder.length > 0 ? (
-                finalOrder.map((item, index) => (
+            </View>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              {ordersForRender.length > 0 ? (
+                ordersForRender.map((item, index) => (
                   <OrderItem
                     key={item._id}
                     id={item._id}
@@ -181,28 +182,27 @@ const Orders = () => {
 
 const styles = StyleSheet.create({
   btnContainer: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 20
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginBottom: 20,
   },
   statusContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
     padding: 3,
     borderRadius: 10,
-    backgroundColor: "#dadbd7",
+    backgroundColor: '#dadbd7',
   },
   buttonOrderStatus: {
-    paddingHorizontal: 25,
+    paddingHorizontal: 12,
     paddingVertical: 15,
     borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonOrderStatusSelected: {
-    backgroundColor: "#f7f7f5",
+    backgroundColor: '#f7f7f5',
   },
   buttonOrderStatusUnselected: {},
 });

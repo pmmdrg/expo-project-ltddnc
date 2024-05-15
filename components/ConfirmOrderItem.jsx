@@ -20,7 +20,6 @@ const ConfirmOrderItem = ({ price, quantity, image, name }) => {
           resizeMode: 'contain',
         }}
       />
-
       <Text>{name}</Text>
       <View
         style={{

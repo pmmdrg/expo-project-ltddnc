@@ -1,27 +1,23 @@
-import { View, Dimensions, Text } from "react-native";
-import { PieChart } from "react-native-chart-kit";
+import { View, Dimensions, Text } from 'react-native';
+import { PieChart } from 'react-native-chart-kit';
+import { useSelector } from 'react-redux';
 
-import { colors } from "../styles/styles";
+import { backgroundColor, textColors } from '../assets/colors/colors';
 
-import { backgroundColor, textColors } from "../assets/colors/colors";
-import { useEffect, useState } from "react";
-import { server } from "../redux/store";
-import { useSelector } from "react-redux";
-
-const screenWidth = Dimensions.get("screen").width - 60 - 75;
+const screenWidth = Dimensions.get('screen').width - 60 - 75;
 
 export const StockChart = ({ inStock = 0, outOfStock = 0 }) => {
   const data = [
     {
-      name: "Hết hàng",
+      name: 'Hết hàng',
       population: outOfStock,
-      color: "#b00c0c",
+      color: '#b00c0c',
       legendFontColor: textColors.primaryText,
     },
     {
-      name: "Còn hàng",
+      name: 'Còn hàng',
       population: inStock,
-      color: "#5aab49",
+      color: '#5aab49',
       legendFontColor: textColors.primaryText,
     },
   ];
@@ -38,7 +34,7 @@ export const StockChart = ({ inStock = 0, outOfStock = 0 }) => {
           width={screenWidth}
           height={150}
           chartConfig={chartConfig}
-          accessor={"population"}
+          accessor={'population'}
           backgroundColor={backgroundColor.transparentBackground}
           absolute
         />
@@ -50,25 +46,24 @@ export const StockChart = ({ inStock = 0, outOfStock = 0 }) => {
   );
 };
 
-export const CategoryChart = ({ inStock = 0, outOfStock = 0 }) => {
+export const CategoryChart = () => {
   const products = useSelector((state) => {
     return state.product.products;
   });
   const obj = {};
-  const total = products.length;
+
   products.forEach((p) => {
     const { category } = p.category;
-    if (typeof obj[category] === "number") {
+    if (typeof obj[category] === 'number') {
       obj[category] = obj[category] + 1;
     } else {
       obj[category] = 1;
     }
   });
 
-  console.log(obj, total);
-
   const data = Object.entries(obj).map((value, key) => {
     const [name, quantity] = value;
+
     return {
       name,
       population: quantity,
@@ -93,7 +88,7 @@ export const CategoryChart = ({ inStock = 0, outOfStock = 0 }) => {
         width={screenWidth}
         height={150}
         chartConfig={chartConfig}
-        accessor={"population"}
+        accessor={'population'}
         backgroundColor={backgroundColor.transparentBackground}
         absolute
       />

@@ -1,11 +1,5 @@
-import  { useState } from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  StyleSheet,
-  
-} from 'react-native';
+import { useState } from 'react';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useIsFocused } from '@react-navigation/native';
 
@@ -17,15 +11,13 @@ import { useAdminProducts, useMessageAndErrorOther } from '../../utils/hooks';
 import Header from '../../components/Header';
 import Loader from '../../components/Loader';
 import ButtonBox from '../../components/ButtonBox';
-import ProductListHeading from '../../components/ProductListHeading';
-import ProductListItem from '../../components/ProductListItem';
+import ProductListItems from '../../components/ProductListItems';
 import { CategoryChart, StockChart } from '../../components/Chart';
 import Pagination from '../../components/Pagination';
 
 import { defaultStyle, formHeading } from '../../styles/styles';
 
 import { backgroundColor } from '../../assets/colors/colors';
-import ProductListItems from '../../components/ProductListItems';
 
 const AdminPanel = ({ navigation }) => {
   const [curPage, setCurPage] = useState(1);
@@ -79,20 +71,20 @@ const AdminPanel = ({ navigation }) => {
     <View style={[defaultStyle, styles.container]}>
       <Header back={true} />
       {/* Heading */}
-      <View style={{ paddingTop: 70, marginBottom: 20 }}>
+      <View style={{ paddingTop: 20, marginBottom: 20 }}>
         <Text style={formHeading}>Bảng điều khiển admin</Text>
       </View>
       {loading ? (
         <Loader />
       ) : (
         <>
-          
           <View>
             <View
               style={{
                 flexDirection: 'row',
-                margin: 10,
-                justifyContent: 'space-between',
+                marginVertical: 10,
+                justifyContent: 'center',
+                flexWrap: 'wrap',
               }}
             >
               <ButtonBox
@@ -117,16 +109,16 @@ const AdminPanel = ({ navigation }) => {
             </View>
           </View>
           <ScrollView showsVerticalScrollIndicator={false}>
-          <View
-            style={{
-              backgroundColor: backgroundColor.secondaryBackground,
-              borderRadius: 20,
-              alignItems: 'center',
-            }}
-          >
-            <StockChart inStock={inStock} outOfStock={outOfStock} />
-            <CategoryChart />
-          </View>
+            <View
+              style={{
+                backgroundColor: backgroundColor.secondaryBackground,
+                borderRadius: 20,
+                alignItems: 'center',
+              }}
+            >
+              <StockChart inStock={inStock} outOfStock={outOfStock} />
+              <CategoryChart />
+            </View>
             <View>
               {!loadingDelete &&
                 productsForRender.map((item, index) => (

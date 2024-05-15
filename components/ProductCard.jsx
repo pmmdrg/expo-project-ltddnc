@@ -1,13 +1,13 @@
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import React from 'react';
-import Toast from 'react-native-toast-message';
 import { Button } from 'react-native-paper';
+import Toast from 'react-native-toast-message';
+import { useSelector } from 'react-redux';
+
 import {
   backgroundColor,
   buttonColors,
   textColors,
 } from '../assets/colors/colors';
-import { useSelector } from 'react-redux';
 
 const ProductCard = ({
   stock,

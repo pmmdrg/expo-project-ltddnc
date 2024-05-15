@@ -1,4 +1,5 @@
 import { ActivityIndicator } from 'react-native-paper';
+
 import { colors } from '../styles/styles';
 
 const Loader = () => {

@@ -92,6 +92,7 @@ export const useSetCategories = (setCategories, isFocused) => {
     axios
       .get(`${server}/product/categories`)
       .then((res) => {
+        res.data.categories.unshift({ category: 'All' });
         setCategories(res.data.categories);
       })
       .catch((e) => {

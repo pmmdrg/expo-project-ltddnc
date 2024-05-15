@@ -61,11 +61,11 @@ const Categories = ({ navigation }) => {
             minHeight: 400,
           }}
         >
-          {categories.map((i) => (
+          {categories.map((i, index) => (
             <CategoryCard
               name={i.category}
               id={i._id}
-              key={i._id}
+              key={i.index}
               deleteHandler={deleteHandler}
             />
           ))}

@@ -61,7 +61,6 @@ const ProductListItem = ({
           >
             {name}
           </Text>
-
           <Text
             style={{
               width: 80,

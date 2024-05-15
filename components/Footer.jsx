@@ -61,7 +61,6 @@ const Footer = () => {
           title='GIỎ HÀNG'
           onPress={() => navigationHandler(1)}
         />
-        {/* {!user && ( */}
         <NavigationItem
           iconSrc={require('../assets/icons/profile.png')}
           title={!isAuthenticated ? 'ĐĂNG NHẬP' : 'HỒ SƠ'}

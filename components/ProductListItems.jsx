@@ -1,8 +1,9 @@
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
-import React, { useState } from "react";
-import { colors } from "../styles/styles";
-import MyModal from "../components/MyModal";
-import { backgroundColor, textColors } from "../assets/colors/colors";
+import { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+
+import MyModal from '../components/MyModal';
+
+import { colors } from '../styles/styles';
 
 const ProductListItems = ({
   navigate,
@@ -22,7 +23,7 @@ const ProductListItems = ({
       <TouchableOpacity
         activeOpacity={0.9}
         onLongPress={() => setOpenModal((prev) => !prev)}
-        onPress={() => navigate.navigate("productdetails", { id })}
+        onPress={() => navigate.navigate('productdetails', { id })}
       >
         <View
           style={{
@@ -38,15 +39,14 @@ const ProductListItems = ({
           >
             ID - #{id}
           </Text>
-
-          <View style={{display: 'flex', flexDirection: 'row'}}>
+          <View style={{ display: 'flex', flexDirection: 'row' }}>
             <View>
-              <TextBox title={"Name"} value={name} i={i} />
-              <TextBox title={"Price"} value={price} i={i} />
-              <TextBox title={"Category"} value={category} i={i} />
-              <TextBox title={"Stock"} value={stock} i={i} />
+              <TextBox title={'Tên'} value={name} i={i} />
+              <TextBox title={'Giá'} value={price} i={i} />
+              <TextBox title={'Danh mục'} value={category} i={i} />
+              <TextBox title={'Trong kho'} value={stock} i={i} />
             </View>
-            <View style={{marginLeft: 'auto'}}>
+            <View style={{ marginLeft: 'auto' }}>
               <Image
                 source={{
                   uri: imgSrc,
@@ -54,7 +54,7 @@ const ProductListItems = ({
                 style={{
                   width: 100,
                   height: 100,
-                  resizeMode: "contain",
+                  resizeMode: 'contain',
                 }}
               />
             </View>
@@ -80,8 +80,8 @@ const TextBox = ({ title, value, i }) => (
       color: i % 2 === 0 ? colors.color3 : colors.color2,
     }}
   >
-    <Text style={{ fontWeight: "900" }}>{title} - </Text>
-    {`${value} ${title === "Price" ? "VND" : ""}`}
+    <Text style={{ fontWeight: '900' }}>{title} - </Text>
+    {`${value} ${title === 'Giá' ? 'VND' : ''}`}
   </Text>
 );
 
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   text: {
     color: colors.color2,
     fontSize: 16,
-    fontWeight: "900",
+    fontWeight: '900',
     marginHorizontal: -20,
     marginTop: -20,
     marginBottom: 10,

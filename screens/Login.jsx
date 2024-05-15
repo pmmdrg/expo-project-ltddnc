@@ -66,7 +66,7 @@ const Login = ({ navigation }) => {
           >
             Đăng nhập
           </Button>
-          <Text style={styles.or}>Đăng nhập</Text>
+          <Text style={styles.or}>Hoặc</Text>
           <Button
             textColor={colors.color2}
             style={styles.btn}

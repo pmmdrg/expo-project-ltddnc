@@ -22,14 +22,12 @@ const MyModal = ({ id, deleteHandler, navigate, setOpenModal }) => {
           }}
         />
       </TouchableOpacity>
-
       <Text
         style={styles.text}
         onPress={() => navigate.navigate('updateproduct', { id })}
       >
         Chỉnh sửa
       </Text>
-
       <Button textColor={colors.color3} onPress={() => deleteHandler(id)}>
         Xóa
       </Button>

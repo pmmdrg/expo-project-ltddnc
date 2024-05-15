@@ -15,13 +15,13 @@ const ButtonBox = ({
       activeOpacity={1}
       style={{
         backgroundColor: backgroundColor.secondaryBackground,
-        height: 80,
+        height: 60,
         width: 'auto',
         borderRadius: 10,
         alignItems: 'center',
-        display: 'flex',
         flexDirection: 'row',
-        paddingRight: 15
+        paddingRight: 15,
+        margin: 5,
       }}
       onPress={() => handler(handlerText)}
       disabled={loading}
