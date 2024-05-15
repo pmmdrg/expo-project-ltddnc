@@ -145,7 +145,7 @@ const Home = () => {
             {categories.map((item, index) => {
               return (
                 <Button
-                  key={item.index}
+                  key={index}
                   style={{
                     backgroundColor:
                       category === item.category
@@ -174,7 +174,6 @@ const Home = () => {
         <HomeSection title='Sản phẩm nổi bật' list={displayProduct} />
         <HomeSection title='Bán chạy nhất' list={displayProduct} />
         <HomeSection title='Hàng mới về' list={displayProduct} />
-        <HomeSection title='Ưu đãi đặc biệt' list={displayProduct} />
       </ScrollView>
       <Footer />
     </SafeAreaView>
