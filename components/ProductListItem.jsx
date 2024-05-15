@@ -51,7 +51,7 @@ const ProductListItem = ({
             }}
             numberOfLines={1}
           >
-            {formatPrice(price)}VND
+            {formatPrice(price)}
           </Text>
           <Text
             style={{

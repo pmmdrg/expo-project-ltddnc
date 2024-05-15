@@ -179,7 +179,7 @@ const ProductDetails = ({ route: { params } }) => {
                 fontWeight: '900',
               }}
             >
-              {formatPrice(price)} VND
+              {formatPrice(price)}
             </Text>
             {avgScore && (
               <View style={styles.voteInfo}>

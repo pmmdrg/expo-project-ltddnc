@@ -124,7 +124,6 @@ const Cart = () => {
               0
             )
           )}
-          VND
         </Text>
       </View>
 

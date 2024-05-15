@@ -16,7 +16,7 @@ const Product = ({ id, name, price, rate, rateCount, image, navigate }) => {
         <Image source={image} style={styles.prodImage} />
         <View style={styles.prodInfo}>
           <Text style={styles.prodName}>{name}</Text>
-          <Text style={styles.prodPrice}>{formatPrice(price)} VND</Text>
+          <Text style={styles.prodPrice}>{formatPrice(price)}</Text>
           <View style={styles.rateContainer}>
             <Image source={require('../assets/icons/star.png')} />
             <Text style={styles.prodRate}>{rate}</Text>

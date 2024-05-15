@@ -45,7 +45,7 @@ const ProductCard = ({
           <View
             style={{ flexDirection: 'row', justifyContent: 'space-between' }}
           >
-            <Text style={styles.prodPrice}>{formatPrice(price)} VND</Text>
+            <Text style={styles.prodPrice}>{formatPrice(price)}</Text>
             {avgScore && (
               <View style={styles.voteInfo}>
                 <Text style={styles.vote}>{avgScore}</Text>

@@ -1,6 +1,8 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { Avatar } from 'react-native-paper';
 
+import { formatPrice } from '../utils/format';
+
 import { iconOptions } from '../screens/ProductDetails';
 
 import { colors } from '../styles/styles';
@@ -63,7 +65,7 @@ const CartItem = ({
             fontWeight: '900',
           }}
         >
-          {amount} VND
+          {formatPrice(amount)}
         </Text>
       </View>
 

@@ -94,7 +94,7 @@ const PriceTag = ({ heading, value }) => {
       }}
     >
       <Text style={{ fontWeight: '800' }}>{heading}</Text>
-      <Text>{formatPrice(value)} VND</Text>
+      <Text>{formatPrice(value)}</Text>
     </View>
   );
 };
