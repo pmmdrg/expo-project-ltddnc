@@ -3,6 +3,8 @@ import { Button } from 'react-native-paper';
 import Toast from 'react-native-toast-message';
 import { useSelector } from 'react-redux';
 
+import { formatPrice } from '../utils/format';
+
 import {
   backgroundColor,
   buttonColors,
@@ -43,7 +45,7 @@ const ProductCard = ({
           <View
             style={{ flexDirection: 'row', justifyContent: 'space-between' }}
           >
-            <Text style={styles.prodPrice}>{price} VND</Text>
+            <Text style={styles.prodPrice}>{formatPrice(price)} VND</Text>
             {avgScore && (
               <View style={styles.voteInfo}>
                 <Text style={styles.vote}>{avgScore}</Text>

@@ -1,5 +1,7 @@
 import { View, Text, Image } from 'react-native';
 
+import { formatPrice } from '../utils/format';
+
 const ConfirmOrderItem = ({ price, quantity, image, name }) => {
   return (
     <View
@@ -28,7 +30,7 @@ const ConfirmOrderItem = ({ price, quantity, image, name }) => {
       >
         <Text>{quantity}</Text>
         <Text style={{ marginHorizontal: 10 }}>x</Text>
-        <Text>{price} VND</Text>
+        <Text>{formatPrice(price)} VND</Text>
       </View>
     </View>
   );

@@ -4,6 +4,8 @@ import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
+import { formatPrice } from '../utils/format';
+
 import Header from '../components/Header';
 import CartItem from '../components/CartItem';
 
@@ -116,9 +118,11 @@ const Cart = () => {
       >
         <Text>{cartItems.length} sản phẩm</Text>
         <Text>
-          {cartItems.reduce(
-            (prev, curr) => prev + curr.quantity * curr.price,
-            0
+          {formatPrice(
+            cartItems.reduce(
+              (prev, curr) => prev + curr.quantity * curr.price,
+              0
+            )
           )}
           VND
         </Text>

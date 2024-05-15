@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
+import { formatPrice } from '../utils/format';
+
 import MyModal from '../components/MyModal';
 
 import { colors } from '../styles/styles';
@@ -42,7 +44,7 @@ const ProductListItems = ({
           <View style={{ display: 'flex', flexDirection: 'row' }}>
             <View>
               <TextBox title={'Tên'} value={name} i={i} />
-              <TextBox title={'Giá'} value={price} i={i} />
+              <TextBox title={'Giá'} value={formatPrice(price)} i={i} />
               <TextBox title={'Danh mục'} value={category} i={i} />
               <TextBox title={'Trong kho'} value={stock} i={i} />
             </View>

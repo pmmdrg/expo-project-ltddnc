@@ -4,6 +4,8 @@ import { Button } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
+import { formatPrice } from '../utils/format';
+
 import Header from '../components/Header';
 import Heading from '../components/Heading';
 import ConfirmOrderItem from '../components/ConfirmOrderItem';
@@ -92,7 +94,7 @@ const PriceTag = ({ heading, value }) => {
       }}
     >
       <Text style={{ fontWeight: '800' }}>{heading}</Text>
-      <Text>{value} VND</Text>
+      <Text>{formatPrice(value)} VND</Text>
     </View>
   );
 };

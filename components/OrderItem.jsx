@@ -1,6 +1,8 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 
+import { formatPrice } from '../utils/format';
+
 import { colors } from '../styles/styles';
 
 const OrderItem = ({
@@ -32,7 +34,7 @@ const OrderItem = ({
       </Text>
       <TextBox title={'Địa chỉ'} value={address} i={i} />
       <TextBox title={'Đặt hàng vào'} value={orderedOn} i={i} />
-      <TextBox title={'Giá'} value={price} i={i} />
+      <TextBox title={'Giá'} value={formatPrice(price)} i={i} />
       <TextBox title={'Trạng thái'} value={status} i={i} />
       <TextBox title={'Phương thức thanh toán'} value={paymentMethod} i={i} />
       {admin && (

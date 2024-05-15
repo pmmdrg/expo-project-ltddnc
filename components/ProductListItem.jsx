@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
+import { formatPrice } from '../utils/format';
+
 import MyModal from '../components/MyModal';
 
 import { backgroundColor, textColors } from '../assets/colors/colors';
@@ -49,7 +51,7 @@ const ProductListItem = ({
             }}
             numberOfLines={1}
           >
-            {price}VND
+            {formatPrice(price)}VND
           </Text>
           <Text
             style={{

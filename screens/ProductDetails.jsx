@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -17,6 +17,8 @@ import { useIsFocused } from '@react-navigation/native';
 
 import { getProductDetails } from '../redux/actions/productAction';
 import { postComment } from '../redux/actions/otherAction';
+
+import { formatPrice } from '../utils/format';
 
 import Header from '../components/Header';
 import CommentItem from '../components/CommentItem';
@@ -78,7 +80,7 @@ const ProductDetails = ({ route: { params } }) => {
       });
     }
 
-    if (stock === 0){
+    if (stock === 0) {
       return Toast.show({
         type: 'error',
         text1: 'Hết hàng',
@@ -121,7 +123,7 @@ const ProductDetails = ({ route: { params } }) => {
     if (!loading) {
       dispatch(postComment(params.id, comment, vote));
     }
-    
+
     setComment('');
     setVote(0);
   };
@@ -177,7 +179,7 @@ const ProductDetails = ({ route: { params } }) => {
                 fontWeight: '900',
               }}
             >
-              {price} VND
+              {formatPrice(price)} VND
             </Text>
             {avgScore && (
               <View style={styles.voteInfo}>
